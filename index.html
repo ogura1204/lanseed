@@ -3,240 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>明石市・加古川市などの不動産買取ならGOOD売買 | 株式会社LANSEED</title>
-    <meta name="description" content="明石市・神戸市・加古郡・加古川市・高砂市の土地、空き家などの不動産買取専門店です。「いつ売れる？」「いくらになる？」の不安を解消し、スピーディーに現金化。デメリットも正直にお伝えする誠実な査定をお約束します。">
     
-    <meta property="og:title" content="明石市・加古川市などの不動産買取ならGOOD売買">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://あなたのGitHubアカウント名.github.io/リポジトリ名/">
-    <meta property="og:image" content="https://あなたのGitHubアカウント名.github.io/リポジトリ名/ogp-image.jpg">
-    <meta property="og:site_name" content="GOOD売買">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ベース設定：40代以上が読みやすいフォントと余白 */
+        /* ベース設定 */
         :root {
-            --primary-color: #1e3a8a; /* 信頼感のある紺色 */
-            --accent-color: #f97316; /* タップを促すオレンジ */
-            --bg-light: #f3f4f6;
-            --text-color: #333333;
+            --primary: #1e3a8a; /* 濃い青 */
+            --accent: #f97316; /* オレンジ */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
         }
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            color: var(--text-color);
+            font-family: 'Zen Maru Gothic', sans-serif;
+            color: var(--text-main);
             line-height: 1.8;
             margin: 0;
             padding: 0;
             background-color: #ffffff;
             font-size: 16px;
         }
-        img { max-width: 100%; height: auto; }
-        .container {
-            max-width: 800px; /* PCで見ても間延びしない幅 */
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        section { padding: 60px 0; }
+        img, svg { max-width: 100%; height: auto; }
+        .container { max-width: 768px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; }
         .bg-gray { background-color: var(--bg-light); }
         
-        /* 見出しデザイン */
+        /* タイポグラフィの緩急（マーカー線など） */
+        .text-huge { font-size: 2.2rem; font-weight: 900; line-height: 1.3; color: var(--primary); }
+        .text-large { font-size: 1.5rem; font-weight: 700; }
+        .text-red { color: #dc2626; }
+        .marker-yellow {
+            background: linear-gradient(transparent 60%, #fef08a 60%);
+            font-weight: bold;
+        }
+
+        /* セクションタイトル */
         h2 {
             text-align: center;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
         }
 
         /* ファーストビュー (FV) */
         .fv {
-            background-color: #e0f2fe;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
             text-align: center;
-            padding: 40px 20px 60px;
-        }
-        .fv h1 {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        .fv .catchcopy {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #b91c1c;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-        .character-img {
-            max-width: 200px;
-            margin: 0 auto 20px;
-            display: block;
-        }
-
-        /* CTAボタン */
-        .btn {
-            display: block;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            text-align: center;
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            margin: 20px auto;
-            max-width: 90%;
-        }
-        .btn:active { transform: translateY(2px); }
-
-        /* 悩みセクション */
-        .worries-list {
-            background: #fff;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 20px;
-            list-style: none;
-        }
-        .worries-list li {
-            margin-bottom: 15px;
-            padding-left: 1.5em;
-            text-indent: -1.5em;
-        }
-        .worries-list li::before {
-            content: "☑";
-            color: var(--primary-color);
-            margin-right: 8px;
-            font-size: 1.2rem;
-        }
-
-        /* 強み（誠実さ）セクション */
-        .honest-box {
-            background-color: #fffaf0;
-            border-left: 6px solid var(--accent-color);
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .honest-box h3 { color: #b91c1c; margin-top: 0; }
-
-        /* 動画埋め込み */
-        .video-wrapper {
+            padding: 40px 20px 80px;
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
-            height: 0;
             overflow: hidden;
         }
-        .video-wrapper iframe {
+        .fv-top-text { font-size: 1.1rem; font-weight: 700; color: #0284c7; margin-bottom: 10px; }
+        .fv-catch { margin: 20px 0 30px; }
+        .fv-sub { font-size: 1.1rem; font-weight: 700; background: #fff; display: inline-block; padding: 10px 20px; border-radius: 30px; color: var(--text-main); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        /* キャラクターと吹き出し */
+        .char-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        .balloon {
+            position: relative;
+            background: #ffffff;
+            border: 3px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--accent);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+        .balloon::before {
+            content: "";
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 50%;
+            left: -15px;
+            margin-top: -10px;
+            border: 10px solid transparent;
+            border-right: 10px solid #ffffff;
+            z-index: 2;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -19px;
+            margin-top: -12px;
+            border: 12px solid transparent;
+            border-right: 12px solid var(--accent);
+            z-index: 1;
         }
 
-        /* フロー（ステップ） */
-        .step {
+        /* ダミーキャラクターの揺れアニメーション */
+        .dummy-char {
+            width: 120px;
+            height: 120px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* アクションボタン（CTA） */
+        .btn-wrap { text-align: center; margin: 30px 0; }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to bottom, #f97316, #ea580c);
+            color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 6px 0 #c2410c, 0 10px 15px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            width: 85%;
+            max-width: 400px;
+            position: relative;
+        }
+        .btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #c2410c, 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn::after {
+            content: '▶';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* 悩みセクション（ボックスデザイン） */
+        .worry-box {
             background: #fff;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--primary-color);
+            border: 3px dashed #94a3b8;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-top: 30px;
         }
-        .step strong { color: var(--primary-color); }
+        .worry-item {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+        .worry-item::before {
+            content: '？';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            background: var(--primary);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
 
-        /* 追従型CTA */
+        /* 強み・誠実さセクション */
+        .point-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .honest-box {
+            background-color: #fee2e2;
+            border: 3px solid #ef4444;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        .honest-box h3 { color: #b91c1c; font-size: 1.4rem; margin-top: 0; text-align: center; font-weight: 900; }
+
+        /* エリア表示 */
+        .area-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .area-tag {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* 動画・フォーム埋め込み */
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .video-wrapper { padding-bottom: 56.25%; height: 0; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        /* 追従ボタン */
         .floating-cta {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            bottom: 0; left: 0; width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
             z-index: 100;
+            text-align: center;
         }
-        .floating-cta .btn { margin: 0 auto; }
-        
-        /* フッターの余白（追従ボタンが被らないように） */
-        footer { padding: 40px 0 100px; text-align: center; font-size: 0.9rem; }
+        .floating-cta .btn { margin: 0; width: 90%; font-size: 1.2rem; padding: 15px 20px; }
+        footer { padding: 40px 0 120px; text-align: center; font-size: 0.9rem; background: #1e293b; color: #94a3b8; }
+        footer a { color: #cbd5e1; }
+
+        /* スマホ向けの微調整 */
+        @media (max-width: 600px) {
+            .text-huge { font-size: 1.8rem; }
+            .balloon { font-size: 1rem; padding: 10px; }
+            .dummy-char { width: 90px; height: 90px; }
+            .btn { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
 
     <header class="fv">
         <div class="container">
-            <h1>明石市・神戸市・加古川市の不動産買取専門店</h1>
-            <p class="catchcopy">「いつ売れるの？」「手残りはいくら？」<br>その不安、私たちが解決します！</p>
+            <p class="fv-top-text">明石市・神戸市・加古川市の不動産買取専門店</p>
             
-            <img src="character-placeholder.png" alt="GOOD売買 キャラクター" class="character-img">
+            <div class="fv-catch">
+                <div class="text-huge text-red">「いつ売れるの？」</div>
+                <div class="text-huge">「手残りはいくら？」</div>
+            </div>
+
+            <div class="char-area">
+                <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#f97316" />
+                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                    <circle cx="35" cy="50" r="5" fill="#ffffff" />
+                    <circle cx="65" cy="50" r="5" fill="#ffffff" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#ffffff" stroke-width="3" fill="transparent" />
+                    <text x="50" y="95" font-size="10" fill="#1e3a8a" text-anchor="middle" font-weight="bold">ダミー</text>
+                </svg>
+                
+                <div class="balloon">
+                    その不安、<br>即解決します！
+                </div>
+            </div>
             
-            <p>不要な土地、空き家、相続不動産…<br>最短スピードで現金化をサポートします。</p>
-            <a href="#contact" class="btn">今すぐ無料相談する ＞</a>
+            <p class="fv-sub">最短〇日で現金化！秘密厳守・査定無料</p>
+
+            <div class="btn-wrap">
+                <a href="#contact" class="btn">今すぐ無料で相談する</a>
+            </div>
         </div>
     </header>
 
     <section class="container">
-        <h2>こんなお悩みはありませんか？</h2>
-        <ul class="worries-list">
-            <li>いつ売れるか分からず、固定資産税だけ払い続けている</li>
-            <li>〇月までに資金が必要で、急いで現金化したい</li>
-            <li>「高く売れますよ」という不動産屋の言葉が本当か不安</li>
-            <li>相続した実家が遠方で、管理が負担になっている</li>
-        </ul>
+        <h2>こんな<span class="text-red">お悩み</span>ありませんか？</h2>
+        <div class="worry-box">
+            <div class="worry-item">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</div>
+            <div class="worry-item">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</div>
+            <div class="worry-item">不動産屋の「高く売れますよ」が<span class="marker-yellow">本当か疑わしい</span></div>
+            <div class="worry-item">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></div>
+        </div>
     </section>
 
     <section class="bg-gray">
         <div class="container">
             <h2>GOOD売買が選ばれる理由</h2>
-            <p>一部の悪質な仲介業者は、契約欲しさに実勢と離れた高い査定額を出し、後から値下げを要求する「囲い込み」を行うことがあります。</p>
-            <p>弊社は<strong>「買取専門店」</strong>ですので、提示した条件でご納得いただければ即買取させていただきます。</p>
             
+            <div class="point-card">
+                <p class="text-large text-red" style="text-align:center; margin-top:0;">契約欲しさの「囲い込み」はしません！</p>
+                <p>一部の悪質な仲介業者は、契約をとるためにわざと高い査定額を出し、後から値下げを要求することがあります。</p>
+                <p>弊社は<strong>「買取専門店」</strong>。提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。</p>
+            </div>
+
             <div class="honest-box">
-                <h3>デメリットも正直にお伝えします</h3>
-                <p>仲介の金額よりは、幾分か買取金額がダウンしてしまうのがデメリットです。しかし、<strong>「売れ残る心配がない」「仲介手数料が不要」「すぐに現金が手に入る」</strong>という確実な安心感をお約束します。少しでもお喜びいただけるよう、精一杯の条件を提示できるよう頑張ります！</p>
+                <h3>【正直にお伝えします】<br>デメリットについて</h3>
+                <p>仲介で一般の方に売却する金額よりは、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実であり、デメリットです。</p>
+                <p>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金が手に入る」</strong>という確実な安心感をお約束します。少しでもお喜びいただけるよう、精一杯の条件を提示できるよう頑張ります！</p>
             </div>
         </div>
     </section>
 
     <section class="container">
         <h2>買取強化エリア</h2>
-        <p style="text-align: center;">兵庫県全域の土地・空き家に幅広く対応！<br>以下のエリアは特に力を入れています。</p>
-        <p style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">
-            明石市 / 神戸市 / 加古郡 / 加古川市 / 高砂市
-        </p>
+        <p style="text-align: center; font-weight:bold;">兵庫県全域の不動産に対応！<br>以下のエリアは特に力を入れています。</p>
+        <div class="area-tags">
+            <span class="area-tag">明石市</span>
+            <span class="area-tag">神戸市</span>
+            <span class="area-tag">加古郡</span>
+            <span class="area-tag">加古川市</span>
+            <span class="area-tag">高砂市</span>
+        </div>
     </section>
 
     <section class="bg-gray">
         <div class="container">
-            <h2>買取までの3ステップ</h2>
-            <div class="step">
-                <strong>STEP 1：お問い合わせ（無料）</strong><br>
-                下のフォームから、物件の情報やご事情をお気軽にお送りください。
-            </div>
-            <div class="step">
-                <strong>STEP 2：スピード査定・条件提示</strong><br>
-                現地調査を行い、確実にお支払いできる買取金額をご提示します。
-            </div>
-            <div class="step">
-                <strong>STEP 3：ご契約・即現金化</strong><br>
-                金額にご納得いただければ、即日買取手続き・お支払いを実行します。
+            <h2>GOOD売買の紹介動画</h2>
+            <div class="iframe-wrapper video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
-    <section class="container">
-        <h2>GOOD売買の紹介動画</h2>
-        <div class="video-wrapper">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/your-video-id" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </section>
-
-    <section id="contact" class="bg-gray">
-        <div class="container">
-            <h2>無料査定・ご相談フォーム</h2>
-            <p style="text-align: center; margin-bottom: 20px;">どんな些細なことでも、まずはお気軽にご相談ください。<br>担当者が内容を確認し、すぐにご連絡いたします。</p>
-            
-            <iframe src="https://docs.google.com/forms/d/e/あなたのフォームID/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <section id="contact" class="container">
+        <h2>無料査定・ご相談フォーム</h2>
+        <p style="text-align: center; margin-bottom: 30px; font-weight:bold;">
+            「まずは金額だけ知りたい」でも大歓迎です。<br>下記よりお気軽にお送りください！
+        </p>
+        
+        <div class="iframe-wrapper" style="background:#f8fafc; border: 2px solid #e2e8f0;">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-dummy-form-id/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
         </div>
     </section>
 
@@ -244,14 +352,14 @@
         <div class="container">
             <p><strong>株式会社LANSEED</strong></p>
             <p>〒651-2133 兵庫県神戸市西区枝吉一丁目13番<br>
-            営業時間：9:30〜19:30（定休日：水曜日・第2第4火曜日）</p>
-            <p><a href="https://www.lanseed.co.jp/" target="_blank">公式サイトはこちら</a></p>
-            <p><small>&copy; 2026 LANSEED Co., Ltd. All Rights Reserved.</small></p>
+            営業時間：9:30〜19:30（定休：水曜・第2第4火曜）</p>
+            <p><a href="https://www.lanseed.co.jp/" target="_blank">コーポレートサイト</a></p>
+            <p style="margin-top:20px;"><small>&copy; 2026 LANSEED Co., Ltd.</small></p>
         </div>
     </footer>
 
     <div class="floating-cta">
-        <a href="#contact" class="btn">まずは無料で相談してみる</a>
+        <a href="#contact" class="btn">今すぐ無料で相談する</a>
     </div>
 
 </body>
