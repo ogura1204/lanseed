@@ -11,12 +11,18 @@
 
     <style>
         :root {
-            --primary: #027130;     /* 指定サブカラー：深緑 */
-            --secondary: #FAFAFA;   /* 指定メインカラー：ほぼ白 */
-            --accent: #F08200;      /* 指定アクセント：オレンジ */
+            --primary: #027130;     /* サブカラー：深緑 */
+            --secondary: #FAFAFA;   /* メインカラー：ほぼ白 */
+            --accent: #F08200;      /* アクセント：オレンジ */
             --accent-btn: #F08200;  /* ボタン用オレンジ */
-            --bg-light: #ffffff;    /* 交互の背景色用に純白を使用 */
+            --bg-light: #ffffff;    
             --text-main: #333333;
+        }
+
+        /* 画面外のはみ出しを防ぐ */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -30,20 +36,20 @@
             scroll-behavior: smooth;
         }
         img, svg { max-width: 100%; height: auto; }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 90px 0; overflow: hidden; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; position: relative; }
+        section { padding: 80px 0; overflow: hidden; }
         .bg-gray { background-color: var(--bg-light); }
         
-        .text-huge { font-size: 2.2rem; font-weight: 900; line-height: 1.3; color: var(--primary); }
+        .text-huge { font-size: 2.8rem; font-weight: 900; line-height: 1.2; color: var(--primary); letter-spacing: -0.05em; }
         .text-large { font-size: 1.5rem; font-weight: 700; }
         .text-red { color: var(--accent); }
         .text-center { text-align: center; }
-        .marker-yellow { background: linear-gradient(transparent 60%, #FFF59D 60%); font-weight: 700; }
+        .marker-yellow { background: linear-gradient(transparent 60%, #FFF59D 60%); font-weight: 700; display: inline; }
 
         h2 {
             text-align: center; font-size: 2rem; font-weight: 900; color: var(--primary);
             margin-bottom: 50px; position: relative; padding-bottom: 20px; letter-spacing: 0.05em;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
         }
         h2::after {
             content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -51,75 +57,126 @@
             border-radius: 5px;
         }
 
-        /* ファーストビュー (FV) */
+        /* =========================================
+           インパクト重視のファーストビュー (FV)
+           ========================================= */
         .fv {
-            background: linear-gradient(135deg, #ffffff 0%, #e8f5e9 100%);
-            text-align: center; padding: 60px 20px 100px; position: relative; border-bottom: 5px solid var(--primary);
+            background: radial-gradient(circle at 50% 0%, #ffffff 0%, #e8f5e9 80%);
+            text-align: center; padding: 40px 10px 100px; position: relative; border-bottom: 8px solid var(--primary);
+            overflow: hidden;
         }
-        .fv-top-text { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; letter-spacing: 0.1em; }
-        .fv-catch { margin: 30px 0 40px; }
+        /* 背景の装飾（集中線のような効果） */
+        .fv::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(2, 113, 48, 0.03) 20px, rgba(2, 113, 48, 0.03) 40px);
+            z-index: 0; animation: rotate-bg 60s linear infinite; pointer-events: none;
+        }
+        @keyframes rotate-bg { 100% { transform: rotate(360deg); } }
+
+        .fv-content { position: relative; z-index: 1; }
         
-        .char-area { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; gap: 20px; }
-        .balloon {
-            position: relative; background: #fff; border: 3px solid var(--primary); padding: 15px 25px;
-            border-radius: 20px; font-size: 1.3rem; font-weight: 900; color: var(--primary);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1); animation: pulse-balloon 2s infinite;
+        .fv-badge {
+            background: var(--primary); color: #fff; padding: 5px 20px; border-radius: 30px;
+            display: inline-block; font-weight: 900; font-size: 1.1rem; margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .balloon::before { content: ""; position: absolute; top: 50%; left: -16px; margin-top: -12px; border: 12px solid transparent; border-right: 12px solid var(--primary); }
-        .balloon::after { content: ""; position: absolute; top: 50%; left: -11px; margin-top: -10px; border: 10px solid transparent; border-right: 10px solid #fff; }
+        
+        .fv-catch { margin: 10px 0 30px; }
+        .fv-catch-sub { font-size: 1.2rem; font-weight: 900; color: #555; margin-bottom: 10px; display: inline-block; border-bottom: 3px solid var(--accent); }
+        .highlight-bg { background: var(--accent); color: #fff; padding: 0 10px; border-radius: 5px; display: inline-block; transform: rotate(-2deg); box-shadow: 2px 2px 0px #b23c00; }
+
+        .char-area { display: flex; align-items: flex-end; justify-content: center; margin: 30px 0; gap: 15px; }
+        .balloon {
+            position: relative; background: #fff; border: 4px solid var(--primary); padding: 15px 25px;
+            border-radius: 30px; font-size: 1.4rem; font-weight: 900; color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); animation: pulse-balloon 2s infinite; margin-bottom: 20px;
+        }
+        .balloon::after {
+            content: ""; position: absolute; bottom: -15px; left: 20px;
+            border: 15px solid transparent; border-top: 15px solid var(--primary); border-left: 15px solid var(--primary);
+            transform: skewX(-10deg);
+        }
 
         /* キャラクター */
-        .dummy-char { width: 140px; height: 140px; animation: float-char 3s ease-in-out infinite; }
-        .char-mini { width: 60px; height: 60px; }
-        .char-worry { width: 80px; height: 80px; position: absolute; top: -50px; right: 0px; animation: float-char 3.5s ease-in-out infinite; }
-        .char-reason { width: 90px; height: 90px; position: absolute; top: -20px; left: -20px; animation: float-char 3.2s ease-in-out infinite; }
-        .char-form { width: 70px; height: 70px; position: absolute; top: -30px; right: -30px; animation: float-char 3.8s ease-in-out infinite; }
+        .dummy-char { width: 160px; height: 160px; animation: float-char 3s ease-in-out infinite; z-index: 2; position: relative; }
+        .char-mini { width: 60px; height: 60px; flex-shrink: 0; }
+        .char-worry { width: 80px; height: 80px; position: absolute; top: -40px; right: -10px; animation: float-char 3.5s ease-in-out infinite; }
+        .char-reason { width: 90px; height: 90px; position: absolute; top: -30px; left: -20px; animation: float-char 3.2s ease-in-out infinite; }
+        .char-form { width: 70px; height: 70px; position: absolute; top: -30px; right: -10px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* ボタン */
         .btn-wrap { text-align: center; margin: 40px 0; }
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
             background: linear-gradient(to bottom, #ffb74d, var(--accent-btn)); color: #ffffff;
-            padding: 20px 40px; border-radius: 50px; font-size: 1.5rem; font-weight: 900; text-decoration: none;
-            box-shadow: 0 8px 0 #cc6d00, 0 15px 25px rgba(240, 130, 0, 0.3); transition: all 0.2s; width: 85%; max-width: 450px;
+            padding: 20px 30px; border-radius: 50px; font-size: 1.6rem; font-weight: 900; text-decoration: none;
+            box-shadow: 0 8px 0 #cc6d00, 0 15px 25px rgba(240, 130, 0, 0.4); transition: all 0.2s; width: 90%; max-width: 500px;
             position: relative; border: none; cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
-            animation: pulse-btn 2.5s infinite;
+            animation: pulse-btn 2.5s infinite; letter-spacing: 0.05em;
         }
-        .btn:active { transform: translateY(8px); box-shadow: 0 0 0 #cc6d00, 0 5px 10px rgba(240, 130, 0, 0.3); }
+        .btn:active { transform: translateY(8px); box-shadow: 0 0 0 #cc6d00, 0 5px 10px rgba(240, 130, 0, 0.4); }
         .btn::after {
             content: ''; position: absolute; right: 25px; top: 50%; transform: translateY(-50%) rotate(45deg);
-            width: 12px; height: 12px; border-top: 3px solid #fff; border-right: 3px solid #fff;
+            width: 12px; height: 12px; border-top: 4px solid #fff; border-right: 4px solid #fff;
         }
 
         /* 悩み・強み */
         .worry-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
         .worry-card {
-            background: #fff; padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-left: 6px solid var(--primary); font-size: 1.2rem; font-weight: 700; display: flex; align-items: center;
+            background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary); font-size: 1.2rem; font-weight: 700; display: flex; align-items: flex-start;
         }
-        .worry-card::before { content: '✓'; color: var(--primary); font-size: 1.8rem; margin-right: 15px; }
+        .worry-card::before { content: '✓'; color: var(--primary); font-size: 1.8rem; margin-right: 15px; line-height: 1; }
         
         .point-card { background: #fff; border-radius: 15px; padding: 40px 30px; box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin-bottom: 40px; border-top: 6px solid var(--primary); }
         .honest-box {
             background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 2px solid #ffcc80; border-radius: 15px;
-            padding: 40px 30px; margin-top: 40px; box-shadow: 0 10px 20px rgba(240, 130, 0, 0.08); position: relative;
+            padding: 40px 20px; margin-top: 40px; box-shadow: 0 10px 20px rgba(240, 130, 0, 0.08); position: relative; z-index: 1;
         }
         .honest-box h3 { color: var(--accent); font-size: 1.6rem; margin-top: 0; text-align: center; font-weight: 900; }
+
+        /* =========================================
+           他社との時系列比較（縦スクロール）
+           ========================================= */
+        .timeline-wrap { background: #fff; border-radius: 15px; padding: 40px 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); margin-top: 40px; }
+        .timeline-header { display: flex; justify-content: space-between; margin-bottom: 30px; font-weight: 900; text-align: center; font-size: 1.2rem; }
+        .tl-other-head { width: 42%; background: #94a3b8; color: #fff; padding: 15px 10px; border-radius: 10px; }
+        .tl-good-head { width: 42%; background: var(--accent); color: #fff; padding: 15px 10px; border-radius: 10px; box-shadow: 0 5px 15px rgba(240,130,0,0.3); }
+        
+        .timeline-row { display: flex; justify-content: space-between; position: relative; margin-bottom: 40px; }
+        /* 中央の線 */
+        .timeline-row::before { content: ''; position: absolute; left: 50%; top: 30px; bottom: -50px; width: 4px; background: #e2e8f0; transform: translateX(-50%); z-index: 1; }
+        .timeline-row:last-child::before { display: none; }
+        
+        /* 中央のステップバッジ */
+        .tl-step {
+            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+            background: var(--primary); color: #fff; width: 70px; height: 70px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 900; z-index: 2; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            line-height: 1.2;
+        }
+        .tl-step span { font-size: 1.2rem; color: var(--accent); }
+        
+        .tl-box { width: 42%; padding: 20px; border-radius: 10px; z-index: 2; position: relative; font-weight: 700; font-size: 1.1rem; }
+        .tl-other-box { background: #f1f5f9; border: 2px dashed #cbd5e1; color: #64748b; }
+        .tl-good-box { background: #fff3e0; border: 2px solid var(--accent); color: var(--primary); }
+        .tl-good-box::after {
+            content: '最短！'; position: absolute; top: -15px; right: -10px; background: var(--accent); color: #fff;
+            padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: 900; transform: rotate(10deg);
+        }
 
         /* 動画・エリア */
         .iframe-wrapper { position: relative; width: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.15); background: #000; }
         .video-wrapper { padding-bottom: 56.25%; height: 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
-        .area-tag { background: #fff; color: var(--primary); padding: 12px 25px; border-radius: 30px; font-weight: 900; font-size: 1.2rem; border: 2px solid var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px; }
+        .area-tag { background: #fff; color: var(--primary); padding: 10px 20px; border-radius: 30px; font-weight: 900; font-size: 1.1rem; border: 2px solid var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
         /* カスタムフォーム */
-        .custom-form-wrapper {
-            background: #fff; border-radius: 15px; padding: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-            border-top: 6px solid var(--primary); margin-top: 20px;
-        }
+        .custom-form-wrapper { background: #fff; border-radius: 15px; padding: 40px 30px; box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-top: 6px solid var(--primary); margin-top: 20px; }
         .form-group { margin-bottom: 35px; }
-        .form-label { display: block; font-size: 1.1rem; font-weight: 900; color: var(--primary); margin-bottom: 15px; }
+        .form-label { display: block; font-size: 1.1rem; font-weight: 900; color: var(--primary); margin-bottom: 15px; line-height: 1.4; }
         .required { background: var(--accent); color: #fff; font-size: 0.8rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; vertical-align: middle; }
         
         .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
@@ -128,24 +185,17 @@
         .radio-card-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 15px 10px; border: 2px solid #ddd; border-radius: 10px; font-weight: 700; color: var(--text-main);
-            cursor: pointer; transition: all 0.2s; text-align: center; height: 100%; background: var(--secondary);
+            cursor: pointer; transition: all 0.2s; text-align: center; height: 100%; background: var(--secondary); box-sizing: border-box;
         }
-        .radio-card-content small { font-size: 0.8rem; font-weight: normal; margin-top: 5px; }
+        .radio-card-content small { font-size: 0.8rem; font-weight: normal; margin-top: 5px; color: #666; }
         .radio-card input[type="radio"]:checked + .radio-card-content {
             background-color: #e8f5e9; border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 10px rgba(2, 113, 48, 0.15);
         }
         
-        .success-message {
-            text-align: center; padding: 40px 20px; background: #e8f5e9; border: 2px solid var(--primary);
-            border-radius: 10px; margin-top: 20px; animation: fade-in 0.5s ease;
-        }
+        .success-message { text-align: center; padding: 40px 20px; background: #e8f5e9; border: 2px solid var(--primary); border-radius: 10px; margin-top: 20px; animation: fade-in 0.5s ease; }
         .success-message h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.5rem; font-weight: 900; }
 
-        .floating-cta {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95);
-            padding: 15px 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 100; text-align: center;
-            transform: translateY(100%); transition: transform 0.5s ease;
-        }
+        .floating-cta { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); padding: 15px 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 100; text-align: center; transform: translateY(100%); transition: transform 0.5s ease; }
         .floating-cta.show { transform: translateY(0); }
         .floating-cta .btn { margin: 0; width: 90%; font-size: 1.3rem; padding: 15px 20px; animation: none; }
         footer { padding: 50px 0 120px; text-align: center; background: #222; color: #fff; }
@@ -158,48 +208,85 @@
         @keyframes pulse-balloon { 0%, 100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.05) rotate(2deg); } }
         @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
 
+        /* =========================================
+           スマホ用レスポンシブ（表示崩れの修正）
+           ========================================= */
         @media (max-width: 600px) {
+            section { padding: 60px 0; }
+            .container { padding: 0 15px; overflow-x: hidden; } /* 横にはみ出さないようにガード */
             .text-huge { font-size: 1.8rem; }
-            .btn { font-size: 1.3rem; }
-            .char-mini, .char-worry, .char-reason, .char-form { width: 40px; height: 40px; }
-            h2 { font-size: 1.6rem; }
-            .radio-group { grid-template-columns: 1fr; }
-            .timing-group { grid-template-columns: repeat(2, 1fr); }
-            .custom-form-wrapper { padding: 25px 20px; }
+            h2 { font-size: 1.5rem; }
+            .btn { font-size: 1.2rem; padding: 15px 20px; width: 100%; box-sizing: border-box; }
+            
+            /* FVのSP調整 */
+            .fv-badge { font-size: 0.9rem; }
+            .fv-catch-sub { font-size: 1rem; }
+            .balloon { font-size: 1.1rem; padding: 10px 15px; border-width: 3px; }
+            .balloon::after { display: none; } /* SPでは吹き出しの尻尾を消してスッキリ */
+            .dummy-char { width: 120px; height: 120px; }
+            .char-area { margin: 20px 0; }
+
+            /* 装飾キャラのSP調整（はみ出し防止） */
+            .char-mini { width: 45px; height: 45px; }
+            .char-worry { top: -30px; right: 0; }
+            .char-reason { top: -20px; left: -10px; }
+            .char-form { top: -20px; right: 0; }
+
+            /* タイムラインのSPレイアウト（縦1列に変更） */
+            .timeline-wrap { padding: 25px 15px; }
+            .timeline-header { display: none; } /* SPではヘッダーを消して各カードにラベルを付ける */
+            .timeline-row { flex-direction: column; align-items: center; gap: 10px; margin-bottom: 30px; padding-top: 30px; }
+            .timeline-row::before { display: none; }
+            .tl-step { top: -10px; width: auto; height: auto; border-radius: 20px; padding: 5px 20px; flex-direction: row; gap: 5px; font-size: 1rem; }
+            .tl-step span { font-size: 1rem; color: #fff; }
+            .tl-box { width: 100%; box-sizing: border-box; font-size: 1rem; padding: 15px; }
+            .tl-other-box::before { content: '▼ 仲介業者の場合'; display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; font-weight: 900; }
+            .tl-good-box::before { content: '★ GOOD売買の場合'; display: block; font-size: 0.8rem; color: var(--accent); margin-bottom: 5px; font-weight: 900; }
+            .tl-good-box::after { display: none; } /* はみ出るバッジを非表示 */
+
+            /* フォームのSPレイアウト */
+            .custom-form-wrapper { padding: 25px 15px; }
+            .radio-group { grid-template-columns: 1fr; } /* 横並びを縦並びに */
+            .timing-group { grid-template-columns: 1fr 1fr; } /* 2列に折りたたみ */
+            .timing-group label:last-child { grid-column: span 2; } /* 奇数個の最後は横幅いっぱい */
         }
     </style>
 </head>
 <body>
 
     <header class="fv">
-        <div class="container js-fade is-active">
-            <p class="fv-top-text">明石市・神戸市・加古川市の不動産買取専門店</p>
+        <div class="container fv-content js-fade is-active">
+            <div class="fv-badge">明石市・神戸市・加古川市密着</div>
+            
             <div class="fv-catch">
-                <div class="text-huge text-red">「いつ売れるの？」</div>
-                <div class="text-huge">「手残りはいくら？」</div>
+                <span class="fv-catch-sub">「いつ売れるの？」「手残りはいくら？」</span>
+                <div class="text-huge" style="margin-top: 10px;">
+                    <span class="highlight-bg">最短7日</span>で<br>スッキリ<span class="text-red">現金化！</span>
+                </div>
             </div>
+
             <div class="char-area">
+                <div class="balloon">不動産のモヤモヤ、<br>私たちが即解決します！</div>
                 <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
                     <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
                     <circle cx="35" cy="50" r="5" fill="#F08200" />
                     <circle cx="65" cy="50" r="5" fill="#F08200" />
                     <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
-                    <text x="50" y="96" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">キャラ</text>
                 </svg>
-                <div class="balloon">その不安、<br>私たちが解決します！</div>
             </div>
-            <p class="text-large" style="margin-top:20px;">最短スピードで現金化！秘密厳守・査定無料</p>
+            
+            <p class="text-large" style="margin-top:10px; font-weight: 900;">秘密厳守・仲介手数料０円</p>
             <div class="btn-wrap">
-                <a href="#contact" class="btn">まずは無料で相談する</a>
+                <a href="#contact" class="btn">まずは無料で査定・相談する</a>
             </div>
         </div>
     </header>
 
     <section class="bg-gray">
-        <div class="container" style="position: relative;">
+        <div class="container">
             <h2 class="js-fade">こんな<span class="text-red">お悩み</span>ありませんか？</h2>
-            <svg class="char-mini char-worry" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <svg class="char-mini char-worry js-fade" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
                 <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
                 <circle cx="35" cy="50" r="5" fill="#027130" />
@@ -207,15 +294,85 @@
                 <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
             </svg>
             <div class="worry-grid">
-                <div class="worry-card js-fade" style="transition-delay: 0.1s;">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</div>
-                <div class="worry-card js-fade" style="transition-delay: 0.2s;">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</div>
-                <div class="worry-card js-fade" style="transition-delay: 0.3s;">不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></div>
-                <div class="worry-card js-fade" style="transition-delay: 0.4s;">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></div>
+                <div class="worry-card js-fade" style="transition-delay: 0.1s;"><span>不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
+                <div class="worry-card js-fade" style="transition-delay: 0.2s;"><span>〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
+                <div class="worry-card js-fade" style="transition-delay: 0.3s;"><span>不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
+                <div class="worry-card js-fade" style="transition-delay: 0.4s;"><span>遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
             </div>
         </div>
     </section>
 
     <section>
+        <div class="container">
+            <h2 class="js-fade">
+                <svg class="char-mini" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin-right:0px;">
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
+                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                    <circle cx="35" cy="50" r="5" fill="#027130" />
+                    <circle cx="65" cy="50" r="5" fill="#027130" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                </svg>
+                他社との比較（依頼から完了まで）
+            </h2>
+            
+            <div class="timeline-wrap js-fade">
+                <div class="timeline-header">
+                    <div class="tl-other-head">一般的な仲介業者</div>
+                    <div class="tl-good-head">GOOD売買（買取）</div>
+                </div>
+
+                <div class="timeline-row js-fade">
+                    <div class="tl-step">STEP<span>1</span></div>
+                    <div class="tl-box tl-other-box">
+                        査定・媒介契約<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">広告や販売活動の準備で時間がかかる。</span>
+                    </div>
+                    <div class="tl-box tl-good-box">
+                        スピード査定・条件提示<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">すぐに買取金額を提示します！</span>
+                    </div>
+                </div>
+
+                <div class="timeline-row js-fade">
+                    <div class="tl-step">STEP<span>2</span></div>
+                    <div class="tl-box tl-other-box">
+                        購入希望者の内覧対応<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">見知らぬ人が家に来る。掃除や立ち会いの手間。</span>
+                    </div>
+                    <div class="tl-box tl-good-box">
+                        内見対応は一切不要！<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">現状のままでOK。ご近所に知られる心配もなし。</span>
+                    </div>
+                </div>
+
+                <div class="timeline-row js-fade">
+                    <div class="tl-step">STEP<span>3</span></div>
+                    <div class="tl-box tl-other-box">
+                        買主探し（数ヶ月〜年単位）<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">いつ売れるか全く不透明。売れ残る不安が続く。</span>
+                    </div>
+                    <div class="tl-box tl-good-box">
+                        即ご契約！<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">買主を探す期間ゼロ。弊社が直接買い取ります。</span>
+                    </div>
+                </div>
+
+                <div class="timeline-row js-fade" style="margin-bottom:0;">
+                    <div class="tl-step" style="background:var(--accent); border-color:var(--accent);"><span>完了</span></div>
+                    <div class="tl-box tl-other-box" style="opacity: 0.7;">
+                        ようやく売却・現金化<br>
+                        <span style="font-size: 0.85rem; font-weight: normal;">さらに【仲介手数料】が差し引かれます。</span>
+                    </div>
+                    <div class="tl-box tl-good-box" style="background: var(--accent); color: #fff; box-shadow: 0 10px 20px rgba(240,130,0,0.3);">
+                        最短即日での現金化<br>
+                        <span style="font-size: 0.85rem; font-weight: normal; color: #fff;">【仲介手数料０円】提示した金額がそのまま手残りに！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray">
         <div class="container">
             <h2 class="js-fade">GOOD売買が選ばれる理由</h2>
             <div class="point-card js-fade">
@@ -237,7 +394,7 @@
         </div>
     </section>
 
-    <section class="bg-gray">
+    <section>
         <div class="container">
             <h2 class="js-fade">GOOD売買の紹介動画</h2>
             <div class="iframe-wrapper video-wrapper js-fade">
@@ -246,36 +403,25 @@
         </div>
     </section>
 
-    <section>
+    <section class="bg-gray">
         <div class="container">
-            <h2 class="js-fade">
-                <svg class="char-mini" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin-right:10px;">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
-                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#027130" />
-                    <circle cx="65" cy="50" r="5" fill="#027130" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
-                </svg>
-                買取強化エリア
-            </h2>
+            <h2 class="js-fade">買取強化エリア</h2>
             <div class="area-tags js-fade">
                 <span class="area-tag">明石市</span><span class="area-tag">神戸市</span><span class="area-tag">加古郡</span><span class="area-tag">加古川市</span><span class="area-tag">高砂市</span>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="bg-gray">
-        <div class="container" style="position: relative;">
+    <section id="contact">
+        <div class="container">
             <h2 class="js-fade">無料査定・ご相談</h2>
-            
-            <svg class="char-mini char-form" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <svg class="char-mini char-form js-fade" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
                 <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
                 <circle cx="35" cy="50" r="5" fill="#F08200" />
                 <circle cx="65" cy="50" r="5" fill="#F08200" />
                 <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
             </svg>
-
             <p class="text-center js-fade" style="font-weight:700; font-size:1.1rem;">
                 下記項目を選択して送信してください。<br>1分で完了します！
             </p>
@@ -297,44 +443,20 @@
                     <div class="form-group">
                         <label class="form-label">売却を検討されているのはどちらですか？ <span class="required">必須</span></label>
                         <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="entry.1230365107" value="マンション" required>
-                                <span class="radio-card-content">マンション</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.1230365107" value="戸建て">
-                                <span class="radio-card-content">戸建て</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.1230365107" value="土地">
-                                <span class="radio-card-content">土地</span>
-                            </label>
+                            <label class="radio-card"><input type="radio" name="entry.2069695861" value="マンション" required><span class="radio-card-content">マンション</span></label>
+                            <label class="radio-card"><input type="radio" name="entry.2069695861" value="戸建て"><span class="radio-card-content">戸建て</span></label>
+                            <label class="radio-card"><input type="radio" name="entry.2069695861" value="土地"><span class="radio-card-content">土地</span></label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">売却予定時期はいつ頃でしょうか？ <span class="required">必須</span></label>
                         <div class="radio-group timing-group">
-                            <label class="radio-card">
-                                <input type="radio" name="entry.557509174" value="すぐに（最短7日）" required>
-                                <span class="radio-card-content">すぐに<br><small>（最短7日）</small></span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.557509174" value="3ヶ月以内">
-                                <span class="radio-card-content">3ヶ月以内</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.557509174" value="半年以内">
-                                <span class="radio-card-content">半年以内</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.557509174" value="１年以内">
-                                <span class="radio-card-content">１年以内</span>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="entry.557509174" value="未定">
-                                <span class="radio-card-content">未定</span>
-                            </label>
+                            <label class="radio-card"><input type="radio" name="entry.903823758" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
+                            <label class="radio-card"><input type="radio" name="entry.903823758" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
+                            <label class="radio-card"><input type="radio" name="entry.903823758" value="半年以内"><span class="radio-card-content">半年以内</span></label>
+                            <label class="radio-card"><input type="radio" name="entry.903823758" value="１年以内"><span class="radio-card-content">１年以内</span></label>
+                            <label class="radio-card"><input type="radio" name="entry.903823758" value="未定"><span class="radio-card-content">未定</span></label>
                         </div>
                     </div>
                     
