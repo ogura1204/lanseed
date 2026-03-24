@@ -7,48 +7,55 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ベース設定 */
+        /* カラーパレット：公式サイトに準拠した誠実なネイビーブルーを基調 */
         :root {
-            --primary: #1e3a8a; /* 濃い青 */
-            --accent: #f97316; /* オレンジ */
-            --bg-light: #f8fafc;
-            --text-main: #334155;
+            --primary: #0A3264;    /* LANSEEDコーポレートブルー（濃紺） */
+            --secondary: #1F64A8;  /* サブカラー（少し明るい青） */
+            --accent: #FF6A00;     /* ボタン等・目を引くオレンジ */
+            --bg-light: #F4F7FB;   /* うっすら青みがかった清潔なグレー */
+            --text-main: #333333;
+            --text-light: #666666;
         }
+
+        /* ベース設定 */
         body {
-            font-family: 'Zen Maru Gothic', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
             color: var(--text-main);
             line-height: 1.8;
             margin: 0;
             padding: 0;
             background-color: #ffffff;
             font-size: 16px;
+            scroll-behavior: smooth;
         }
         img, svg { max-width: 100%; height: auto; }
-        .container { max-width: 768px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 80px 0; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 90px 0; overflow: hidden; }
         .bg-gray { background-color: var(--bg-light); }
         
-        /* タイポグラフィの緩急（マーカー線など） */
+        /* タイポグラフィ */
         .text-huge { font-size: 2.2rem; font-weight: 900; line-height: 1.3; color: var(--primary); }
         .text-large { font-size: 1.5rem; font-weight: 700; }
-        .text-red { color: #dc2626; }
+        .text-red { color: #D32F2F; }
+        .text-center { text-align: center; }
         .marker-yellow {
-            background: linear-gradient(transparent 60%, #fef08a 60%);
-            font-weight: bold;
+            background: linear-gradient(transparent 60%, #FFF59D 60%);
+            font-weight: 700;
         }
 
         /* セクションタイトル */
         h2 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 900;
             color: var(--primary);
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
+            letter-spacing: 0.05em;
         }
         h2::after {
             content: '';
@@ -56,208 +63,169 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 5px;
         }
 
         /* ファーストビュー (FV) */
         .fv {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #E3EAF3 100%);
             text-align: center;
-            padding: 40px 20px 80px;
+            padding: 60px 20px 100px;
             position: relative;
-            overflow: hidden;
+            border-bottom: 5px solid var(--primary);
         }
-        .fv-top-text { font-size: 1.1rem; font-weight: 700; color: #0284c7; margin-bottom: 10px; }
-        .fv-catch { margin: 20px 0 30px; }
-        .fv-sub { font-size: 1.1rem; font-weight: 700; background: #fff; display: inline-block; padding: 10px 20px; border-radius: 30px; color: var(--text-main); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-
+        .fv-top-text { 
+            font-size: 1.2rem; font-weight: 700; color: var(--secondary); 
+            margin-bottom: 15px; letter-spacing: 0.1em;
+        }
+        .fv-catch { margin: 30px 0 40px; }
+        
         /* キャラクターと吹き出し */
         .char-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            gap: 15px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 30px; gap: 20px;
         }
         .balloon {
-            position: relative;
-            background: #ffffff;
-            border: 3px solid var(--accent);
-            padding: 15px 20px;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--accent);
-            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+            position: relative; background: #fff;
+            border: 3px solid var(--primary); padding: 15px 25px;
+            border-radius: 20px; font-size: 1.3rem; font-weight: 900;
+            color: var(--primary); box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            animation: pulse-balloon 2s infinite;
         }
         .balloon::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: -15px;
-            margin-top: -10px;
-            border: 10px solid transparent;
-            border-right: 10px solid #ffffff;
-            z-index: 2;
+            content: ""; position: absolute; top: 50%; left: -16px;
+            margin-top: -12px; border: 12px solid transparent; border-right: 12px solid var(--primary);
         }
         .balloon::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: -19px;
-            margin-top: -12px;
-            border: 12px solid transparent;
-            border-right: 12px solid var(--accent);
-            z-index: 1;
+            content: ""; position: absolute; top: 50%; left: -11px;
+            margin-top: -10px; border: 10px solid transparent; border-right: 10px solid #fff;
         }
 
-        /* ダミーキャラクターの揺れアニメーション */
+        /* SVGキャラクター（高画質・アニメーション付き） */
         .dummy-char {
-            width: 120px;
-            height: 120px;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            width: 140px; height: 140px;
+            animation: float-char 3s ease-in-out infinite;
         }
 
         /* アクションボタン（CTA） */
-        .btn-wrap { text-align: center; margin: 30px 0; }
+        .btn-wrap { text-align: center; margin: 40px 0; }
         .btn {
-            display: inline-block;
-            background: linear-gradient(to bottom, #f97316, #ea580c);
-            color: #ffffff;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            text-decoration: none;
-            box-shadow: 0 6px 0 #c2410c, 0 10px 15px rgba(0,0,0,0.2);
-            transition: all 0.2s;
-            width: 85%;
-            max-width: 400px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: linear-gradient(to bottom, #FF8A00, #FF6A00);
+            color: #ffffff; padding: 20px 40px; border-radius: 50px;
+            font-size: 1.5rem; font-weight: 900; text-decoration: none;
+            box-shadow: 0 8px 0 #CC5500, 0 15px 25px rgba(255, 106, 0, 0.3);
+            transition: all 0.2s; width: 85%; max-width: 450px;
             position: relative;
+            animation: pulse-btn 2.5s infinite;
         }
         .btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 0 0 #c2410c, 0 4px 6px rgba(0,0,0,0.2);
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #CC5500, 0 5px 10px rgba(255, 106, 0, 0.3);
         }
         .btn::after {
-            content: '▶';
-            position: absolute;
-            right: 25px;
-            top: 50%;
+            content: '';
+            position: absolute; right: 25px; top: 50%;
             transform: translateY(-50%);
+            width: 12px; height: 12px;
+            border-top: 3px solid #fff; border-right: 3px solid #fff;
+            transform: translateY(-50%) rotate(45deg);
         }
 
-        /* 悩みセクション（ボックスデザイン） */
-        .worry-box {
-            background: #fff;
-            border: 3px dashed #94a3b8;
-            border-radius: 15px;
-            padding: 30px 20px;
-            margin-top: 30px;
+        /* 悩みセクション（カード型で読みやすく） */
+        .worry-grid {
+            display: grid; grid-template-columns: 1fr; gap: 20px;
+            margin-top: 40px;
         }
-        .worry-item {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-left: 2.5rem;
-            position: relative;
+        .worry-card {
+            background: #fff; padding: 25px 30px; border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary);
+            font-size: 1.2rem; font-weight: 700;
+            display: flex; align-items: center;
         }
-        .worry-item::before {
-            content: '？';
-            position: absolute;
-            left: 0;
-            top: -5px;
-            background: var(--primary);
-            color: #fff;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
+        .worry-card::before {
+            content: '✓'; color: var(--primary); font-size: 1.8rem; margin-right: 15px;
         }
 
         /* 強み・誠実さセクション */
         .point-card {
-            background: #fff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            background: #fff; border-radius: 15px; padding: 40px 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin-bottom: 40px;
+            border-top: 6px solid var(--secondary);
         }
         .honest-box {
-            background-color: #fee2e2;
-            border: 3px solid #ef4444;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
+            background: linear-gradient(135deg, #FFF0F0 0%, #FFE5E5 100%);
+            border: 2px solid #FFCDCD; border-radius: 15px;
+            padding: 40px 30px; margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.1);
         }
-        .honest-box h3 { color: #b91c1c; font-size: 1.4rem; margin-top: 0; text-align: center; font-weight: 900; }
-
-        /* エリア表示 */
-        .area-tags {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .area-tag {
-            background: var(--primary);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
+        .honest-box h3 { color: #D32F2F; font-size: 1.6rem; margin-top: 0; text-align: center; font-weight: 900; }
 
         /* 動画・フォーム埋め込み */
         .iframe-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative; width: 100%; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15); background: #000;
         }
         .video-wrapper { padding-bottom: 56.25%; height: 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
+        /* エリア表示 */
+        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
+        .area-tag {
+            background: #fff; color: var(--primary); padding: 12px 25px;
+            border-radius: 30px; font-weight: 900; font-size: 1.2rem;
+            border: 2px solid var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
         /* 追従ボタン */
         .floating-cta {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 0;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-            z-index: 100;
-            text-align: center;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95); padding: 15px 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 100; text-align: center;
+            transform: translateY(100%); transition: transform 0.5s ease;
         }
-        .floating-cta .btn { margin: 0; width: 90%; font-size: 1.2rem; padding: 15px 20px; }
-        footer { padding: 40px 0 120px; text-align: center; font-size: 0.9rem; background: #1e293b; color: #94a3b8; }
-        footer a { color: #cbd5e1; }
+        .floating-cta.show { transform: translateY(0); }
+        .floating-cta .btn { margin: 0; width: 90%; font-size: 1.3rem; padding: 15px 20px; animation: none; }
+        
+        footer { padding: 50px 0 120px; text-align: center; background: var(--primary); color: #fff; }
+        footer a { color: #fff; text-decoration: underline; }
 
-        /* スマホ向けの微調整 */
+        /* ==== アニメーション関連（スクロールで発火） ==== */
+        .js-fade { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .js-fade.is-active { opacity: 1; transform: translateY(0); }
+        
+        /* CSSキーフレームアニメーション */
+        @keyframes float-char {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes pulse-btn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        @keyframes pulse-balloon {
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.05) rotate(2deg); }
+        }
+
+        /* スマホ向け微調整 */
         @media (max-width: 600px) {
             .text-huge { font-size: 1.8rem; }
-            .balloon { font-size: 1rem; padding: 10px; }
-            .dummy-char { width: 90px; height: 90px; }
-            .btn { font-size: 1.2rem; }
+            .balloon { font-size: 1.1rem; padding: 10px 15px; }
+            .dummy-char { width: 110px; height: 110px; }
+            .btn { font-size: 1.3rem; }
+            .worry-card { font-size: 1.1rem; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
     <header class="fv">
-        <div class="container">
+        <div class="container js-fade is-active">
             <p class="fv-top-text">明石市・神戸市・加古川市の不動産買取専門店</p>
             
             <div class="fv-catch">
@@ -267,48 +235,50 @@
 
             <div class="char-area">
                 <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#f97316" />
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#0A3264" />
                     <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#ffffff" />
-                    <circle cx="65" cy="50" r="5" fill="#ffffff" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#ffffff" stroke-width="3" fill="transparent" />
-                    <text x="50" y="95" font-size="10" fill="#1e3a8a" text-anchor="middle" font-weight="bold">ダミー</text>
+                    <circle cx="35" cy="50" r="5" fill="#FF6A00" />
+                    <circle cx="65" cy="50" r="5" fill="#FF6A00" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#FF6A00" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                    <text x="50" y="96" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">キャラ</text>
                 </svg>
                 
                 <div class="balloon">
-                    その不安、<br>即解決します！
+                    その不安、<br>私たちが解決します！
                 </div>
             </div>
             
-            <p class="fv-sub">最短〇日で現金化！秘密厳守・査定無料</p>
+            <p class="text-large" style="margin-top:20px;">最短スピードで現金化！秘密厳守・査定無料</p>
 
             <div class="btn-wrap">
-                <a href="#contact" class="btn">今すぐ無料で相談する</a>
+                <a href="#contact" class="btn">まずは無料で相談する</a>
             </div>
         </div>
     </header>
 
-    <section class="container">
-        <h2>こんな<span class="text-red">お悩み</span>ありませんか？</h2>
-        <div class="worry-box">
-            <div class="worry-item">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</div>
-            <div class="worry-item">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</div>
-            <div class="worry-item">不動産屋の「高く売れますよ」が<span class="marker-yellow">本当か疑わしい</span></div>
-            <div class="worry-item">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></div>
+    <section class="bg-gray">
+        <div class="container">
+            <h2 class="js-fade">こんな<span class="text-red">お悩み</span>ありませんか？</h2>
+            <div class="worry-grid">
+                <div class="worry-card js-fade" style="transition-delay: 0.1s;">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</div>
+                <div class="worry-card js-fade" style="transition-delay: 0.2s;">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</div>
+                <div class="worry-card js-fade" style="transition-delay: 0.3s;">不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></div>
+                <div class="worry-card js-fade" style="transition-delay: 0.4s;">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></div>
+            </div>
         </div>
     </section>
 
-    <section class="bg-gray">
+    <section>
         <div class="container">
-            <h2>GOOD売買が選ばれる理由</h2>
+            <h2 class="js-fade">GOOD売買が選ばれる理由</h2>
             
-            <div class="point-card">
-                <p class="text-large text-red" style="text-align:center; margin-top:0;">契約欲しさの「囲い込み」はしません！</p>
+            <div class="point-card js-fade">
+                <p class="text-large text-red text-center" style="margin-top:0;">契約欲しさの「囲い込み」はしません！</p>
                 <p>一部の悪質な仲介業者は、契約をとるためにわざと高い査定額を出し、後から値下げを要求することがあります。</p>
-                <p>弊社は<strong>「買取専門店」</strong>。提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。</p>
+                <p>弊社は<strong>「買取専門店」</strong>。提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
             </div>
 
-            <div class="honest-box">
+            <div class="honest-box js-fade">
                 <h3>【正直にお伝えします】<br>デメリットについて</h3>
                 <p>仲介で一般の方に売却する金額よりは、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実であり、デメリットです。</p>
                 <p>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金が手に入る」</strong>という確実な安心感をお約束します。少しでもお喜びいただけるよう、精一杯の条件を提示できるよう頑張ります！</p>
@@ -316,51 +286,86 @@
         </div>
     </section>
 
-    <section class="container">
-        <h2>買取強化エリア</h2>
-        <p style="text-align: center; font-weight:bold;">兵庫県全域の不動産に対応！<br>以下のエリアは特に力を入れています。</p>
-        <div class="area-tags">
-            <span class="area-tag">明石市</span>
-            <span class="area-tag">神戸市</span>
-            <span class="area-tag">加古郡</span>
-            <span class="area-tag">加古川市</span>
-            <span class="area-tag">高砂市</span>
-        </div>
-    </section>
-
     <section class="bg-gray">
         <div class="container">
-            <h2>GOOD売買の紹介動画</h2>
-            <div class="iframe-wrapper video-wrapper">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <h2 class="js-fade">GOOD売買の紹介動画</h2>
+            <p class="text-center js-fade" style="margin-bottom: 30px; font-weight: 700;">弊社の取り組みを1分でわかりやすく解説しています！</p>
+            <div class="iframe-wrapper video-wrapper js-fade">
+                <iframe src="https://www.youtube.com/embed/2fFRqJS0dsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="container">
-        <h2>無料査定・ご相談フォーム</h2>
-        <p style="text-align: center; margin-bottom: 30px; font-weight:bold;">
-            「まずは金額だけ知りたい」でも大歓迎です。<br>下記よりお気軽にお送りください！
-        </p>
-        
-        <div class="iframe-wrapper" style="background:#f8fafc; border: 2px solid #e2e8f0;">
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-dummy-form-id/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <section>
+        <div class="container">
+            <h2 class="js-fade">買取強化エリア</h2>
+            <p class="text-center js-fade" style="font-weight:700; font-size:1.1rem;">兵庫県全域の不動産に対応！<br>以下のエリアは特に力を入れています。</p>
+            <div class="area-tags js-fade">
+                <span class="area-tag">明石市</span>
+                <span class="area-tag">神戸市</span>
+                <span class="area-tag">加古郡</span>
+                <span class="area-tag">加古川市</span>
+                <span class="area-tag">高砂市</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-gray">
+        <div class="container">
+            <h2 class="js-fade">無料査定・ご相談フォーム</h2>
+            <p class="text-center js-fade" style="margin-bottom: 40px; font-weight:700; font-size:1.1rem;">
+                「まずは金額だけ知りたい」でも大歓迎です。<br>下記よりお気軽にお送りください！
+            </p>
+            
+            <div class="iframe-wrapper js-fade" style="background:#fff; border: 1px solid #ddd;">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-dummy-form-id/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p><strong>株式会社LANSEED</strong></p>
+            <p style="font-size: 1.3rem; font-weight: 900; margin-bottom: 15px;">株式会社LANSEED</p>
             <p>〒651-2133 兵庫県神戸市西区枝吉一丁目13番<br>
             営業時間：9:30〜19:30（定休：水曜・第2第4火曜）</p>
-            <p><a href="https://www.lanseed.co.jp/" target="_blank">コーポレートサイト</a></p>
-            <p style="margin-top:20px;"><small>&copy; 2026 LANSEED Co., Ltd.</small></p>
+            <p><a href="https://www.lanseed.co.jp/" target="_blank">コーポレートサイトはこちら</a></p>
+            <p style="margin-top:30px; font-size: 0.8rem; color: #a0b2c6;"><small>&copy; 2026 LANSEED Co., Ltd.</small></p>
         </div>
     </footer>
 
-    <div class="floating-cta">
+    <div class="floating-cta" id="floating-btn">
         <a href="#contact" class="btn">今すぐ無料で相談する</a>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // スクロールフェードインのアニメーション
+            const fadeElements = document.querySelectorAll('.js-fade');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-active');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // 要素が15%見えたら発火
+            });
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // スクロール時の追従ボタンの表示/非表示
+            const floatBtn = document.getElementById('floating-btn');
+            window.addEventListener('scroll', () => {
+                // 少しスクロールしたらボタンを表示
+                if (window.scrollY > 300) {
+                    floatBtn.classList.add('show');
+                } else {
+                    floatBtn.classList.remove('show');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
