@@ -14,10 +14,10 @@
            公式サイト（https://www.lanseed.co.jp/）より抽出したカラーコード
            ==================================================== */
         :root {
-            --primary: #003a75;     /* 公式サイトのメインネイビー */
-            --secondary: #0056b3;   /* グラデーションやホバー用の調整ブルー */
-            --accent: #d32f2f;      /* 公式サイトの強調/アクセントカラー（赤系） */
-            --accent-btn: #e65100;  /* コンバージョンボタン用の目立つオレンジ */
+            --primary: #027130;     /* サブカラー：深緑 */
+            --secondary: #FAFAFA;   /* メインカラー：ほぼ白 */
+            --accent: #F08200;      /* アクセントカラー：オレンジ */
+            --accent-btn: #F08200;  /* コンバージョンボタン用のオレンジ */
             --bg-light: #f8f9fa;    /* 公式サイトのセクション背景のオフホワイト */
             --text-main: #333333;   /* 基本のテキストカラー */
             --text-light: #666666;
@@ -30,7 +30,7 @@
             line-height: 1.8;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
+            background-color: var(--secondary); /* メインカラーを全体背景に */
             font-size: 16px;
             scroll-behavior: smooth;
         }
@@ -59,6 +59,10 @@
             position: relative;
             padding-bottom: 20px;
             letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
         h2::after {
             content: '';
@@ -68,20 +72,20 @@
             transform: translateX(-50%);
             width: 80px;
             height: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(to right, var(--primary), var(--accent));
             border-radius: 5px;
         }
 
         /* ファーストビュー (FV) */
         .fv {
-            background: linear-gradient(135deg, #ffffff 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--bg-light) 100%);
             text-align: center;
             padding: 60px 20px 100px;
             position: relative;
             border-bottom: 5px solid var(--primary);
         }
         .fv-top-text { 
-            font-size: 1.2rem; font-weight: 700; color: var(--secondary); 
+            font-size: 1.2rem; font-weight: 700; color: var(--primary); 
             margin-bottom: 15px; letter-spacing: 0.1em;
         }
         .fv-catch { margin: 30px 0 40px; }
@@ -107,27 +111,51 @@
             margin-top: -10px; border: 10px solid transparent; border-right: 10px solid #fff;
         }
 
-        /* SVGキャラクター（高画質・アニメーション付き・色味同期） */
+        /* SVGキャラクター（高画質・アニメーション付き・色味同期・随所配置用） */
         .dummy-char {
             width: 140px; height: 140px;
             animation: float-char 3s ease-in-out infinite;
+        }
+        .char-mini {
+            width: 60px; height: 60px;
+        }
+        .char-worry {
+            width: 80px; height: 80px;
+            position: absolute;
+            top: -50px;
+            right: 0px;
+            animation: float-char 3.5s ease-in-out infinite;
+        }
+        .char-reason {
+            width: 90px; height: 90px;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            animation: float-char 3.2s ease-in-out infinite;
+        }
+        .char-form {
+            width: 70px; height: 70px;
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            animation: float-char 3.8s ease-in-out infinite;
         }
 
         /* アクションボタン（CTA） */
         .btn-wrap { text-align: center; margin: 40px 0; }
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
-            background: linear-gradient(to bottom, #ff9800, var(--accent-btn));
+            background: linear-gradient(to bottom, #ffb74d, var(--accent-btn));
             color: #ffffff; padding: 20px 40px; border-radius: 50px;
             font-size: 1.5rem; font-weight: 900; text-decoration: none;
-            box-shadow: 0 8px 0 #b23c00, 0 15px 25px rgba(230, 81, 0, 0.3);
+            box-shadow: 0 8px 0 #b23c00, 0 15px 25px rgba(240, 130, 0, 0.3);
             transition: all 0.2s; width: 85%; max-width: 450px;
             position: relative;
             animation: pulse-btn 2.5s infinite;
         }
         .btn:active {
             transform: translateY(8px);
-            box-shadow: 0 0 0 #b23c00, 0 5px 10px rgba(230, 81, 0, 0.3);
+            box-shadow: 0 0 0 #b23c00, 0 5px 10px rgba(240, 130, 0, 0.3);
         }
         .btn::after {
             content: '';
@@ -158,13 +186,14 @@
         .point-card {
             background: #fff; border-radius: 15px; padding: 40px 30px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.08); margin-bottom: 40px;
-            border-top: 6px solid var(--secondary);
+            border-top: 6px solid var(--primary);
         }
         .honest-box {
-            background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
-            border: 2px solid #ffcaca; border-radius: 15px;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ffcc80; border-radius: 15px;
             padding: 40px 30px; margin-top: 40px;
-            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.08);
+            box-shadow: 0 10px 20px rgba(240, 130, 0, 0.08);
+            position: relative;
         }
         .honest-box h3 { color: var(--accent); font-size: 1.6rem; margin-top: 0; text-align: center; font-weight: 900; }
 
@@ -222,6 +251,8 @@
             .dummy-char { width: 110px; height: 110px; }
             .btn { font-size: 1.3rem; }
             .worry-card { font-size: 1.1rem; padding: 20px; }
+            .char-mini, .char-worry, .char-reason, .char-form { width: 40px; height: 40px; }
+            h2 { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -238,11 +269,11 @@
 
             <div class="char-area">
                 <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#003a75" />
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
                     <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#e65100" />
-                    <circle cx="65" cy="50" r="5" fill="#e65100" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#e65100" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                    <circle cx="35" cy="50" r="5" fill="#F08200" />
+                    <circle cx="65" cy="50" r="5" fill="#F08200" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
                     <text x="50" y="96" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">キャラ</text>
                 </svg>
                 
@@ -260,8 +291,17 @@
     </header>
 
     <section class="bg-gray">
-        <div class="container">
+        <div class="container" style="position: relative;">
             <h2 class="js-fade">こんな<span class="text-red">お悩み</span>ありませんか？</h2>
+            
+            <svg class="char-mini char-worry" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
+                <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                <circle cx="35" cy="50" r="5" fill="#027130" />
+                <circle cx="65" cy="50" r="5" fill="#027130" />
+                <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
+            </svg>
+
             <div class="worry-grid">
                 <div class="worry-card js-fade" style="transition-delay: 0.1s;">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</div>
                 <div class="worry-card js-fade" style="transition-delay: 0.2s;">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</div>
@@ -282,6 +322,14 @@
             </div>
 
             <div class="honest-box js-fade">
+                <svg class="char-mini char-reason" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
+                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                    <circle cx="35" cy="50" r="5" fill="#F08200" />
+                    <circle cx="65" cy="50" r="5" fill="#F08200" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                </svg>
+
                 <h3>【正直にお伝えします】<br>デメリットについて</h3>
                 <p>仲介で一般の方に売却する金額よりは、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実であり、デメリットです。</p>
                 <p>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金が手に入る」</strong>という確実な安心感をお約束します。少しでもお喜びいただけるよう、精一杯の条件を提示できるよう頑張ります！</p>
@@ -302,7 +350,16 @@
 
     <section>
         <div class="container">
-            <h2 class="js-fade">買取強化エリア</h2>
+            <h2 class="js-fade">
+                <svg class="char-mini" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
+                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                    <circle cx="35" cy="50" r="5" fill="#027130" />
+                    <circle cx="65" cy="50" r="5" fill="#027130" />
+                    <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                </svg>
+                買取強化エリア
+            </h2>
             <p class="text-center js-fade" style="font-weight:700; font-size:1.1rem;">兵庫県全域の不動産に対応！<br>以下のエリアは特に力を入れています。</p>
             <div class="area-tags js-fade">
                 <span class="area-tag">明石市</span>
@@ -315,8 +372,19 @@
     </section>
 
     <section id="contact" class="bg-gray">
-        <div class="container">
-            <h2 class="js-fade">無料査定・ご相談フォーム</h2>
+        <div class="container" style="position: relative;">
+            <h2 class="js-fade">
+                無料査定・ご相談フォーム
+            </h2>
+            
+            <svg class="char-mini char-form" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
+                <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                <circle cx="35" cy="50" r="5" fill="#F08200" />
+                <circle cx="65" cy="50" r="5" fill="#F08200" />
+                <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
+            </svg>
+
             <p class="text-center js-fade" style="margin-bottom: 40px; font-weight:700; font-size:1.1rem;">
                 「まずは金額だけ知りたい」でも大歓迎です。<br>下記よりお気軽にお送りください！
             </p>
