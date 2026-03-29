@@ -23,7 +23,7 @@
             --border-color: #E2E8F0;
         }
 
-        /* 横揺れ防止の徹底（bodyのみに適用し、内部の固定要素を阻害しない） */
+        /* 横揺れ防止 */
         html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; position: relative; }
 
         body {
@@ -56,7 +56,6 @@
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
-            /* ★修正：overflow-x: hidden を削除したことでPCの左固定が機能します */
         }
 
         /* -----------------------------------------
@@ -212,10 +211,10 @@
         .form-wrapper { max-width: 760px; margin: 0 auto; background: var(--secondary); padding: 60px; border-radius: 40px; border: 1px solid var(--border-color); position: relative; }
         .form-group { margin-bottom: 40px; }
         
-        /* ★修正：必須バッジの改行を防ぐためフレックスボックス化 */
-        .form-label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
-        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
-        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+        /* ★修正：必須バッジの改行を防ぐ指定 */
+        .form-label { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
+        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
         
         .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .timing-group { grid-template-columns: repeat(5, 1fr); }
@@ -260,7 +259,7 @@
            ========================================= */
         @media (max-width: 900px) {
             .wrapper { flex-direction: column; padding: 0; }
-            .sidebar { display: none; }
+            .sidebar { display: none; } /* SPでは左メニューを隠す */
             
             /* SP専用トップヘッダー */
             .sp-header {
@@ -286,7 +285,7 @@
             .badge { padding: 10px 15px; font-size: 0.8rem; }
             .hero-img-large { padding: 40px 15px; border-radius: 30px; background-color: var(--bg-white); }
             
-            /* キャラクター位置調整 */
+            /* キャラクターのはみ出し修正 */
             .char-mini { width: 55px; }
             .char-worry { right: 5px; top: -25px; }
             .char-reason { left: 5px; top: -25px; }
@@ -298,29 +297,28 @@
             .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
             .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
             
-            /* フォームはみ出し防止 */
-            .form-wrapper { padding: 40px 20px; border-radius: 24px; width: 100%; box-sizing: border-box; }
-            .radio-group { grid-template-columns: 1fr; }
-            .timing-group { grid-template-columns: 1fr 1fr; }
+            /* -------------------------------------
+               ★SP フォーム周り（枠はみ出し・改行の修正）
+               ------------------------------------- */
+            .form-wrapper { padding: 40px 20px; border-radius: 24px; width: 100%; box-sizing: border-box; overflow: hidden; }
+            .form-label { font-size: 1rem; flex-wrap: wrap; /* SPのみ折り返しを許可して枠内に収める */ }
+            
+            .radio-group { grid-template-columns: 1fr; gap: 10px; }
+            .timing-group { grid-template-columns: 1fr 1fr; gap: 10px; }
             .timing-group label:last-child { grid-column: span 2; }
-            .radio-card-content { padding: 15px 5px; font-size: 0.9rem; } /* 余白を詰めて改行防止 */
+
+            .radio-card-content { padding: 15px 5px; font-size: 0.85rem; }
+            .btn-submit { padding: 20px; font-size: 1.2rem; }
 
             /* -------------------------------------
                ★SP用：横スクロール比較（はみ出し・横揺れ完全解消）
                ------------------------------------- */
             .pc-timeline { display: none; }
-            .sp-timeline {
-                display: block;
-                /* ネガティブマージンで親のpaddingを相殺し、画面幅ピッタリにする */
-                margin-left: -15px;
-                margin-right: -15px;
-            }
+            .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; }
 
             .horizontal-scroll-container {
-                padding: 0 15px 20px 15px;
-                width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+                padding: 0 15px 20px 15px; width: 100%; box-sizing: border-box;
+                overflow-x: auto; -webkit-overflow-scrolling: touch;
             }
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
@@ -329,7 +327,7 @@
                 grid-template-columns: 100px repeat(4, 200px);
                 grid-template-rows: 1fr auto 1fr;
                 gap: 15px 12px;
-                width: max-content; /* 中身のサイズに合わせてコンテナを広げる */
+                width: max-content; /* ★これを指定することでスクロールエリアが正しく機能します */
                 background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
             }
 
@@ -351,14 +349,11 @@
             .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 6px 16px; }
 
             /* -------------------------------------
-               ★追加要件：SP用 フッター
+               SP用 フッター
                ------------------------------------- */
             .sp-footer {
-                display: block;
-                text-align: center;
-                padding: 60px 20px;
-                margin-top: 40px;
-                border-top: 1px solid var(--border-color);
+                display: block; text-align: center; padding: 60px 20px;
+                margin-top: 40px; border-top: 1px solid var(--border-color);
             }
             .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1.1rem; text-decoration: none; }
             .sp-footer p { font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; }
@@ -395,7 +390,7 @@
                 <div class="sidebar-logo">GOOD売買</div>
                 
                 <div class="sidebar-ill">
-                    <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2001.png" alt="ランシードくん">
+                    <img src="char_01.png" alt="ランシードくん">
                 </div>
                 
                 <p class="sidebar-catch">明石・神戸・加古川の<br>不動産買取専門店</p>
@@ -423,7 +418,7 @@
                 </div>
 
                 <div class="hero-img-large js-fade is-active">
-                    <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2002.png" alt="ランシードくん" class="hero-char">
+                    <img src="char_02.png" alt="ランシードくん" class="hero-char">
                     <p style="font-weight: 900; font-size: 1.3rem; color: var(--primary); margin:0;">私たちにお任せください！</p>
                 </div>
                 
@@ -440,7 +435,7 @@
                 </div>
 
                 <div class="worry-list">
-                    <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2003.png" alt="ランシードくん" class="char-mini char-worry js-fade">
+                    <img src="char_03.png" alt="ランシードくん" class="char-mini char-worry js-fade">
                     
                     <div class="worry-item js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span class="worry-text">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
                     <div class="worry-item js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span class="worry-text">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
@@ -526,7 +521,7 @@
                 </div>
                 
                 <div class="honest-box js-fade">
-                    <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2005%20%E4%BF%AE%E6%AD%A3.png" alt="ランシードくん" class="char-mini char-reason">
+                    <img src="char_05.png" alt="ランシードくん" class="char-mini char-reason">
                     
                     <h3>【正直にお伝えします】デメリットについて</h3>
                     <p>仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
@@ -561,7 +556,7 @@
                 </div>
                 
                 <div class="form-wrapper js-fade">
-                    <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2001.png" alt="ランシードくん" class="char-mini char-form">
+                    <img src="char_01.png" alt="ランシードくん" class="char-mini char-form">
                     
                     <script>
                         var submitted = false;
@@ -597,7 +592,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">備考 <span class="optional">任意</span></label>
+                            <label class="form-label" style="flex-wrap: nowrap;">備考 <span class="optional">任意</span></label>
                             <textarea name="entry.946392948" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
                         </div>
                         
