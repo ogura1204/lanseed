@@ -23,10 +23,10 @@
             --border-color: #E2E8F0;
         }
 
-        /* ★横揺れ防止（bodyにのみ指定し、stickyを阻害しない） */
-        html, body { width: 100%; margin: 0; padding: 0; }
+        /* 横揺れ防止の徹底 */
+        html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; position: relative; }
+
         body {
-            overflow-x: hidden;
             background-color: var(--secondary);
             color: var(--text-main);
             font-family: 'Noto Sans JP', "Helvetica Neue", Arial, sans-serif;
@@ -53,19 +53,19 @@
            ========================================= */
         .wrapper {
             display: flex;
-            align-items: flex-start; /* ★重要：stickyを効かせるための指定 */
+            align-items: flex-start; 
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
         }
 
         /* -----------------------------------------
-           左側：サイドバー（★スクロールでピタッと固定）
+           左側：サイドバー（★スクロールしても完全に固定）
            ----------------------------------------- */
         .sidebar {
             width: 320px;
-            height: 100vh;
-            position: sticky; /* ★固定指定 */
+            height: 100vh; /* 画面の高さに固定 */
+            position: sticky; /* スクロールに追従して固定される */
             top: 0;
             display: flex;
             flex-direction: column;
@@ -97,7 +97,7 @@
         .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
 
         /* -----------------------------------------
-           右側：メインコンテンツ（ここだけがスクロールする）
+           右側：メインコンテンツ
            ----------------------------------------- */
         .main-content {
             flex: 1;
@@ -122,17 +122,21 @@
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
         .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
         
-        /* ★修正：動画がはみ出さないように設定 */
+        /* ★修正：動画ラッパーとビデオタグの制御 */
         .hero-video-wrapper {
             width: 100%; max-width: 800px; margin: 0 auto 50px;
             border-radius: 30px; overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             background-color: #000;
+            display: flex; justify-content: center; align-items: center;
         }
         .hero-video-wrapper video {
             width: 100%; max-width: 100%; height: auto;
-            display: block; object-fit: cover;
+            display: block; object-fit: contain; /* はみ出しをカットして確実に収める */
         }
+        
+        .hero-char { width: clamp(140px, 20vw, 180px); height: auto; animation: float-char 3s ease-in-out infinite; margin-bottom: 30px; }
+        @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         .hero-text { font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 700; line-height: 2; margin-bottom: 40px; }
 
@@ -152,7 +156,6 @@
         
         .char-mini { width: clamp(50px, 10vw, 70px); height: auto; flex-shrink: 0; position: absolute; z-index: 2; }
         .char-worry { top: -40px; right: -30px; animation: float-char 3.5s ease-in-out infinite; }
-        @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* =========================================
            他社比較 (Difference) セクション
@@ -286,9 +289,13 @@
             .dl-badges { gap: 10px; margin-bottom: 30px; }
             .badge { padding: 10px 15px; font-size: 0.8rem; }
             
-            /* ★修正：SPでの動画枠のはみ出しを防ぐ */
-            .hero-video-wrapper { padding: 0; border-radius: 20px; width: 100%; max-width: 100%; box-sizing: border-box; }
-            
+            /* ★修正：SP動画の大きさを90%程度に縮小し、確実にはみ出させない */
+            .hero-video-wrapper { 
+                width: 90%; max-width: 100%; margin: 0 auto 30px; 
+                border-radius: 20px; box-sizing: border-box; overflow: hidden;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
             .char-mini { width: 55px; }
             .char-worry { right: 5px; top: -25px; }
             .char-reason { left: 5px; top: -25px; }
@@ -302,13 +309,13 @@
             
             .form-wrapper { padding: 40px 15px; border-radius: 24px; width: 100%; box-sizing: border-box; }
             .form-label { font-size: 1rem; flex-wrap: wrap; }
-            .radio-group { grid-template-columns: 1fr; gap: 10px; }
-            .timing-group { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .radio-group { grid-template-columns: 1fr; }
+            .timing-group { grid-template-columns: 1fr 1fr; }
             .timing-group label:last-child { grid-column: span 2; }
-            .radio-card-content { padding: 15px 5px; font-size: 0.85rem; }
+            .radio-card-content { padding: 15px 5px; font-size: 0.9rem; }
 
             /* -------------------------------------
-               SP用：横スクロール比較（ズレ完全解消版）
+               SP用：横スクロール比較
                ------------------------------------- */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; }
@@ -322,31 +329,15 @@
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
             .sp-tl-track {
-                display: flex;
-                gap: 15px;
-                position: relative;
-                width: max-content;
-                background: #fff;
-                border-radius: 24px;
-                padding: 20px;
-                border: 1px solid var(--border-color);
+                display: flex; gap: 15px; position: relative;
+                width: max-content; background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
             }
-
-            /* 中央の線（中段の中心を通る） */
-            .sp-tl-line {
-                position: absolute;
-                top: 50%; left: 110px; right: 20px; height: 2px;
-                background-color: var(--border-color);
-                transform: translateY(-50%);
-                z-index: 1;
-            }
+            .sp-tl-line { position: absolute; top: 50%; left: 110px; right: 20px; height: 2px; background-color: var(--border-color); transform: translateY(-50%); z-index: 1; }
 
             .sp-tl-col { display: flex; flex-direction: column; gap: 15px; width: 200px; flex-shrink: 0; }
             .label-col { width: 90px; }
 
-            .sp-tl-top, .sp-tl-bottom {
-                flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            }
+            .sp-tl-top, .sp-tl-bottom { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 
             .g-lbl-other { color: var(--text-muted); border-bottom: 2px solid var(--border-color); font-weight: 900; font-size: 0.85rem; padding-bottom: 10px; justify-content: flex-end; }
             .g-lbl-good { color: var(--primary); border-bottom: 2px solid var(--primary); font-weight: 900; font-size: 0.85rem; padding-bottom: 10px; justify-content: flex-start; }
@@ -363,15 +354,8 @@
             .box-title { display: block; }
             .sp-tl-col .tl-note { font-size: 0.75rem; margin-top: 5px; font-weight: normal; }
 
-            /* 中段（時間バッジ） */
-            .sp-tl-mid {
-                height: 40px; display: flex; align-items: center; justify-content: center;
-                position: relative; z-index: 2;
-            }
-            .grid-time {
-                background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
-                padding: 4px 16px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; white-space: nowrap;
-            }
+            .sp-tl-mid { height: 40px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+            .grid-time { background: #fff; border: 2px solid var(--border-color); color: var(--text-muted); padding: 4px 16px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; white-space: nowrap; }
             .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 6px 18px; }
 
             /* -------------------------------------
@@ -591,6 +575,16 @@
                     
                     <h3>【正直にお伝えします】デメリットについて</h3>
                     <p>仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
+                </div>
+            </section>
+
+            <section class="movie">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">MOVIE</span>
+                    <h2 class="sec-ja">1分でわかる弊社の取り組み</h2>
+                </div>
+                <div class="iframe-wrapper video-wrapper js-fade">
+                    <iframe src="https://www.youtube.com/embed/2fFRqJS0dsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </section>
 
