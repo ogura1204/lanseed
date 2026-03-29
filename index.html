@@ -23,13 +23,13 @@
             --border-color: #E2E8F0;
         }
 
-        /* 横揺れ防止：clipを使用することでsticky（固定）を無効化せずに横はみ出しを防ぐ */
         html, body { 
             width: 100%; 
-            max-width: 100vw; 
+            max-width: 100%; 
             margin: 0; 
             padding: 0; 
-            overflow-x: clip; 
+            overflow-x: hidden; 
+            -webkit-text-size-adjust: 100%; 
         }
 
         body {
@@ -40,8 +40,7 @@
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
-            overflow-wrap: break-word;
-            word-break: normal; 
+            overflow-wrap: break-word; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,6 +62,7 @@
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
+            position: relative; 
         }
 
         /* -----------------------------------------
@@ -112,6 +112,7 @@
             padding: 100px 8%;
             min-width: 0;
             box-shadow: -15px 0 40px rgba(0,0,0,0.03);
+            position: relative;
         }
 
         section { margin-bottom: 140px; }
@@ -123,7 +124,7 @@
            Hero セクション
            ========================================= */
         .hero { text-align: center; padding-top: 20px; }
-        .hero-title { font-size: clamp(2.4rem, 6vw, 3.8rem); font-weight: 900; line-height: 1.3; margin-bottom: 40px; color: var(--primary); letter-spacing: -0.02em; word-break: keep-all; overflow-wrap: break-word; }
+        .hero-title { font-size: clamp(2.4rem, 6vw, 3.8rem); font-weight: 900; line-height: 1.3; margin-bottom: 40px; color: var(--primary); letter-spacing: -0.02em; word-break: break-all; }
         
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
         .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
@@ -251,7 +252,7 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆フッター＆追従ボタン
+           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
            ========================================= */
         .sp-header, .sp-footer, .sp-floating-cta { display: none; }
 
@@ -262,6 +263,8 @@
            Responsive (SP - 1カラム)
            ========================================= */
         @media (max-width: 900px) {
+            html, body { overflow-x: hidden; }
+            
             .wrapper { flex-direction: column; padding: 0; max-width: 100%; overflow-x: hidden; }
             .sidebar { display: none; }
             
@@ -277,7 +280,7 @@
 
             .main-content {
                 border-radius: 0;
-                padding: 20px 15px 120px;
+                padding: 20px 15px 120px; 
                 box-shadow: none;
                 background-color: var(--secondary);
                 max-width: 100%; 
@@ -304,6 +307,8 @@
 
             .reason-box, .honest-box { padding: 30px 15px; border-radius: 20px; }
             .reason-box p.text-red { font-size: 1.15rem; line-height: 1.4; }
+            .reason-box p, .honest-box p { font-size: 0.95rem; }
+            .honest-box h3 { font-size: 1.15rem; }
             
             .form-wrapper { padding: 30px 15px; border-radius: 20px; width: 100%; box-sizing: border-box; }
             .form-label { font-size: 0.95rem; flex-wrap: wrap; }
@@ -335,7 +340,6 @@
                 background: #fff; border-radius: 20px; padding: 15px; border: 1px solid var(--border-color);
             }
 
-            /* ★修正：ラベルの下線を削除 */
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: none; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-weight: 900; font-size: 0.8rem; text-align: center; }
             .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: none; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px; font-weight: 900; font-size: 0.8rem; text-align: center; }
 
@@ -411,7 +415,6 @@
             <div class="sidebar-bottom">
                 <ul class="footer-nav">
                     <li><a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a></li>
-                    <li><a href="#contact">お問い合わせ</a></li>
                 </ul>
                 <p class="copyright">&copy; 2026 LANSEED Co., Ltd.</p>
             </div>
@@ -496,7 +499,7 @@
                     
                     <div class="horizontal-scroll-container">
                         <div class="tl-grid">
-                            <div class="g-lbl-other">一般的な<br>仲介</div>
+                            <div class="g-lbl-other">一般的な仲介</div>
                             <div class="g-lbl-good">GOOD売買</div>
                             
                             <div class="g-axis-line-container"></div>
