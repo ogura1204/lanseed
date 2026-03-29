@@ -23,12 +23,11 @@
             --border-color: #E2E8F0;
         }
 
+        /* ★修正：PC表示で左固定(sticky)を効かせるため、ここにあった overflow-x: hidden を撤廃 */
         html, body { 
             width: 100%; 
-            max-width: 100%; 
             margin: 0; 
             padding: 0; 
-            overflow-x: hidden; 
             -webkit-text-size-adjust: 100%; 
         }
 
@@ -40,7 +39,7 @@
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
-            overflow-wrap: break-word; 
+            overflow-wrap: break-word;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -58,7 +57,7 @@
            ========================================= */
         .wrapper {
             display: flex;
-            align-items: flex-start; 
+            align-items: flex-start; /* ★左メニューを固定（sticky）するために必須 */
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
@@ -66,12 +65,13 @@
         }
 
         /* -----------------------------------------
-           左側：サイドバー（スクロールしても画面内に固定）
+           左側：サイドバー（★スクロールしても画面内に完全に固定される）
            ----------------------------------------- */
         .sidebar {
             width: 320px;
             height: 100vh;
-            position: sticky; 
+            position: -webkit-sticky; /* Safari対応 */
+            position: sticky; /* ★スクロール追従固定 */
             top: 0;
             display: flex;
             flex-direction: column;
@@ -129,7 +129,6 @@
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
         .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
         
-        /* 動画のスタイル */
         .hero-video-wrapper {
             width: 100%; max-width: 800px; margin: 0 auto 50px;
             border-radius: 30px; overflow: hidden;
@@ -263,7 +262,8 @@
            Responsive (SP - 1カラム)
            ========================================= */
         @media (max-width: 900px) {
-            html, body { overflow-x: hidden; }
+            /* ★SP時のみ横揺れを防止する設定を適用 */
+            html, body { overflow-x: hidden; max-width: 100vw; }
             
             .wrapper { flex-direction: column; padding: 0; max-width: 100%; overflow-x: hidden; }
             .sidebar { display: none; }
