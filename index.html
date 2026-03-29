@@ -23,7 +23,7 @@
             --border-color: #E2E8F0;
         }
 
-        /* 横揺れ・はみ出し防止の徹底 */
+        /* 横揺れ防止の徹底（bodyのみに適用し、内部の固定要素を阻害しない） */
         html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; position: relative; }
 
         body {
@@ -56,15 +56,16 @@
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
+            /* ★修正：overflow-x: hidden を削除したことでPCの左固定が機能します */
         }
 
         /* -----------------------------------------
-           左側：サイドバー（★スクロールしても画面内に固定）
+           左側：サイドバー（★スクロールしても完全に固定）
            ----------------------------------------- */
         .sidebar {
             width: 320px;
-            height: 100vh; /* ビューポートの高さに固定 */
-            position: sticky; /* スクロール追従（固定） */
+            height: 100vh; /* 画面の高さに固定 */
+            position: sticky; /* スクロールに追従して固定される */
             top: 0;
             display: flex;
             flex-direction: column;
@@ -72,7 +73,7 @@
             padding: 60px 40px;
             background-color: var(--secondary);
             flex-shrink: 0;
-            overflow-y: auto; /* サイドバーの中身が多い場合はサイドバー内だけスクロール */
+            overflow-y: auto;
             scrollbar-width: none;
         }
         .sidebar::-webkit-scrollbar { display: none; }
@@ -96,14 +97,14 @@
         .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
 
         /* -----------------------------------------
-           右側：メインコンテンツ（ここだけがスクロールする）
+           右側：メインコンテンツ（ここだけがスクロール）
            ----------------------------------------- */
         .main-content {
             flex: 1;
             background-color: var(--bg-white);
             border-radius: 50px 0 0 50px;
             padding: 100px 8%;
-            min-width: 0; /* flexbox内で子要素のはみ出しを防ぐ重要プロパティ */
+            min-width: 0;
             box-shadow: -15px 0 40px rgba(0,0,0,0.03);
         }
 
@@ -210,9 +211,11 @@
            ========================================= */
         .form-wrapper { max-width: 760px; margin: 0 auto; background: var(--secondary); padding: 60px; border-radius: 40px; border: 1px solid var(--border-color); position: relative; }
         .form-group { margin-bottom: 40px; }
-        .form-label { display: block; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
-        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
-        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
+        
+        /* ★修正：必須バッジの改行を防ぐためフレックスボックス化 */
+        .form-label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
+        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
         
         .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .timing-group { grid-template-columns: repeat(5, 1fr); }
@@ -244,11 +247,9 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆追従ボタン・フッター（PC非表示）
+           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
            ========================================= */
-        .sp-header { display: none; }
-        .sp-floating-cta { display: none; }
-        .sp-footer { display: none; }
+        .sp-header, .sp-footer, .sp-floating-cta { display: none; }
 
         /* アニメーション */
         .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -259,7 +260,7 @@
            ========================================= */
         @media (max-width: 900px) {
             .wrapper { flex-direction: column; padding: 0; }
-            .sidebar { display: none; } /* SPでは左メニューを隠す */
+            .sidebar { display: none; }
             
             /* SP専用トップヘッダー */
             .sp-header {
@@ -271,7 +272,7 @@
 
             .main-content {
                 border-radius: 0;
-                padding: 20px 15px 120px; /* ★左右の余白を少し詰めて画面内に確実に収める */
+                padding: 20px 15px 120px;
                 box-shadow: none;
                 background-color: var(--secondary);
             }
@@ -285,7 +286,7 @@
             .badge { padding: 10px 15px; font-size: 0.8rem; }
             .hero-img-large { padding: 40px 15px; border-radius: 30px; background-color: var(--bg-white); }
             
-            /* キャラクターのはみ出し修正：画面端に寄せる */
+            /* キャラクター位置調整 */
             .char-mini { width: 55px; }
             .char-worry { right: 5px; top: -25px; }
             .char-reason { left: 5px; top: -25px; }
@@ -297,70 +298,78 @@
             .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
             .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
             
-            /* -------------------------------------
-               ★SP フォーム周り（枠外はみ出し・改行の修正）
-               ------------------------------------- */
-            .form-wrapper { 
-                padding: 40px 15px; /* ★左右のパディングを減らす */
-                border-radius: 24px; 
-                width: 100%; /* ★コンテナに100%フィットさせる */
-                box-sizing: border-box;
-            }
-            .form-label { font-size: 1rem; }
-            
-            .radio-group { grid-template-columns: 1fr; gap: 10px; } /* 縦1列に */
-            .timing-group { grid-template-columns: 1fr 1fr; gap: 10px; } /* 2列 */
+            /* フォームはみ出し防止 */
+            .form-wrapper { padding: 40px 20px; border-radius: 24px; width: 100%; box-sizing: border-box; }
+            .radio-group { grid-template-columns: 1fr; }
+            .timing-group { grid-template-columns: 1fr 1fr; }
             .timing-group label:last-child { grid-column: span 2; }
-
-            .radio-card-content { padding: 15px 5px; font-size: 0.85rem; } /* 余白を削って改行を防ぐ */
-            .btn-submit { padding: 20px; font-size: 1.2rem; }
+            .radio-card-content { padding: 15px 5px; font-size: 0.9rem; } /* 余白を詰めて改行防止 */
 
             /* -------------------------------------
-               ★SP用：横スクロール比較（枠はみ出し修正）
+               ★SP用：横スクロール比較（はみ出し・横揺れ完全解消）
                ------------------------------------- */
             .pc-timeline { display: none; }
-            .sp-timeline { display: block; }
+            .sp-timeline {
+                display: block;
+                /* ネガティブマージンで親のpaddingを相殺し、画面幅ピッタリにする */
+                margin-left: -15px;
+                margin-right: -15px;
+            }
 
             .horizontal-scroll-container {
-                margin: 0; padding: 0 0 20px 0; width: 100%; /* ★親の枠をはみ出さない設定に */
-                overflow-x: auto; -webkit-overflow-scrolling: touch;
+                padding: 0 15px 20px 15px;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
             .tl-grid {
                 display: grid;
-                /* 左のラベルを細くし、右のコンテンツも適度な幅に抑える */
-                grid-template-columns: 90px repeat(4, 180px);
+                grid-template-columns: 100px repeat(4, 200px);
                 grid-template-rows: 1fr auto 1fr;
-                gap: 15px 10px;
-                min-width: 850px; /* スクロールさせるための最低幅 */
-                background: #fff; border-radius: 20px; padding: 15px; border: 1px solid var(--border-color);
+                gap: 15px 12px;
+                width: max-content; /* 中身のサイズに合わせてコンテナを広げる */
+                background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
             }
 
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid var(--border-color); }
             .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); }
-            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.8rem; padding: 5px; }
+            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.85rem; padding: 10px; }
 
-            .grid-box { padding: 12px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.4; }
-            .grid-box .tl-note { font-size: 0.75rem; margin-top: 5px; font-weight: normal; }
+            .grid-box { padding: 15px 12px; border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; }
+            .grid-box .tl-note { font-size: 0.8rem; margin-top: 6px; font-weight: normal; }
 
             .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
-            .g-axis-line-container::before { content: ''; position: absolute; left: -5px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
+            .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
 
             .grid-time {
                 grid-row: 2; justify-self: center; align-self: center;
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
-                padding: 4px 12px; border-radius: 20px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; white-space: nowrap;
+                padding: 4px 16px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; z-index: 2; position: relative; white-space: nowrap;
             }
-            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.9rem; padding: 6px 16px; }
+            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 6px 16px; }
 
             /* -------------------------------------
-               SP用：追従CTAボタン
+               ★追加要件：SP用 フッター
+               ------------------------------------- */
+            .sp-footer {
+                display: block;
+                text-align: center;
+                padding: 60px 20px;
+                margin-top: 40px;
+                border-top: 1px solid var(--border-color);
+            }
+            .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1.1rem; text-decoration: none; }
+            .sp-footer p { font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; }
+
+            /* -------------------------------------
+               SP用 追従CTAボタン
                ------------------------------------- */
             .sp-floating-cta {
                 display: block; position: fixed; bottom: 0; left: 0; width: 100%;
                 background: linear-gradient(to top, rgba(242,244,246,1) 50%, rgba(242,244,246,0));
-                padding: 20px 20px 20px; z-index: 100;
+                padding: 20px 20px 30px; z-index: 100;
                 transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
             }
             .sp-floating-cta.hidden-by-contact { transform: translateY(100%); opacity: 0; pointer-events: none; }
@@ -370,19 +379,6 @@
                 padding: 18px 0; border-radius: 50px; font-weight: 900; font-size: 1.1rem;
                 box-shadow: 0 10px 25px rgba(230, 106, 0, 0.35); letter-spacing: 0.05em;
             }
-
-            /* -------------------------------------
-               ★追加要件：SP用フッター
-               ------------------------------------- */
-            .sp-footer {
-                display: block;
-                text-align: center;
-                padding: 40px 20px 60px; /* 追従ボタンに被らないよう下部余白多め */
-                border-top: 1px solid var(--border-color);
-                margin-top: 60px;
-            }
-            .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1.1rem; text-decoration: none; }
-            .sp-footer p { font-size: 0.8rem; color: #999; margin-top: 15px; }
         }
     </style>
 </head>
@@ -511,7 +507,7 @@
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3; border-color: transparent;">（現金化済み）</div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1; border-color: var(--border-color);">売却・現金化<span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span></div>
-                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
+                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3; border-color: transparent;">（現金化済み）</div>
                         </div>
                     </div>
@@ -615,10 +611,10 @@
                 </div>
             </section>
 
-            <div class="sp-footer js-fade">
-                <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a>
-                <p>&copy; 2026 LANSEED Co., Ltd.</p>
-            </div>
+            <footer class="sp-footer js-fade">
+                <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (株式会社LANSEED)</a>
+                <p>&copy; 2026 LANSEED Co., Ltd. All Rights Reserved.</p>
+            </footer>
 
         </main>
     </div>
