@@ -41,7 +41,7 @@
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-wrap: break-word;
-            word-break: normal; /* ★修正：不自然に画面を押し広げる改行禁止を解除 */
+            word-break: normal;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,7 +59,7 @@
            ========================================= */
         .wrapper {
             display: flex;
-            align-items: flex-start; /* ★重要：左メニューを固定（sticky）するために必須 */
+            align-items: flex-start; /* ★左メニューを固定（sticky）するために必須 */
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
@@ -128,7 +128,7 @@
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
         .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
         
-        /* ★動画のスタイル */
+        /* 動画のスタイル */
         .hero-video-wrapper {
             width: 100%; max-width: 800px; margin: 0 auto 50px;
             border-radius: 30px; overflow: hidden;
@@ -206,8 +206,12 @@
         .char-reason { top: -35px; left: -20px; animation: float-char 3.2s ease-in-out infinite; }
 
         /* =========================================
-           エリア セクション
+           動画・エリア セクション (通常動画枠)
            ========================================= */
+        .iframe-wrapper { position: relative; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 30px; overflow: hidden; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .video-wrapper { padding-bottom: 56.25%; height: 0; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
         .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         .area-tag { background-color: var(--secondary); color: var(--primary); padding: 16px 32px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; border: 1px solid var(--border-color); }
 
@@ -251,7 +255,7 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
+           SP用 ヘッダー＆フッター＆追従ボタン
            ========================================= */
         .sp-header, .sp-footer, .sp-floating-cta { display: none; }
 
@@ -280,19 +284,24 @@
             }
 
             section { margin-bottom: 100px; }
-            /* ★修正：タイトルの文字サイズを少し抑えてはみ出しを防ぐ */
-            .sec-ja { font-size: 1.6rem; }
+            .sec-ja { font-size: 1.8rem; }
             .sec-header { margin-bottom: 50px; }
             
-            .hero-title { font-size: 2rem; margin-bottom: 30px; letter-spacing: -0.05em; line-height: 1.35; }
+            .hero-title { font-size: 2.2rem; margin-bottom: 30px; letter-spacing: -0.05em; line-height: 1.3; }
             .dl-badges { gap: 10px; margin-bottom: 30px; }
             .badge { padding: 10px 15px; font-size: 0.8rem; }
             
-            /* ★修正：動画が枠にピッタリ収まるように調整 */
+            /* ★修正：SP用 動画サイズを縮小し、確実に画面内に収める */
             .hero-video-wrapper { 
-                width: 100%; max-width: 100%; margin: 0 auto 30px; 
-                border-radius: 20px;
+                width: 85%; /* 画面幅の85%に縮小して余白を確保 */
+                max-width: 400px; /* 大きくなりすぎないように上限をセット */
+                margin: 0 auto 40px; 
+                border-radius: 20px; 
+                box-sizing: border-box;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            .hero-video-wrapper video {
+                width: 100%; height: auto; display: block; border-radius: 20px;
             }
 
             .char-mini { width: 55px; }
@@ -306,7 +315,7 @@
             .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
             .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
             
-            .form-wrapper { padding: 40px 20px; border-radius: 24px; width: 100%; box-sizing: border-box; }
+            .form-wrapper { padding: 40px 15px; border-radius: 24px; width: 100%; box-sizing: border-box; }
             .form-label { font-size: 1rem; flex-wrap: wrap; }
             .radio-group { grid-template-columns: 1fr; }
             .timing-group { grid-template-columns: 1fr 1fr; }
@@ -314,7 +323,7 @@
             .radio-card-content { padding: 15px 5px; font-size: 0.9rem; }
 
             /* -------------------------------------
-               ★SP用：横スクロール比較（ズレ完全解消・グリッド構成）
+               SP用：横スクロール比較
                ------------------------------------- */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; }
@@ -327,11 +336,10 @@
             }
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
-            /* ★修正：上下の文字数に依存せず、常に中段と横線が完璧に揃うGrid設定 */
             .tl-grid {
                 display: grid;
-                grid-template-columns: 90px repeat(4, 200px);
-                grid-template-rows: 1fr auto 1fr; /* 上段、中段(時間)、下段 */
+                grid-template-columns: 100px repeat(4, 200px);
+                grid-template-rows: 1fr auto 1fr;
                 gap: 15px 12px;
                 width: max-content; 
                 background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
@@ -340,30 +348,17 @@
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid var(--border-color); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; font-weight: 900; font-size: 0.85rem; text-align: center; }
             .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; font-weight: 900; font-size: 0.85rem; text-align: center; }
 
-            /* 横線（中段のど真ん中を貫く） */
-            .g-axis-line-container {
-                grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center;
-            }
-            .g-axis-line-container::before {
-                content: ''; position: absolute; left: -10px; right: 0; height: 2px;
-                background-color: var(--border-color); z-index: 1;
-            }
+            .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
+            .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
 
-            /* ボックスの共通スタイル */
-            .grid-box {
-                padding: 15px 12px; border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; border: 1px solid;
-                display: flex; flex-direction: column; justify-content: center; line-height: 1.5;
-            }
+            .grid-box { padding: 15px 12px; border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; }
             .grid-box .tl-note { font-size: 0.8rem; margin-top: 6px; font-weight: normal; }
 
-            /* 上段（一般的な仲介） */
             .tl-other-box { border-color: var(--border-color); color: var(--text-muted); }
-            /* 下段（GOOD売買） */
             .tl-good-box { border-color: var(--primary); color: var(--primary); }
             .tl-box-accent { background-color: var(--accent); border-color: var(--accent); color: #fff; }
             .tl-done { border-color: transparent; color: #94a3b8; background: transparent; }
 
-            /* 中段（時間バッジ） */
             .grid-time {
                 grid-row: 2; justify-self: center; align-self: center;
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
@@ -504,48 +499,67 @@
                     <div class="swipe-hint">横にスクロールして時間経過を比較 👉</div>
                     
                     <div class="horizontal-scroll-container">
-                        <div class="tl-grid">
-                            <div class="g-lbl-other">一般的な<br>仲介</div>
-                            <div class="g-lbl-good">GOOD売買</div>
-                            
-                            <div class="g-axis-line-container"></div>
+                        <div class="sp-tl-track">
+                            <div class="sp-tl-line"></div>
 
-                            <div class="grid-box tl-other-box" style="grid-column: 2; grid-row: 1;">
-                                <span>査定・媒介契約</span>
-                                <span class="tl-note">準備に時間がかかります</span>
-                            </div>
-                            <div class="grid-time" style="grid-column: 2;">1〜3日目</div>
-                            <div class="grid-box tl-good-box" style="grid-column: 2; grid-row: 3;">
-                                <span>スピード査定・提示</span>
-                                <span class="tl-note">ご納得で即契約へ！</span>
+                            <div class="sp-tl-col label-col">
+                                <div class="sp-tl-top g-lbl-other">一般的な仲介</div>
+                                <div class="sp-tl-mid"></div>
+                                <div class="sp-tl-bottom g-lbl-good">GOOD売買</div>
                             </div>
 
-                            <div class="grid-box tl-other-box" style="grid-column: 3; grid-row: 1;">
-                                <span>広告・内覧対応</span>
-                                <span class="tl-note">掃除や立ち会いの手間</span>
-                            </div>
-                            <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
-                            <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3;">
-                                <span>ご契約・現金化！</span>
-                                <span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span>
-                            </div>
-
-                            <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1;">
-                                <span>買主探し・値下げ</span>
-                                <span class="tl-note">売れ残る不安が続きます</span>
-                            </div>
-                            <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
-                            <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3;">
-                                （現金化済み）
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">査定・媒介契約</span>
+                                    <span class="tl-note">準備に時間がかかります</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time">1〜3日目</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-good-box">
+                                    <span class="box-title">スピード査定・提示</span>
+                                    <span class="tl-note">ご納得で即契約へ！</span>
+                                </div>
                             </div>
 
-                            <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1;">
-                                <span>売却・現金化</span>
-                                <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">広告・内覧対応</span>
+                                    <span class="tl-note">掃除や立ち会いの手間</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time time-accent">最短7日</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-box-accent">
+                                    <span class="box-title">ご契約・現金化！</span>
+                                    <span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span>
+                                </div>
                             </div>
-                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</div>
-                            <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3;">
-                                （現金化済み）
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">買主探し・値下げ</span>
+                                    <span class="tl-note">売れ残る不安が続きます</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time">数ヶ月〜半年</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-done">
+                                    （現金化済み）
+                                </div>
+                            </div>
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">売却・現金化</span>
+                                    <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time" style="background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-done">
+                                    （現金化済み）
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -568,6 +582,16 @@
                     
                     <h3>【正直にお伝えします】デメリットについて</h3>
                     <p>仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
+                </div>
+            </section>
+
+            <section class="movie">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">MOVIE</span>
+                    <h2 class="sec-ja">1分でわかる弊社の取り組み</h2>
+                </div>
+                <div class="iframe-wrapper video-wrapper js-fade">
+                    <iframe src="https://www.youtube.com/embed/2fFRqJS0dsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </section>
 
@@ -653,14 +677,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // スクロールフェードイン
             const fadeElements = document.querySelectorAll('.js-fade');
             const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-active'); });
             }, { root: null, rootMargin: '0px', threshold: 0.1 });
             fadeElements.forEach(el => fadeObserver.observe(el));
 
-            // SP時 フローティングボタンの表示・非表示制御
             const floatBtn = document.getElementById('floating-btn');
             const contactSection = document.getElementById('contact');
             
