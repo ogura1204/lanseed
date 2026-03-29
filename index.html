@@ -23,7 +23,7 @@
             --border-color: #E2E8F0;
         }
 
-        /* ★横揺れ防止の徹底：htmlとbodyで横方向のはみ出しを完全カット */
+        /* 横揺れ・はみ出し防止の徹底 */
         html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; position: relative; }
 
         body {
@@ -34,6 +34,7 @@
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
+            word-break: auto-phrase;
             overflow-wrap: break-word;
         }
 
@@ -55,17 +56,15 @@
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
-            /* ★横揺れ防止の徹底：ラッパーからもはみ出さない */
-            overflow-x: hidden;
         }
 
         /* -----------------------------------------
-           左側：サイドバー（固定）
+           左側：サイドバー（★スクロールしても画面内に固定）
            ----------------------------------------- */
         .sidebar {
             width: 320px;
-            height: 100vh;
-            position: sticky;
+            height: 100vh; /* ビューポートの高さに固定 */
+            position: sticky; /* スクロール追従（固定） */
             top: 0;
             display: flex;
             flex-direction: column;
@@ -73,7 +72,10 @@
             padding: 60px 40px;
             background-color: var(--secondary);
             flex-shrink: 0;
+            overflow-y: auto; /* サイドバーの中身が多い場合はサイドバー内だけスクロール */
+            scrollbar-width: none;
         }
+        .sidebar::-webkit-scrollbar { display: none; }
 
         .sidebar-top { text-align: center; }
         .sidebar-logo { font-size: 2.2rem; font-weight: 900; color: var(--primary); letter-spacing: 0.05em; margin-bottom: 30px; }
@@ -94,14 +96,14 @@
         .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
 
         /* -----------------------------------------
-           右側：メインコンテンツ
+           右側：メインコンテンツ（ここだけがスクロールする）
            ----------------------------------------- */
         .main-content {
             flex: 1;
             background-color: var(--bg-white);
             border-radius: 50px 0 0 50px;
             padding: 100px 8%;
-            min-width: 0;
+            min-width: 0; /* flexbox内で子要素のはみ出しを防ぐ重要プロパティ */
             box-shadow: -15px 0 40px rgba(0,0,0,0.03);
         }
 
@@ -144,7 +146,6 @@
         .worry-icon { color: var(--accent); font-size: 1.8rem; margin-right: 20px; font-weight: 900; font-family: 'Montserrat', sans-serif; line-height: 1; }
         .worry-text { flex: 1; line-height: 1.6; }
         
-        /* PC時のキャラクター配置 */
         .char-mini { width: clamp(50px, 10vw, 70px); height: auto; flex-shrink: 0; position: absolute; z-index: 2; }
         .char-worry { top: -40px; right: -30px; animation: float-char 3.5s ease-in-out infinite; }
 
@@ -192,10 +193,7 @@
         }
         .honest-box h3 { color: var(--accent); font-size: 1.4rem; margin: 0 0 20px 0; font-weight: 900; }
         .honest-box p { color: var(--text-main); font-weight: 700; margin: 0; line-height: 1.8; }
-        
-        /* PC時のキャラクター配置 */
         .char-reason { top: -35px; left: -20px; animation: float-char 3.2s ease-in-out infinite; }
-        .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
            動画・エリア セクション
@@ -243,12 +241,14 @@
         
         .success-message { text-align: center; padding: 50px; background-color: #e6f4ea; border: 2px solid var(--primary); border-radius: 24px; margin-top: 20px; }
         .success-message h3 { color: var(--primary); margin: 0 0 15px 0; font-size: 1.5rem; font-weight: 900; }
+        .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆追従ボタン（PC非表示）
+           SP用 ヘッダー＆追従ボタン・フッター（PC非表示）
            ========================================= */
         .sp-header { display: none; }
         .sp-floating-cta { display: none; }
+        .sp-footer { display: none; }
 
         /* アニメーション */
         .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -259,7 +259,7 @@
            ========================================= */
         @media (max-width: 900px) {
             .wrapper { flex-direction: column; padding: 0; }
-            .sidebar { display: none; }
+            .sidebar { display: none; } /* SPでは左メニューを隠す */
             
             /* SP専用トップヘッダー */
             .sp-header {
@@ -271,7 +271,7 @@
 
             .main-content {
                 border-radius: 0;
-                padding: 20px 20px 140px;
+                padding: 20px 15px 120px; /* ★左右の余白を少し詰めて画面内に確実に収める */
                 box-shadow: none;
                 background-color: var(--secondary);
             }
@@ -282,12 +282,10 @@
             
             .hero-title { font-size: 2.2rem; margin-bottom: 30px; letter-spacing: -0.05em; line-height: 1.3; }
             .dl-badges { gap: 10px; margin-bottom: 30px; }
-            .badge { padding: 10px 20px; font-size: 0.85rem; }
-            .hero-img-large { padding: 40px 20px; border-radius: 30px; background-color: var(--bg-white); }
+            .badge { padding: 10px 15px; font-size: 0.8rem; }
+            .hero-img-large { padding: 40px 15px; border-radius: 30px; background-color: var(--bg-white); }
             
-            /* -------------------------------------
-               ★横揺れ防止：SPでのキャラのはみ出しを確実にカット
-               ------------------------------------- */
+            /* キャラクターのはみ出し修正：画面端に寄せる */
             .char-mini { width: 55px; }
             .char-worry { right: 5px; top: -25px; }
             .char-reason { left: 5px; top: -25px; }
@@ -299,50 +297,62 @@
             .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
             .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
             
-            .form-wrapper { padding: 40px 20px; border-radius: 24px; }
+            /* -------------------------------------
+               ★SP フォーム周り（枠外はみ出し・改行の修正）
+               ------------------------------------- */
+            .form-wrapper { 
+                padding: 40px 15px; /* ★左右のパディングを減らす */
+                border-radius: 24px; 
+                width: 100%; /* ★コンテナに100%フィットさせる */
+                box-sizing: border-box;
+            }
+            .form-label { font-size: 1rem; }
             
-            .radio-group { grid-template-columns: 1fr; }
-            .timing-group { grid-template-columns: 1fr 1fr; }
+            .radio-group { grid-template-columns: 1fr; gap: 10px; } /* 縦1列に */
+            .timing-group { grid-template-columns: 1fr 1fr; gap: 10px; } /* 2列 */
             .timing-group label:last-child { grid-column: span 2; }
 
+            .radio-card-content { padding: 15px 5px; font-size: 0.85rem; } /* 余白を削って改行を防ぐ */
+            .btn-submit { padding: 20px; font-size: 1.2rem; }
+
             /* -------------------------------------
-               SP用：横スクロール比較
+               ★SP用：横スクロール比較（枠はみ出し修正）
                ------------------------------------- */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; }
 
-            /* ★横揺れ防止：width指定を削除し、親の幅いっぱいに余白のみを伸ばす */
             .horizontal-scroll-container {
-                margin: 0 -20px; padding: 0 20px 20px 20px;
+                margin: 0; padding: 0 0 20px 0; width: 100%; /* ★親の枠をはみ出さない設定に */
                 overflow-x: auto; -webkit-overflow-scrolling: touch;
             }
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
             .tl-grid {
                 display: grid;
-                grid-template-columns: 100px repeat(4, 200px);
+                /* 左のラベルを細くし、右のコンテンツも適度な幅に抑える */
+                grid-template-columns: 90px repeat(4, 180px);
                 grid-template-rows: 1fr auto 1fr;
-                gap: 15px 12px;
-                min-width: 950px; 
-                background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
+                gap: 15px 10px;
+                min-width: 850px; /* スクロールさせるための最低幅 */
+                background: #fff; border-radius: 20px; padding: 15px; border: 1px solid var(--border-color);
             }
 
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid var(--border-color); }
             .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); }
-            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.85rem; padding: 10px; }
+            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.8rem; padding: 5px; }
 
-            .grid-box { padding: 15px 12px; border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; }
-            .grid-box .tl-note { font-size: 0.8rem; margin-top: 6px; font-weight: normal; }
+            .grid-box { padding: 12px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.4; }
+            .grid-box .tl-note { font-size: 0.75rem; margin-top: 5px; font-weight: normal; }
 
             .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
-            .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
+            .g-axis-line-container::before { content: ''; position: absolute; left: -5px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
 
             .grid-time {
                 grid-row: 2; justify-self: center; align-self: center;
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
-                padding: 6px 18px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; z-index: 2; position: relative; white-space: nowrap;
+                padding: 4px 12px; border-radius: 20px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; white-space: nowrap;
             }
-            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 8px 20px; }
+            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.9rem; padding: 6px 16px; }
 
             /* -------------------------------------
                SP用：追従CTAボタン
@@ -350,16 +360,29 @@
             .sp-floating-cta {
                 display: block; position: fixed; bottom: 0; left: 0; width: 100%;
                 background: linear-gradient(to top, rgba(242,244,246,1) 50%, rgba(242,244,246,0));
-                padding: 20px 20px 30px; z-index: 100;
+                padding: 20px 20px 20px; z-index: 100;
                 transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
             }
             .sp-floating-cta.hidden-by-contact { transform: translateY(100%); opacity: 0; pointer-events: none; }
             
             .btn-dl-sp {
                 display: block; background: linear-gradient(135deg, #FF8811, var(--accent)); color: #ffffff; text-align: center;
-                padding: 20px 0; border-radius: 50px; font-weight: 900; font-size: 1.2rem;
+                padding: 18px 0; border-radius: 50px; font-weight: 900; font-size: 1.1rem;
                 box-shadow: 0 10px 25px rgba(230, 106, 0, 0.35); letter-spacing: 0.05em;
             }
+
+            /* -------------------------------------
+               ★追加要件：SP用フッター
+               ------------------------------------- */
+            .sp-footer {
+                display: block;
+                text-align: center;
+                padding: 40px 20px 60px; /* 追従ボタンに被らないよう下部余白多め */
+                border-top: 1px solid var(--border-color);
+                margin-top: 60px;
+            }
+            .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1.1rem; text-decoration: none; }
+            .sp-footer p { font-size: 0.8rem; color: #999; margin-top: 15px; }
         }
     </style>
 </head>
@@ -488,7 +511,7 @@
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3; border-color: transparent;">（現金化済み）</div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1; border-color: var(--border-color);">売却・現金化<span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span></div>
-                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</div>
+                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3; border-color: transparent;">（現金化済み）</div>
                         </div>
                     </div>
@@ -591,6 +614,11 @@
                     </div>
                 </div>
             </section>
+
+            <div class="sp-footer js-fade">
+                <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a>
+                <p>&copy; 2026 LANSEED Co., Ltd.</p>
+            </div>
 
         </main>
     </div>
