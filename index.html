@@ -23,9 +23,10 @@
             --border-color: #E2E8F0;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+        /* ★横揺れ防止（bodyにのみ指定し、stickyを阻害しない） */
+        html, body { width: 100%; margin: 0; padding: 0; }
         body {
+            overflow-x: hidden;
             background-color: var(--secondary);
             color: var(--text-main);
             font-family: 'Noto Sans JP', "Helvetica Neue", Arial, sans-serif;
@@ -35,21 +36,16 @@
             scroll-behavior: smooth;
             word-break: auto-phrase;
             overflow-wrap: break-word;
-            /* ★重要：bodyのoverflow-x: hiddenを削除（stickyを効かせるため） */
         }
 
-        /* 画面全体の横揺れを防ぐためのラッパー */
-        .overflow-wrap {
-            overflow-x: hidden;
-            width: 100%;
-            position: relative;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
         a:hover { opacity: 0.7; }
         ul { list-style: none; }
         .text-red { color: var(--accent); }
         .marker-yellow { background: linear-gradient(transparent 60%, #fef08a 60%); font-weight: 700; display: inline; }
+
         img { max-width: 100%; height: auto; display: block; object-fit: contain; }
 
         /* =========================================
@@ -57,7 +53,7 @@
            ========================================= */
         .wrapper {
             display: flex;
-            align-items: flex-start; /* ★重要：これを指定しないとstickyが動くスペースができない */
+            align-items: flex-start; /* ★重要：stickyを効かせるための指定 */
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
@@ -126,14 +122,16 @@
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
         .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
         
-        /* ★修正：動画を角丸で美しく配置 */
+        /* ★修正：動画がはみ出さないように設定 */
         .hero-video-wrapper {
             width: 100%; max-width: 800px; margin: 0 auto 50px;
             border-radius: 30px; overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background-color: #000;
         }
         .hero-video-wrapper video {
-            width: 100%; display: block; object-fit: cover;
+            width: 100%; max-width: 100%; height: auto;
+            display: block; object-fit: cover;
         }
 
         .hero-text { font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 700; line-height: 2; margin-bottom: 40px; }
@@ -159,7 +157,6 @@
         /* =========================================
            他社比較 (Difference) セクション
            ========================================= */
-        /* PC用 縦タイムライン */
         .pc-timeline { max-width: 760px; margin: 0 auto; }
         .tl-header { display: flex; justify-content: space-between; margin-bottom: 60px; font-weight: 900; text-align: center; }
         .tl-head-other { width: 45%; color: var(--text-muted); padding: 15px; border-bottom: 3px solid var(--border-color); font-size: 1.1rem; }
@@ -253,7 +250,7 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
+           SP用 ヘッダー＆フッター＆追従ボタン
            ========================================= */
         .sp-header, .sp-footer, .sp-floating-cta { display: none; }
 
@@ -267,7 +264,6 @@
             .wrapper { flex-direction: column; padding: 0; }
             .sidebar { display: none; }
             
-            /* SP専用トップヘッダー */
             .sp-header {
                 display: block; text-align: center; padding: 30px 20px 20px;
                 background-color: var(--secondary);
@@ -289,7 +285,9 @@
             .hero-title { font-size: 2.2rem; margin-bottom: 30px; letter-spacing: -0.05em; line-height: 1.3; }
             .dl-badges { gap: 10px; margin-bottom: 30px; }
             .badge { padding: 10px 15px; font-size: 0.8rem; }
-            .hero-video-wrapper { padding: 0; border-radius: 20px; }
+            
+            /* ★修正：SPでの動画枠のはみ出しを防ぐ */
+            .hero-video-wrapper { padding: 0; border-radius: 20px; width: 100%; max-width: 100%; box-sizing: border-box; }
             
             .char-mini { width: 55px; }
             .char-worry { right: 5px; top: -25px; }
@@ -302,16 +300,15 @@
             .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
             .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
             
-            /* フォームはみ出し防止 */
             .form-wrapper { padding: 40px 15px; border-radius: 24px; width: 100%; box-sizing: border-box; }
-            .form-label { font-size: 1rem; }
-            .radio-group { grid-template-columns: 1fr; }
-            .timing-group { grid-template-columns: 1fr 1fr; }
+            .form-label { font-size: 1rem; flex-wrap: wrap; }
+            .radio-group { grid-template-columns: 1fr; gap: 10px; }
+            .timing-group { grid-template-columns: 1fr 1fr; gap: 10px; }
             .timing-group label:last-child { grid-column: span 2; }
-            .radio-card-content { padding: 15px 5px; font-size: 0.9rem; }
+            .radio-card-content { padding: 15px 5px; font-size: 0.85rem; }
 
             /* -------------------------------------
-               ★SP用：横スクロール比較（ズレ完全解消版）
+               SP用：横スクロール比較（ズレ完全解消版）
                ------------------------------------- */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; }
@@ -324,12 +321,11 @@
             }
             .horizontal-scroll-container::-webkit-scrollbar { display: none; }
 
-            /* ★修正：高さが絶対にずれないFlexboxによる構造 */
             .sp-tl-track {
                 display: flex;
                 gap: 15px;
                 position: relative;
-                width: max-content; /* 中身に合わせて伸びる */
+                width: max-content;
                 background: #fff;
                 border-radius: 24px;
                 padding: 20px;
@@ -345,28 +341,19 @@
                 z-index: 1;
             }
 
-            /* 各列の設定 */
-            .sp-tl-col {
-                display: flex; flex-direction: column; gap: 15px;
-                width: 200px; flex-shrink: 0;
-            }
+            .sp-tl-col { display: flex; flex-direction: column; gap: 15px; width: 200px; flex-shrink: 0; }
             .label-col { width: 90px; }
 
-            /* 上・中・下段 */
             .sp-tl-top, .sp-tl-bottom {
-                flex: 1; /* 高さを均等に担保 */
-                display: flex; flex-direction: column; justify-content: center; align-items: center;
-                text-align: center;
+                flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             }
 
-            /* ラベル列のデザイン */
             .g-lbl-other { color: var(--text-muted); border-bottom: 2px solid var(--border-color); font-weight: 900; font-size: 0.85rem; padding-bottom: 10px; justify-content: flex-end; }
             .g-lbl-good { color: var(--primary); border-bottom: 2px solid var(--primary); font-weight: 900; font-size: 0.85rem; padding-bottom: 10px; justify-content: flex-start; }
 
-            /* コンテンツボックスのデザイン */
             .sp-tl-top.tl-other-box, .sp-tl-bottom.tl-good-box, .sp-tl-bottom.tl-box-accent, .sp-tl-bottom.tl-done {
                 padding: 15px 12px; border-radius: 16px; border: 1px solid var(--border-color);
-                font-size: 0.95rem; font-weight: 700; width: 100%;
+                font-size: 0.95rem; font-weight: 700; width: 100%; box-sizing: border-box;
             }
             .sp-tl-top.tl-other-box { border-color: var(--border-color); color: var(--text-muted); }
             .sp-tl-bottom.tl-good-box { border-color: var(--primary); color: var(--primary); }
@@ -378,17 +365,14 @@
 
             /* 中段（時間バッジ） */
             .sp-tl-mid {
-                height: 40px; /* ★高さを固定することで線が絶対にずれない */
-                display: flex; align-items: center; justify-content: center;
+                height: 40px; display: flex; align-items: center; justify-content: center;
                 position: relative; z-index: 2;
             }
             .grid-time {
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
                 padding: 4px 16px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; white-space: nowrap;
             }
-            .grid-time.time-accent {
-                border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 6px 18px;
-            }
+            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 6px 18px; }
 
             /* -------------------------------------
                SP用 フッター
@@ -418,285 +402,272 @@
 </head>
 <body>
 
-    <div class="overflow-wrap">
-        
-        <div class="sp-header js-fade is-active">
-            <h1 class="sp-logo">GOOD売買</h1>
-            <p class="sp-sub">明石・神戸・加古川の不動産買取専門店</p>
-        </div>
+    <div class="sp-header js-fade is-active">
+        <h1 class="sp-logo">GOOD売買</h1>
+        <p class="sp-sub">明石・神戸・加古川の不動産買取専門店</p>
+    </div>
 
-        <div class="wrapper">
-            <aside class="sidebar">
-                <div class="sidebar-top">
-                    <div class="sidebar-logo">GOOD売買</div>
-                    
-                    <div class="sidebar-ill">
-                        <img src="char_01.png" alt="ランシードくん">
-                    </div>
-                    
-                    <p class="sidebar-catch">明石・神戸・加古川の<br>不動産買取専門店</p>
-                    <a href="#contact" class="btn-dl-sidebar">無料で査定・相談する</a>
-                </div>
-
-                <div class="sidebar-bottom">
-                    <ul class="footer-nav">
-                        <li><a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a></li>
-                        <li><a href="#contact">お問い合わせ</a></li>
-                    </ul>
-                    <p class="copyright">&copy; 2026 LANSEED Co., Ltd.</p>
-                </div>
-            </aside>
-
-            <main class="main-content">
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-logo">GOOD売買</div>
                 
-                <section class="hero">
-                    <h1 class="hero-title">「いつ売れるの？」<br>「手残りはいくら？」<br><span class="text-red">不動産のモヤモヤ即解決。</span></h1>
+                <div class="sidebar-ill">
+                    <img src="char_01.png" alt="ランシードくん">
+                </div>
+                
+                <p class="sidebar-catch">明石・神戸・加古川の<br>不動産買取専門店</p>
+                <a href="#contact" class="btn-dl-sidebar">無料で査定・相談する</a>
+            </div>
+
+            <div class="sidebar-bottom">
+                <ul class="footer-nav">
+                    <li><a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+                <p class="copyright">&copy; 2026 LANSEED Co., Ltd.</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section class="hero">
+                <h1 class="hero-title">「いつ売れるの？」<br>「手残りはいくら？」<br><span class="text-red">不動産のモヤモヤ即解決。</span></h1>
+                
+                <div class="dl-badges">
+                    <div class="badge">最短7日で現金化</div>
+                    <div class="badge">仲介手数料０円</div>
+                    <div class="badge">秘密厳守</div>
+                </div>
+
+                <div class="hero-video-wrapper js-fade is-active">
+                    <video src="https://www.lanseed.co.jp/images/top/mv.mp4" autoplay loop muted playsinline></video>
+                </div>
+                
+                <p class="hero-text">
+                    不要な土地、空き家、相続不動産…<br>
+                    色々な理由での不動産の悩み事を一緒に解決できるよう頑張ります！
+                </p>
+            </section>
+
+            <section class="worry">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">WORRY</span>
+                    <h2 class="sec-ja">こんなお悩みありませんか？</h2>
+                </div>
+
+                <div class="worry-list">
+                    <img src="char_03.png" alt="ランシードくん" class="char-mini char-worry js-fade">
                     
-                    <div class="dl-badges">
-                        <div class="badge">最短7日で現金化</div>
-                        <div class="badge">仲介手数料０円</div>
-                        <div class="badge">秘密厳守</div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span class="worry-text">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span class="worry-text">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span class="worry-text">不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span class="worry-text">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
+                </div>
+            </section>
+
+            <section class="difference">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">DIFFERENCE</span>
+                    <h2 class="sec-ja">時間でわかる！他社との圧倒的な違い</h2>
+                </div>
+
+                <div class="pc-timeline js-fade">
+                    <div class="tl-header">
+                        <div class="tl-head-other">一般的な仲介業者</div>
+                        <div class="tl-head-good">GOOD売買（弊社買取）</div>
                     </div>
 
-                    <div class="hero-video-wrapper js-fade is-active">
-                        <video src="https://www.lanseed.co.jp/images/top/mv.mp4" autoplay loop muted playsinline></video>
+                    <div class="tl-row">
+                        <div class="tl-time">1〜3日目</div>
+                        <div class="tl-box tl-other-box">査定・媒介契約の締結<span class="tl-note">広告や販売活動の準備に時間がかかります。</span></div>
+                        <div class="tl-box tl-good-box">スピード査定・条件提示<span class="tl-note">すぐに金額を提示し、ご納得いただければ即契約へ！</span></div>
                     </div>
+
+                    <div class="tl-row">
+                        <div class="tl-time time-accent">最短7日</div>
+                        <div class="tl-box tl-other-box">広告活動・内覧対応<span class="tl-note">見知らぬ人が家に来るため、掃除や立ち会いの手間。</span></div>
+                        <div class="tl-box tl-box-accent">ご契約・現金化完了！<span class="tl-note" style="color:#fff;">内覧対応一切不要。【仲介手数料０円】で解決。</span></div>
+                    </div>
+
+                    <div class="tl-row">
+                        <div class="tl-time">数ヶ月〜半年</div>
+                        <div class="tl-box tl-other-box">買主探し・値下げ交渉<span class="tl-note">いつ売れるか不透明。売れ残る不安が続きます。</span></div>
+                        <div class="tl-box tl-done">（すでに現金化済み）</div>
+                    </div>
+
+                    <div class="tl-row" style="margin-bottom:0;">
+                        <div class="tl-time" style="background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
+                        <div class="tl-box tl-other-box">やっと売却・現金化<span class="tl-note text-red">※さらに数十万円の【仲介手数料】が引かれます。</span></div>
+                        <div class="tl-box tl-done">（すでに現金化済み）</div>
+                    </div>
+                </div>
+
+                <div class="sp-timeline js-fade">
+                    <div class="swipe-hint">横にスクロールして時間経過を比較 👉</div>
                     
-                    <p class="hero-text">
-                        不要な土地、空き家、相続不動産…<br>
-                        色々な理由での不動産の悩み事を一緒に解決できるよう頑張ります！
-                    </p>
-                </section>
+                    <div class="horizontal-scroll-container">
+                        <div class="sp-tl-track">
+                            <div class="sp-tl-line"></div>
 
-                <section class="worry">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">WORRY</span>
-                        <h2 class="sec-ja">こんなお悩みありませんか？</h2>
-                    </div>
-
-                    <div class="worry-list">
-                        <img src="char_03.png" alt="ランシードくん" class="char-mini char-worry js-fade">
-                        
-                        <div class="worry-item js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span class="worry-text">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
-                        <div class="worry-item js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span class="worry-text">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
-                        <div class="worry-item js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span class="worry-text">不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
-                        <div class="worry-item js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span class="worry-text">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
-                    </div>
-                </section>
-
-                <section class="difference">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">DIFFERENCE</span>
-                        <h2 class="sec-ja">時間でわかる！他社との圧倒的な違い</h2>
-                    </div>
-
-                    <div class="pc-timeline js-fade">
-                        <div class="tl-header">
-                            <div class="tl-head-other">一般的な仲介業者</div>
-                            <div class="tl-head-good">GOOD売買（弊社買取）</div>
-                        </div>
-
-                        <div class="tl-row">
-                            <div class="tl-time">1〜3日目</div>
-                            <div class="tl-box tl-other-box">査定・媒介契約の締結<span class="tl-note">広告や販売活動の準備に時間がかかります。</span></div>
-                            <div class="tl-box tl-good-box">スピード査定・条件提示<span class="tl-note">すぐに金額を提示し、ご納得いただければ即契約へ！</span></div>
-                        </div>
-
-                        <div class="tl-row">
-                            <div class="tl-time time-accent">最短7日</div>
-                            <div class="tl-box tl-other-box">広告活動・内覧対応<span class="tl-note">見知らぬ人が家に来るため、掃除や立ち会いの手間。</span></div>
-                            <div class="tl-box tl-box-accent">ご契約・現金化完了！<span class="tl-note" style="color:#fff;">内覧対応一切不要。【仲介手数料０円】で解決。</span></div>
-                        </div>
-
-                        <div class="tl-row">
-                            <div class="tl-time">数ヶ月〜半年</div>
-                            <div class="tl-box tl-other-box">買主探し・値下げ交渉<span class="tl-note">いつ売れるか不透明。売れ残る不安が続きます。</span></div>
-                            <div class="tl-box tl-done">（すでに現金化済み）</div>
-                        </div>
-
-                        <div class="tl-row" style="margin-bottom:0;">
-                            <div class="tl-time" style="background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
-                            <div class="tl-box tl-other-box">やっと売却・現金化<span class="tl-note text-red">※さらに数十万円の【仲介手数料】が引かれます。</span></div>
-                            <div class="tl-box tl-done">（すでに現金化済み）</div>
-                        </div>
-                    </div>
-
-                    <div class="sp-timeline js-fade">
-                        <div class="swipe-hint">横にスクロールして時間経過を比較 👉</div>
-                        
-                        <div class="horizontal-scroll-container">
-                            <div class="sp-tl-track">
-                                <div class="sp-tl-line"></div>
-
-                                <div class="sp-tl-col label-col">
-                                    <div class="sp-tl-top g-lbl-other">一般的な仲介</div>
-                                    <div class="sp-tl-mid"></div>
-                                    <div class="sp-tl-bottom g-lbl-good">GOOD売買</div>
-                                </div>
-
-                                <div class="sp-tl-col content-col">
-                                    <div class="sp-tl-top tl-other-box">
-                                        <span class="box-title">査定・媒介契約</span>
-                                        <span class="tl-note">準備に時間がかかります</span>
-                                    </div>
-                                    <div class="sp-tl-mid">
-                                        <span class="grid-time">1〜3日目</span>
-                                    </div>
-                                    <div class="sp-tl-bottom tl-good-box">
-                                        <span class="box-title">スピード査定・提示</span>
-                                        <span class="tl-note">ご納得で即契約へ！</span>
-                                    </div>
-                                </div>
-
-                                <div class="sp-tl-col content-col">
-                                    <div class="sp-tl-top tl-other-box">
-                                        <span class="box-title">広告・内覧対応</span>
-                                        <span class="tl-note">掃除や立ち会いの手間</span>
-                                    </div>
-                                    <div class="sp-tl-mid">
-                                        <span class="grid-time time-accent">最短7日</span>
-                                    </div>
-                                    <div class="sp-tl-bottom tl-box-accent">
-                                        <span class="box-title">ご契約・現金化！</span>
-                                        <span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span>
-                                    </div>
-                                </div>
-
-                                <div class="sp-tl-col content-col">
-                                    <div class="sp-tl-top tl-other-box">
-                                        <span class="box-title">買主探し・値下げ</span>
-                                        <span class="tl-note">売れ残る不安が続きます</span>
-                                    </div>
-                                    <div class="sp-tl-mid">
-                                        <span class="grid-time">数ヶ月〜半年</span>
-                                    </div>
-                                    <div class="sp-tl-bottom tl-done">
-                                        （現金化済み）
-                                    </div>
-                                </div>
-
-                                <div class="sp-tl-col content-col">
-                                    <div class="sp-tl-top tl-other-box">
-                                        <span class="box-title">売却・現金化</span>
-                                        <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
-                                    </div>
-                                    <div class="sp-tl-mid">
-                                        <span class="grid-time" style="background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</span>
-                                    </div>
-                                    <div class="sp-tl-bottom tl-done">
-                                        （現金化済み）
-                                    </div>
-                                </div>
-
+                            <div class="sp-tl-col label-col">
+                                <div class="sp-tl-top g-lbl-other">一般的な仲介</div>
+                                <div class="sp-tl-mid"></div>
+                                <div class="sp-tl-bottom g-lbl-good">GOOD売買</div>
                             </div>
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">査定・媒介契約</span>
+                                    <span class="tl-note">準備に時間がかかります</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time">1〜3日目</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-good-box">
+                                    <span class="box-title">スピード査定・提示</span>
+                                    <span class="tl-note">ご納得で即契約へ！</span>
+                                </div>
+                            </div>
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">広告・内覧対応</span>
+                                    <span class="tl-note">掃除や立ち会いの手間</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time time-accent">最短7日</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-box-accent">
+                                    <span class="box-title">ご契約・現金化！</span>
+                                    <span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span>
+                                </div>
+                            </div>
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">買主探し・値下げ</span>
+                                    <span class="tl-note">売れ残る不安が続きます</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time">数ヶ月〜半年</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-done">
+                                    （現金化済み）
+                                </div>
+                            </div>
+
+                            <div class="sp-tl-col content-col">
+                                <div class="sp-tl-top tl-other-box">
+                                    <span class="box-title">売却・現金化</span>
+                                    <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
+                                </div>
+                                <div class="sp-tl-mid">
+                                    <span class="grid-time" style="background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</span>
+                                </div>
+                                <div class="sp-tl-bottom tl-done">
+                                    （現金化済み）
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="reason">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">REASON</span>
-                        <h2 class="sec-ja">GOOD売買が選ばれる理由</h2>
-                    </div>
+            <section class="reason">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">REASON</span>
+                    <h2 class="sec-ja">GOOD売買が選ばれる理由</h2>
+                </div>
+                
+                <div class="reason-box js-fade">
+                    <p class="text-red" style="font-size:clamp(1.25rem, 3vw, 1.5rem); font-weight:900; margin-bottom:15px; line-height: 1.4;">契約欲しさの「囲い込み」はしません！</p>
+                    <p style="font-weight:700; margin:0; line-height: 1.8;">弊社は<strong>「買取専門店」</strong>。<br>提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
+                </div>
+                
+                <div class="honest-box js-fade">
+                    <img src="char_05.png" alt="ランシードくん" class="char-mini char-reason">
                     
-                    <div class="reason-box js-fade">
-                        <p class="text-red" style="font-size:clamp(1.25rem, 3vw, 1.5rem); font-weight:900; margin-bottom:15px; line-height: 1.4;">契約欲しさの「囲い込み」はしません！</p>
-                        <p style="font-weight:700; margin:0; line-height: 1.8;">弊社は<strong>「買取専門店」</strong>。<br>提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
-                    </div>
+                    <h3>【正直にお伝えします】デメリットについて</h3>
+                    <p>仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
+                </div>
+            </section>
+
+            <section class="area">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">AREA</span>
+                    <h2 class="sec-ja">買取強化エリア</h2>
+                </div>
+                <div class="area-tags js-fade">
+                    <span class="area-tag">明石市</span><span class="area-tag">神戸市</span><span class="area-tag">加古郡</span><span class="area-tag">加古川市</span><span class="area-tag">高砂市</span>
+                </div>
+            </section>
+
+            <section id="contact" style="margin-bottom: 0;">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">CONTACT</span>
+                    <h2 class="sec-ja">無料査定・ご相談</h2>
+                    <p style="margin-top:15px; font-weight:700; color:var(--text-muted);">下記項目を選択して送信してください。<br>1分で完了します！</p>
+                </div>
+                
+                <div class="form-wrapper js-fade">
+                    <img src="char_01.png" alt="ランシードくん" class="char-mini char-form">
                     
-                    <div class="honest-box js-fade">
-                        <img src="char_05.png" alt="ランシードくん" class="char-mini char-reason">
-                        
-                        <h3>【正直にお伝えします】デメリットについて</h3>
-                        <p>仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
-                    </div>
-                </section>
-
-                <section class="movie">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">MOVIE</span>
-                        <h2 class="sec-ja">1分でわかる弊社の取り組み</h2>
-                    </div>
-                    <div class="iframe-wrapper video-wrapper js-fade">
-                        <iframe src="https://www.youtube.com/embed/2fFRqJS0dsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </section>
-
-                <section class="area">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">AREA</span>
-                        <h2 class="sec-ja">買取強化エリア</h2>
-                    </div>
-                    <div class="area-tags js-fade">
-                        <span class="area-tag">明石市</span><span class="area-tag">神戸市</span><span class="area-tag">加古郡</span><span class="area-tag">加古川市</span><span class="area-tag">高砂市</span>
-                    </div>
-                </section>
-
-                <section id="contact" style="margin-bottom: 0;">
-                    <div class="sec-header js-fade">
-                        <span class="sec-en">CONTACT</span>
-                        <h2 class="sec-ja">無料査定・ご相談</h2>
-                        <p style="margin-top:15px; font-weight:700; color:var(--text-muted);">下記項目を選択して送信してください。<br>1分で完了します！</p>
-                    </div>
-                    
-                    <div class="form-wrapper js-fade">
-                        <img src="char_01.png" alt="ランシードくん" class="char-mini char-form">
-                        
-                        <script>
-                            var submitted = false;
-                            function showSuccessMessage() {
-                                if(submitted) {
-                                    document.getElementById('customForm').style.display = 'none';
-                                    document.getElementById('successMessage').style.display = 'block';
-                                }
+                    <script>
+                        var submitted = false;
+                        function showSuccessMessage() {
+                            if(submitted) {
+                                document.getElementById('customForm').style.display = 'none';
+                                document.getElementById('successMessage').style.display = 'block';
                             }
-                        </script>
-                        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="showSuccessMessage();"></iframe>
+                        }
+                    </script>
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="showSuccessMessage();"></iframe>
+                    
+                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQ7eleeEcYCT1YLAkTFa6RGUD5ISm7IVe_HCJvsGL5zPuF2A/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
                         
-                        <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQ7eleeEcYCT1YLAkTFa6RGUD5ISm7IVe_HCJvsGL5zPuF2A/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
-                            
-                            <div class="form-group">
-                                <label class="form-label">売却を検討されているのはどちらですか？ <span class="required">必須</span></label>
-                                <div class="radio-group">
-                                    <label class="radio-card"><input type="radio" name="entry.1230365107" value="マンション" required><span class="radio-card-content">マンション</span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.1230365107" value="戸建て"><span class="radio-card-content">戸建て</span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.1230365107" value="土地"><span class="radio-card-content">土地</span></label>
-                                </div>
+                        <div class="form-group">
+                            <label class="form-label">売却を検討されているのはどちらですか？ <span class="required">必須</span></label>
+                            <div class="radio-group">
+                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="マンション" required><span class="radio-card-content">マンション</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="戸建て"><span class="radio-card-content">戸建て</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="土地"><span class="radio-card-content">土地</span></label>
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-label">売却予定時期はいつ頃でしょうか？ <span class="required">必須</span></label>
-                                <div class="radio-group timing-group">
-                                    <label class="radio-card"><input type="radio" name="entry.557509174" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.557509174" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
-                                    <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">備考 <span class="optional">任意</span></label>
-                                <textarea name="entry.946392948" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
-                            </div>
-                            
-                            <button type="submit" class="btn-submit">送信する</button>
-                        </form>
-
-                        <div id="successMessage" class="success-message" style="display:none;">
-                            <h3>送信が完了しました！</h3>
-                            <p style="font-weight:700; margin:0;">お問い合わせいただきありがとうございます。<br>担当者より内容を確認させていただきます。</p>
                         </div>
+
+                        <div class="form-group">
+                            <label class="form-label">売却予定時期はいつ頃でしょうか？ <span class="required">必須</span></label>
+                            <div class="radio-group timing-group">
+                                <label class="radio-card"><input type="radio" name="entry.557509174" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
+                                <label class="radio-card"><input type="radio" name="entry.557509174" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" style="flex-wrap: nowrap;">備考 <span class="optional">任意</span></label>
+                            <textarea name="entry.946392948" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">送信する</button>
+                    </form>
+
+                    <div id="successMessage" class="success-message" style="display:none;">
+                        <h3>送信が完了しました！</h3>
+                        <p style="font-weight:700; margin:0;">お問い合わせいただきありがとうございます。<br>担当者より内容を確認させていただきます。</p>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <footer class="sp-footer js-fade">
-                    <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (株式会社LANSEED)</a>
-                    <p>&copy; 2026 LANSEED Co., Ltd. All Rights Reserved.</p>
-                </footer>
+            <footer class="sp-footer js-fade">
+                <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (株式会社LANSEED)</a>
+                <p>&copy; 2026 LANSEED Co., Ltd. All Rights Reserved.</p>
+            </footer>
 
-            </main>
-        </div>
+        </main>
     </div>
 
     <div class="sp-floating-cta" id="floating-btn">
