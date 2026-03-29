@@ -11,13 +11,12 @@
 
     <style>
         :root {
-            /* 指定カラーを維持 */
             --primary: #027130;
             --secondary: #FAFAFA;
             --accent: #F08200;
             --text-main: #333333;
             --text-muted: #666666;
-            --bg-gray: #f2f6f9; /* 参考サイト風の少し青みがかったクリーンなグレー */
+            --bg-gray: #f4f7f9;
         }
 
         html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
@@ -26,7 +25,7 @@
             font-family: 'Noto Sans JP', sans-serif;
             color: var(--text-main);
             line-height: 1.8;
-            background-color: var(--secondary);
+            background-color: #fff;
             font-size: 16px;
             scroll-behavior: smooth;
         }
@@ -34,461 +33,425 @@
         *, *::before, *::after { box-sizing: border-box; }
         img, svg { max-width: 100%; height: auto; display: block; }
         
-        /* 余白をたっぷりとるADAY風のコンテナ */
-        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; }
-        section { padding: 120px 0; overflow: hidden; }
-        .bg-gray { background-color: var(--bg-gray); }
-        
         /* タイポグラフィ */
-        .text-huge { font-size: clamp(2rem, 6vw, 3rem); font-weight: 900; line-height: 1.4; color: var(--primary); letter-spacing: 0.05em; }
+        .text-huge { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.3; color: var(--primary); letter-spacing: 0.05em; }
         .text-red { color: var(--accent); }
         .marker-yellow { background: linear-gradient(transparent 70%, #fef08a 70%); font-weight: 700; display: inline; }
 
-        /* 参考サイト風の見出し構造（英語＋日本語） */
-        .sec-title-wrap { text-align: center; margin-bottom: 60px; }
-        .sec-title-en { 
-            font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 900; 
-            color: var(--accent); letter-spacing: 0.15em; display: block; margin-bottom: 8px;
-        }
-        .sec-title-ja { 
-            font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 900; color: var(--primary); 
-            margin: 0; line-height: 1.4; letter-spacing: 0.05em;
-        }
+        .sec-title-wrap { text-align: center; margin-bottom: 50px; }
+        .sec-title-en { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 900; color: var(--accent); letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+        .sec-title-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 900; color: var(--primary); margin: 0; line-height: 1.4; letter-spacing: 0.05em; }
 
         /* =========================================
-           ファーストビュー (FV) - クリーン＆ミニマル
+           大枠レイアウト：参考サイト風 2カラム設計
            ========================================= */
-        .fv {
-            background-color: var(--secondary);
-            text-align: center; padding: 80px 10px 120px; position: relative;
-            /* 控えめなドットパターン */
-            background-image: radial-gradient(#027130 0.5px, transparent 0.5px), radial-gradient(#027130 0.5px, #FAFAFA 0.5px);
-            background-size: 40px 40px; background-position: 0 0, 20px 20px;
-            background-color: var(--secondary);
+        .layout-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
         }
 
-        .fv-badge {
-            background-color: var(--primary); color: #fff; padding: 6px 20px; border-radius: 50px;
-            display: inline-block; font-weight: 900; font-size: clamp(0.85rem, 2vw, 1rem); margin-bottom: 30px;
-            letter-spacing: 0.1em;
+        /* 左側（固定フォームエリア） */
+        .layout-left {
+            flex: 0 0 450px; /* PCでは幅450pxで固定 */
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background-color: var(--bg-gray);
+            border-right: 1px solid #e2e8f0;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            /* スクロールバー非表示で美しく */
+            scrollbar-width: none;
         }
-        
-        .fv-catch-sub { font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 900; color: var(--text-muted); margin-bottom: 15px; display: block; }
-        
-        .char-area { display: flex; align-items: flex-end; justify-content: center; margin: 50px 0 30px; gap: 20px; }
-        .balloon {
-            position: relative; background: #fff; padding: 18px 30px;
-            border-radius: 24px; font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 900; color: var(--primary);
-            box-shadow: 0 10px 30px rgba(2, 113, 48, 0.08); line-height: 1.5;
-        }
-        .balloon::after {
-            content: ""; position: absolute; bottom: -12px; left: 30px;
-            border: 12px solid transparent; border-top: 12px solid #fff; border-left: 12px solid #fff;
-            transform: skewX(-15deg); filter: drop-shadow(2px 5px 5px rgba(2,113,48,0.05));
+        .layout-left::-webkit-scrollbar { display: none; }
+
+        /* 右側（スクロールするコンテンツエリア） */
+        .layout-right {
+            flex: 1;
+            min-width: 0;
+            background-color: #fff;
         }
 
-        .dummy-char { width: clamp(120px, 20vw, 160px); height: clamp(120px, 20vw, 160px); animation: float-char 4s ease-in-out infinite; z-index: 2; }
-        .char-mini { width: 60px; height: 60px; position: absolute; }
-
-        /* CTAボタン - ADAY風の角丸で柔らかいシャドウ */
-        .btn-wrap { text-align: center; margin-top: 40px; }
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            background-color: var(--accent); color: #ffffff;
-            padding: 20px 40px; border-radius: 50px; font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 900; text-decoration: none;
-            box-shadow: 0 10px 20px rgba(240, 130, 0, 0.25); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            width: 100%; max-width: 400px; border: none; cursor: pointer; letter-spacing: 0.05em;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(240, 130, 0, 0.3); }
-        .btn:active { transform: translateY(2px); box-shadow: 0 5px 10px rgba(240, 130, 0, 0.2); }
+        .right-section { padding: 80px 5%; overflow: hidden; }
+        .right-section.bg-light { background-color: #fafbfc; }
 
         /* =========================================
-           悩み・理由セクション（モダンカード）
+           左側（フォーム）のスタイル
            ========================================= */
-        .worry-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .modern-card {
-            background: #fff; padding: 30px 40px; border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.04); display: flex; align-items: center;
-            font-size: 1.15rem; font-weight: 700; transition: transform 0.3s ease;
-        }
-        .modern-card:hover { transform: translateY(-5px); }
-        .worry-icon { color: var(--accent); font-size: 1.8rem; margin-right: 20px; font-weight: 900; }
+        .sidebar-form-title { font-size: 1.8rem; font-weight: 900; color: var(--primary); text-align: center; margin: 0 0 10px 0; }
+        .sidebar-form-desc { text-align: center; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
 
-        .honest-box {
-            background-color: #fff; border-radius: 24px; padding: 50px 40px; margin-top: 60px;
-            box-shadow: 0 15px 50px rgba(240, 130, 0, 0.08); position: relative; border: 2px solid #feebc8;
-        }
-        .honest-box h3 { color: var(--accent); font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0 0 20px 0; text-align: center; font-weight: 900; }
-
-        /* =========================================
-           【PC版】時間軸比較（縦軸・クリーンデザイン）
-           ========================================= */
-        .pc-comparison { margin-top: 30px; width: 100%; }
-        .timeline-wrap-vert { 
-            background: #fff; border-radius: 32px; padding: 60px 40px; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.05); 
-        }
-        .tl-header-vert { display: flex; justify-content: space-between; margin-bottom: 50px; font-weight: 900; text-align: center; font-size: 1.2rem; }
-        .tl-other-head { width: 42%; color: var(--text-muted); padding: 15px; border-bottom: 3px solid #cbd5e1; }
-        .tl-good-head { width: 42%; color: var(--primary); padding: 15px; border-bottom: 3px solid var(--primary); font-size: 1.3rem; }
+        .form-group { margin-bottom: 30px; }
+        .form-label { display: block; font-size: 1rem; font-weight: 900; color: var(--primary); margin-bottom: 12px; }
+        .required { background-color: var(--accent); color: #fff; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .optional { background-color: #94a3b8; color: #fff; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         
-        .tl-row-vert { display: flex; justify-content: space-between; position: relative; margin-bottom: 60px; align-items: center; }
-        .tl-row-vert::before { content: ''; position: absolute; left: 50%; top: 40px; bottom: -80px; width: 2px; background-color: #e2e8f0; transform: translateX(-50%); z-index: 1; }
-        .tl-row-vert:last-child::before { display: none; }
-        
-        .tl-time-vert {
-            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-            background-color: var(--secondary); color: var(--text-muted); width: 120px; padding: 8px 0; border-radius: 50px;
-            font-size: 0.95rem; font-weight: 900; z-index: 2; border: 2px solid #e2e8f0; text-align: center;
-        }
-        .time-accent { background-color: var(--accent); color: #fff; border-color: var(--accent); }
-        
-        .tl-box-vert { width: 40%; padding: 30px; border-radius: 20px; z-index: 2; position: relative; font-weight: 700; font-size: 1.1rem; line-height: 1.6; }
-        .tl-other-box { background-color: var(--bg-gray); color: var(--text-muted); }
-        .tl-good-box { background-color: #e6f4ea; color: var(--primary); box-shadow: 0 10px 30px rgba(2, 113, 48, 0.08); }
-        .tl-done { opacity: 0.4; background-color: transparent; text-align: center; color: var(--text-muted); }
-        .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; color: inherit; opacity: 0.8; }
-
-        /* =========================================
-           【SP版】時間軸比較（横スクロール）
-           ========================================= */
-        .sp-comparison { display: none; margin-top: 20px; }
-        .swipe-hint { text-align: center; color: var(--text-muted); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; animation: swipe-anim 2s infinite; }
-        @keyframes swipe-anim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
-
-        .horizontal-scroll-container {
-            margin: 0 -24px; padding: 0 24px 30px; width: calc(100% + 48px);
-            overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity;
-        }
-        .horizontal-scroll-container::-webkit-scrollbar { display: none; } /* スクロールバー非表示でよりアプリライクに */
-
-        .tl-grid {
-            display: grid;
-            grid-template-columns: 140px repeat(4, 220px);
-            grid-template-rows: 1fr auto 1fr;
-            gap: 20px 15px;
-            min-width: 1020px; 
-            position: relative;
-        }
-
-        .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid #cbd5e1; }
-        .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); font-size: 1rem; }
-        .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.9rem; padding: 10px; }
-
-        .grid-box { padding: 20px; border-radius: 20px; font-size: 0.95rem; font-weight: 700; text-align: center; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; scroll-snap-align: center; }
-
-        .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
-        .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: #e2e8f0; z-index: 1; }
-
-        .grid-time {
-            grid-row: 2; justify-self: center; align-self: center;
-            background: var(--secondary); border: 2px solid #e2e8f0; color: var(--text-muted);
-            padding: 6px 20px; border-radius: 50px; font-weight: 900; font-size: 0.85rem;
-            z-index: 2; position: relative; white-space: nowrap;
-        }
-        .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; }
-
-        /* エリアタグ */
-        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 40px; }
-        .area-tag { background-color: #fff; color: var(--primary); padding: 15px 30px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(2, 113, 48, 0.08); }
-
-        /* フォーム（ADAY風のクリーンUI） */
-        .custom-form-wrapper { background-color: #fff; border-radius: 32px; padding: 60px 50px; margin-top: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 40px; }
-        .form-label { display: block; font-size: 1.1rem; font-weight: 900; color: var(--primary); margin-bottom: 20px; line-height: 1.4; }
-        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 50px; margin-left: 10px; vertical-align: text-bottom; }
-        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 50px; margin-left: 10px; vertical-align: text-bottom; }
-        
-        .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .timing-group { grid-template-columns: repeat(5, 1fr); }
+        .radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .radio-card input[type="radio"] { display: none; }
         .radio-card-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px 10px; border: 2px solid #e2e8f0; border-radius: 16px; font-weight: 700; color: var(--text-muted);
+            padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: 700; color: var(--text-muted); font-size: 0.9rem;
             cursor: pointer; transition: all 0.2s; text-align: center; height: 100%; background-color: #fff;
         }
-        .radio-card-content small { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 8px; }
-        .radio-card input[type="radio"]:checked + .radio-card-content { background-color: #e6f4ea; border-color: var(--primary); color: var(--primary); box-shadow: 0 5px 15px rgba(2, 113, 48, 0.1); }
+        .radio-card-content small { display: block; font-size: 0.75rem; font-weight: normal; margin-top: 4px; }
+        .radio-card input[type="radio"]:checked + .radio-card-content { background-color: #e6f4ea; border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 10px rgba(2, 113, 48, 0.1); }
         
+        /* タイミングのラジオは横幅いっぱいなど調整 */
+        .timing-group { grid-template-columns: 1fr 1fr; }
+        .timing-group label:last-child { grid-column: span 2; }
+
         .form-textarea {
-            width: 100%; padding: 20px; border: 2px solid #e2e8f0; border-radius: 16px;
-            font-size: 1rem; font-family: inherit; color: var(--text-main);
-            resize: vertical; min-height: 140px; transition: border-color 0.2s; background-color: var(--secondary);
+            width: 100%; padding: 15px; border: 2px solid #cbd5e1; border-radius: 8px;
+            font-size: 0.95rem; font-family: inherit; color: var(--text-main);
+            resize: vertical; min-height: 100px; transition: border-color 0.2s;
         }
-        .form-textarea:focus { outline: none; border-color: var(--primary); background-color: #fff; }
+        .form-textarea:focus { outline: none; border-color: var(--primary); }
         
-        .success-message { text-align: center; padding: 50px 20px; background-color: #e6f4ea; border-radius: 24px; margin-top: 20px; }
-        .success-message h3 { color: var(--primary); margin: 0 0 15px 0; font-size: 1.5rem; font-weight: 900; }
-
-        /* フッター・追従CTA */
-        .floating-cta { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(250,250,250,1) 60%, rgba(250,250,250,0)); padding: 20px; z-index: 100; text-align: center; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .floating-cta.show { transform: translateY(0); }
-        .floating-cta .btn { margin: 0 auto; width: 100%; font-size: 1.2rem; padding: 18px 20px; box-shadow: 0 10px 25px rgba(240, 130, 0, 0.3); }
+        .btn-submit {
+            display: flex; align-items: center; justify-content: center; width: 100%;
+            background-color: var(--accent); color: #ffffff;
+            padding: 20px; border-radius: 50px; font-size: 1.2rem; font-weight: 900; text-decoration: none;
+            box-shadow: 0 8px 20px rgba(240, 130, 0, 0.3); transition: all 0.3s;
+            border: none; cursor: pointer; letter-spacing: 0.05em; margin-top: 10px;
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(240, 130, 0, 0.4); }
         
-        footer { padding: 80px 20px 160px; text-align: center; background-color: #fff; color: var(--text-muted); border-top: 1px solid #e2e8f0; }
-        footer p { margin: 0 0 15px 0; }
-        footer a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
-
-        .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .js-fade.is-active { opacity: 1; transform: translateY(0); }
-        @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .success-message { text-align: center; padding: 40px 20px; background-color: #e6f4ea; border-radius: 16px; margin-top: 20px; border: 2px solid var(--primary); }
+        .success-message h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.3rem; font-weight: 900; }
 
         /* =========================================
-           レスポンシブ (SP)
+           右側（コンテンツ）のスタイル
            ========================================= */
-        @media (max-width: 768px) {
-            section { padding: 80px 0; }
-            .sec-title-wrap { margin-bottom: 40px; }
-            .modern-card { padding: 24px; font-size: 1rem; border-radius: 20px; }
-            .honest-box { padding: 40px 24px; border-radius: 20px; }
-            .custom-form-wrapper { padding: 40px 24px; border-radius: 24px; }
-            .radio-group { grid-template-columns: 1fr; }
-            .timing-group { grid-template-columns: 1fr 1fr; }
-            .timing-group label:last-child { grid-column: span 2; }
+        .fv { text-align: center; padding-top: 40px; }
+        .fv-badge { background-color: var(--primary); color: #fff; padding: 6px 20px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.9rem; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .fv-catch-sub { font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 900; color: var(--text-muted); margin-bottom: 10px; display: block; }
+        
+        .char-area { display: flex; align-items: flex-end; justify-content: center; margin: 40px 0; gap: 20px; }
+        .balloon { position: relative; background: #fff; padding: 15px 25px; border-radius: 20px; font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; color: var(--primary); box-shadow: 0 10px 30px rgba(2, 113, 48, 0.08); border: 2px solid var(--primary); }
+        .balloon::after { content: ""; position: absolute; bottom: -10px; left: 20px; border: 10px solid transparent; border-top: 10px solid var(--primary); border-left: 10px solid var(--primary); transform: skewX(-15deg); }
+        .dummy-char { width: clamp(100px, 15vw, 140px); height: auto; animation: float-char 4s ease-in-out infinite; z-index: 2; }
+        .char-mini { width: 50px; height: 50px; position: absolute; }
 
-            .char-worry { top: -25px; right: 10px; width: 50px; height: 50px;}
-            .char-reason { top: -20px; left: 10px; width: 50px; height: 50px;}
+        .worry-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 600px; margin: 0 auto; }
+        .modern-card { background: #fff; padding: 25px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); display: flex; align-items: center; font-size: 1.1rem; font-weight: 700; border: 1px solid #e2e8f0; }
+        .worry-icon { color: var(--accent); font-size: 1.5rem; margin-right: 15px; font-weight: 900; }
 
-            /* 比較セクションの切り替え */
+        /* PC版：時間軸比較（縦軸） ※右カラムの幅に合わせてスリム化 */
+        .timeline-wrap-vert { background: #fff; border-radius: 24px; padding: 40px 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; max-width: 700px; margin: 0 auto; }
+        .tl-header-vert { display: flex; justify-content: space-between; margin-bottom: 40px; font-weight: 900; text-align: center; font-size: 1.1rem; }
+        .tl-other-head { width: 45%; color: var(--text-muted); padding: 10px; border-bottom: 3px solid #cbd5e1; }
+        .tl-good-head { width: 45%; color: var(--primary); padding: 10px; border-bottom: 3px solid var(--primary); font-size: 1.2rem; }
+        
+        .tl-row-vert { display: flex; justify-content: space-between; position: relative; margin-bottom: 40px; align-items: center; }
+        .tl-row-vert::before { content: ''; position: absolute; left: 50%; top: 30px; bottom: -50px; width: 2px; background-color: #e2e8f0; transform: translateX(-50%); z-index: 1; }
+        .tl-row-vert:last-child::before { display: none; }
+        
+        .tl-time-vert { position: absolute; left: 50%; top: 0; transform: translateX(-50%); background-color: var(--bg-gray); color: var(--text-muted); width: 90px; padding: 5px 0; border-radius: 30px; font-size: 0.85rem; font-weight: 900; z-index: 2; border: 2px solid #e2e8f0; text-align: center; line-height: 1.2; }
+        .time-accent { background-color: var(--accent); color: #fff; border-color: var(--accent); }
+        
+        .tl-box-vert { width: 42%; padding: 20px; border-radius: 12px; z-index: 2; position: relative; font-weight: 700; font-size: 0.95rem; line-height: 1.5; }
+        .tl-other-box { background-color: var(--bg-gray); color: var(--text-muted); }
+        .tl-good-box { background-color: #e6f4ea; color: var(--primary); border: 2px solid var(--primary); }
+        .tl-done { opacity: 0.4; text-align: center; color: var(--text-muted); background: transparent; padding: 10px; }
+        .tl-note { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 8px; opacity: 0.8; }
+
+        .honest-box { background-color: #fff; border-radius: 20px; padding: 40px 30px; margin: 40px auto 0; box-shadow: 0 15px 40px rgba(240, 130, 0, 0.05); border: 2px solid #fbd38d; max-width: 600px; position: relative; }
+        .honest-box h3 { color: var(--accent); font-size: 1.4rem; margin: 0 0 15px 0; text-align: center; font-weight: 900; }
+        .char-reason { top: -25px; left: -15px; }
+
+        .iframe-wrapper { position: relative; width: 100%; max-width: 700px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .video-wrapper { padding-bottom: 56.25%; height: 0; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 600px; margin: 0 auto; }
+        .area-tag { background-color: #fff; color: var(--primary); padding: 10px 20px; border-radius: 50px; font-weight: 900; font-size: 1rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+
+        footer { text-align: center; padding: 60px 20px; border-top: 1px solid #e2e8f0; color: var(--text-muted); }
+        
+        .sp-comparison { display: none; }
+        .sp-only-title { display: none; }
+        .floating-cta { display: none; }
+
+        .js-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .js-fade.is-active { opacity: 1; transform: translateY(0); }
+        @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* =========================================
+           レスポンシブ (SP) - 1カラムにスタック
+           ========================================= */
+        @media (max-width: 992px) {
+            .layout-wrapper { flex-direction: column; }
+            
+            /* 右側（コンテンツ）を上に配置 */
+            .layout-right { order: 1; width: 100%; }
+            .right-section { padding: 60px 20px; }
+            
+            /* 左側（フォーム）を下に配置し、固定を解除 */
+            .layout-left { order: 2; width: 100%; height: auto; position: relative; border-right: none; border-top: 4px solid var(--primary); padding: 60px 20px 120px; }
+
+            .text-huge { font-size: 2rem; }
+            .sec-title-ja { font-size: 1.6rem; }
+            .balloon { font-size: 1.1rem; padding: 12px 20px; }
+            .dummy-char { width: 110px; }
+            
+            /* 比較セクションの切り替え（SPは横スクロール） */
             .pc-comparison { display: none; }
-            .sp-comparison { display: block; }
+            .sp-comparison { display: block; margin-top: 20px; }
+
+            .swipe-hint { text-align: center; color: var(--text-muted); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; animation: swipe-anim 2s infinite; }
+            @keyframes swipe-anim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+
+            .horizontal-scroll-container { margin: 0 -20px; padding: 0 20px 20px; width: calc(100% + 40px); overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+            .horizontal-scroll-container::-webkit-scrollbar { display: none; }
+
+            .tl-grid { display: grid; grid-template-columns: 120px repeat(4, 180px); grid-template-rows: 1fr auto 1fr; gap: 15px 10px; min-width: 880px; position: relative; }
+            .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid #cbd5e1; }
+            .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); }
+            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.9rem; padding: 10px; }
+            .grid-box { padding: 15px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; text-align: center; display: flex; flex-direction: column; justify-content: center; line-height: 1.4; scroll-snap-align: center; background: #fff; border: 1px solid #e2e8f0; }
+            .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
+            .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: #e2e8f0; z-index: 1; }
+            .grid-time { grid-row: 2; justify-self: center; align-self: center; background: var(--bg-gray); border: 2px solid #e2e8f0; color: var(--text-muted); padding: 4px 16px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; }
+            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; }
+            .good-grid-box { background-color: #e6f4ea; border-color: var(--primary); color: var(--primary); }
+
+            .sp-only-title { display: block; margin-bottom: 30px; text-align: center; }
+
+            /* SP時のみ画面下部に追従するCTAボタン */
+            .floating-cta { display: block; position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(255,255,255,1) 70%, rgba(255,255,255,0)); padding: 15px 20px 25px; z-index: 100; text-align: center; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
+            .floating-cta.show { transform: translateY(0); }
+            .floating-cta .btn { margin: 0 auto; width: 100%; font-size: 1.2rem; padding: 18px 20px; box-shadow: 0 10px 20px rgba(240, 130, 0, 0.3); border-radius: 50px; display: inline-block; background: var(--accent); color: #fff; font-weight: 900; text-decoration: none; }
         }
     </style>
 </head>
 <body>
 
-    <header class="fv">
-        <div class="container fv-content js-fade is-active">
-            <div class="fv-badge">明石市・神戸市・加古川市密着</div>
-            
-            <div>
-                <span class="fv-catch-sub">「いつ売れるの？」「手残りはいくら？」</span>
-                <div class="text-huge">
-                    <span class="text-red">最短7日</span>で<br>スッキリ現金化。
-                </div>
+    <div class="layout-wrapper">
+        
+        <aside class="layout-left" id="contact-form">
+            <h2 class="sidebar-form-title sp-only-title">無料査定・ご相談</h2>
+            <div class="pc-only" style="text-align: center; margin-bottom: 20px;">
+                <span class="sec-title-en" style="margin-bottom: 5px;">CONTACT</span>
+                <h2 style="font-size: 1.6rem; color: var(--primary); margin: 0;">無料査定・ご相談</h2>
             </div>
+            <p class="sidebar-form-desc">最短1分で完了！<br>下記よりお気軽にお送りください。</p>
 
-            <div class="char-area">
-                <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
-                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#F08200" />
-                    <circle cx="65" cy="50" r="5" fill="#F08200" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
-                </svg>
-                <div class="balloon">不動産のモヤモヤ、<br>私たちが解決します！</div>
-            </div>
-            
-            <p style="font-weight: 700; color: var(--text-muted); margin-top: 20px;">秘密厳守・仲介手数料０円</p>
-            <div class="btn-wrap">
-                <a href="#contact" class="btn">無料で査定・相談する</a>
-            </div>
-        </div>
-    </header>
-
-    <section class="bg-gray">
-        <div class="container">
-            <div class="sec-title-wrap js-fade">
-                <span class="sec-title-en">WORRY</span>
-                <h2 class="sec-title-ja">こんなお悩みありませんか？</h2>
-            </div>
-            
-            <div style="position:relative;">
-                <svg class="char-mini char-worry js-fade" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#F08200" />
-                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#027130" />
-                    <circle cx="65" cy="50" r="5" fill="#027130" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#027130" stroke-width="4" fill="transparent" stroke-linecap="round" />
-                </svg>
-                <div class="worry-grid">
-                    <div class="modern-card js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span>不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
-                    <div class="modern-card js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span>〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
-                    <div class="modern-card js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span>不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
-                    <div class="modern-card js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span>遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <div class="sec-title-wrap js-fade">
-                <span class="sec-title-en">DIFFERENCE</span>
-                <h2 class="sec-title-ja">他社との圧倒的な違い</h2>
-            </div>
-
-            <div class="pc-comparison js-fade">
-                <div class="timeline-wrap-vert">
-                    <div class="tl-header-vert">
-                        <div class="tl-other-head">一般的な仲介業者</div>
-                        <div class="tl-good-head">GOOD売買（弊社買取）</div>
-                    </div>
-
-                    <div class="tl-row-vert">
-                        <div class="tl-time-vert">1〜3日目</div>
-                        <div class="tl-box-vert tl-other-box">査定・媒介契約の締結<span class="tl-note">広告や販売活動の準備に時間がかかります。</span></div>
-                        <div class="tl-box-vert tl-good-box">スピード査定・条件提示<span class="tl-note">すぐに金額を提示し、ご納得で即契約へ！</span></div>
-                    </div>
-
-                    <div class="tl-row-vert">
-                        <div class="tl-time-vert time-accent">最短7日</div>
-                        <div class="tl-box-vert tl-other-box">広告活動・内覧対応<span class="tl-note">見知らぬ人が家に来るため、掃除や立ち会いの手間。</span></div>
-                        <div class="tl-box-vert tl-good-box" style="background-color: var(--accent); color: #fff;">ご契約・現金化完了！<span class="tl-note" style="color:#fff; opacity:1;">内覧対応一切不要。【仲介手数料０円】で解決。</span></div>
-                    </div>
-
-                    <div class="tl-row-vert">
-                        <div class="tl-time-vert">数ヶ月〜半年</div>
-                        <div class="tl-box-vert tl-other-box">買主探し・値下げ交渉<span class="tl-note">いつ売れるか不透明。管理費の負担が続きます。</span></div>
-                        <div class="tl-box-vert tl-done">（すでに現金化済み）</div>
-                    </div>
-
-                    <div class="tl-row-vert" style="margin-bottom:0;">
-                        <div class="tl-time-vert" style="background-color:#e2e8f0; border-color:#e2e8f0;">ようやく完了</div>
-                        <div class="tl-box-vert tl-other-box">やっと売却・現金化<span class="tl-note text-red">※さらに【仲介手数料】が引かれます。</span></div>
-                        <div class="tl-box-vert tl-done">（すでに現金化済み）</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sp-comparison js-fade">
-                <div class="swipe-hint">横にスクロールして時間経過を比較 👉</div>
-                <div class="horizontal-scroll-container">
-                    <div class="tl-grid">
-                        <div class="grid-label g-lbl-other">一般的な仲介</div>
-                        <div class="grid-label g-lbl-good">GOOD売買</div>
-                        <div class="g-axis-line-container"></div>
-
-                        <div class="grid-box tl-other-box" style="grid-column: 2; grid-row: 1;">査定・媒介契約<span class="tl-note">準備に時間がかかります</span></div>
-                        <div class="grid-time" style="grid-column: 2;">1〜3日目</div>
-                        <div class="grid-box tl-good-box" style="grid-column: 2; grid-row: 3;">スピード査定・提示<span class="tl-note">ご納得で即契約へ！</span></div>
-
-                        <div class="grid-box tl-other-box" style="grid-column: 3; grid-row: 1;">広告・内覧対応<span class="tl-note">掃除や立ち会いの手間</span></div>
-                        <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
-                        <div class="grid-box" style="grid-column: 3; grid-row: 3; background-color: var(--accent); color: #fff;">現金化完了！<span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span></div>
-
-                        <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1;">買主探し・値下げ<span class="tl-note">売れ残る不安が続きます</span></div>
-                        <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
-                        <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3;">（現金化済み）</div>
-
-                        <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1;">売却・現金化<span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span></div>
-                        <div class="grid-time" style="grid-column: 5; background-color:#e2e8f0; border-color:#e2e8f0;">ようやく完了</div>
-                        <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3;">（現金化済み）</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="bg-gray">
-        <div class="container">
-            <div class="sec-title-wrap js-fade">
-                <span class="sec-title-en">REASON</span>
-                <h2 class="sec-title-ja">GOOD売買が選ばれる理由</h2>
-            </div>
-            
-            <div class="modern-card js-fade" style="flex-direction: column; text-align: center; gap: 15px;">
-                <p class="text-large text-red" style="margin:0;">契約欲しさの「囲い込み」はしません！</p>
-                <p style="color: var(--text-muted); margin:0;">弊社は<strong>「買取専門店」</strong>。提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
-            </div>
-            
-            <div class="honest-box js-fade">
-                <svg class="char-mini char-reason" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
-                    <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
-                    <circle cx="35" cy="50" r="5" fill="#F08200" />
-                    <circle cx="65" cy="50" r="5" fill="#F08200" />
-                    <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
-                </svg>
-                <h3>【正直にお伝えします】<br>デメリットについて</h3>
-                <p style="color: var(--text-muted); text-align: center;">仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <div class="sec-title-wrap js-fade">
-                <span class="sec-title-en">AREA</span>
-                <h2 class="sec-title-ja">買取強化エリア</h2>
-            </div>
-            <div class="area-tags js-fade">
-                <span class="area-tag">明石市</span><span class="area-tag">神戸市</span><span class="area-tag">加古郡</span><span class="area-tag">加古川市</span><span class="area-tag">高砂市</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="bg-gray">
-        <div class="container">
-            <div class="sec-title-wrap js-fade">
-                <span class="sec-title-en">CONTACT</span>
-                <h2 class="sec-title-ja">無料査定・ご相談</h2>
-                <p style="margin-top: 20px; color: var(--text-muted);">下記項目を選択して送信してください。<br>1分で完了します！</p>
-            </div>
-            
-            <div class="custom-form-wrapper js-fade">
-                <script>
-                    var submitted = false;
-                    function showSuccessMessage() {
-                        if(submitted) {
-                            document.getElementById('customForm').style.display = 'none';
-                            document.getElementById('successMessage').style.display = 'block';
-                        }
+            <script>
+                var submitted = false;
+                function showSuccessMessage() {
+                    if(submitted) {
+                        document.getElementById('customForm').style.display = 'none';
+                        document.getElementById('successMessage').style.display = 'block';
                     }
-                </script>
-                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="showSuccessMessage();"></iframe>
+                }
+            </script>
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="showSuccessMessage();"></iframe>
+            
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQ7eleeEcYCT1YLAkTFa6RGUD5ISm7IVe_HCJvsGL5zPuF2A/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
                 
-                <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQ7eleeEcYCT1YLAkTFa6RGUD5ISm7IVe_HCJvsGL5zPuF2A/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
-                    
-                    <div class="form-group">
-                        <label class="form-label">売却を検討されているのはどちらですか？ <span class="required">必須</span></label>
-                        <div class="radio-group">
-                            <label class="radio-card"><input type="radio" name="entry.1230365107" value="マンション" required><span class="radio-card-content">マンション</span></label>
-                            <label class="radio-card"><input type="radio" name="entry.1230365107" value="戸建て"><span class="radio-card-content">戸建て</span></label>
-                            <label class="radio-card"><input type="radio" name="entry.1230365107" value="土地"><span class="radio-card-content">土地</span></label>
-                        </div>
+                <div class="form-group">
+                    <label class="form-label">物件種別 <span class="required">必須</span></label>
+                    <div class="radio-group">
+                        <label class="radio-card"><input type="radio" name="entry.1230365107" value="マンション" required><span class="radio-card-content">マンション</span></label>
+                        <label class="radio-card"><input type="radio" name="entry.1230365107" value="戸建て"><span class="radio-card-content">戸建て</span></label>
+                        <label class="radio-card" style="grid-column: span 2;"><input type="radio" name="entry.1230365107" value="土地"><span class="radio-card-content">土地</span></label>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">売却予定時期はいつ頃でしょうか？ <span class="required">必須</span></label>
-                        <div class="radio-group timing-group">
-                            <label class="radio-card"><input type="radio" name="entry.557509174" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
-                            <label class="radio-card"><input type="radio" name="entry.557509174" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
-                            <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
-                            <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
-                            <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">備考 <span class="optional">任意</span></label>
-                        <textarea name="entry.946392948" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
-                    </div>
-                    
-                    <div class="btn-wrap" style="margin-top:0;">
-                        <button type="submit" class="btn">送信する</button>
-                    </div>
-                </form>
-
-                <div id="successMessage" class="success-message" style="display:none;">
-                    <h3>送信が完了しました！</h3>
-                    <p>お問い合わせいただきありがとうございます。<br>担当者より内容を確認させていただきます。</p>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <p style="font-weight: 900; font-size: 1.2rem; color: var(--primary);">株式会社LANSEED</p>
-            <p style="font-size: 0.9rem;">〒651-2133 兵庫県神戸市西区枝吉一丁目13番<br>営業時間：9:30〜19:30</p>
-            <p style="margin-top: 30px;"><small>&copy; 2026 LANSEED Co., Ltd.</small></p>
-        </div>
-    </footer>
+                <div class="form-group">
+                    <label class="form-label">売却予定時期 <span class="required">必須</span></label>
+                    <div class="radio-group timing-group">
+                        <label class="radio-card"><input type="radio" name="entry.557509174" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<small>（最短7日）</small></span></label>
+                        <label class="radio-card"><input type="radio" name="entry.557509174" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
+                        <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
+                        <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
+                        <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">備考・お問い合わせ <span class="optional">任意</span></label>
+                    <textarea name="entry.946392948" class="form-textarea" placeholder="所在地や面積、気になること等"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">送信する</button>
+            </form>
+
+            <div id="successMessage" class="success-message" style="display:none;">
+                <h3>送信完了</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin:0;">お問い合わせありがとうございます。<br>担当者よりご連絡いたします。</p>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: center; font-size: 0.85rem; color: #94a3b8;">
+                &copy; 2026 LANSEED Co., Ltd.
+            </div>
+        </aside>
+
+        <main class="layout-right">
+            
+            <section class="right-section fv">
+                <div class="js-fade is-active">
+                    <div class="fv-badge">明石市・神戸市・加古川市密着</div>
+                    <div>
+                        <span class="fv-catch-sub">「いつ売れる？」「手残りはいくら？」</span>
+                        <div class="text-huge">
+                            <span class="text-red">最短7日</span>で<br>スッキリ現金化。
+                        </div>
+                    </div>
+
+                    <div class="char-area">
+                        <svg class="dummy-char" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
+                            <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                            <circle cx="35" cy="50" r="5" fill="#F08200" />
+                            <circle cx="65" cy="50" r="5" fill="#F08200" />
+                            <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                        </svg>
+                        <div class="balloon">不動産のモヤモヤ<br>即解決します！</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-section bg-light">
+                <div class="sec-title-wrap js-fade">
+                    <span class="sec-title-en">WORRY</span>
+                    <h2 class="sec-title-ja">こんなお悩みありませんか？</h2>
+                </div>
+                <div style="position:relative; max-width:600px; margin:0 auto;">
+                    <div class="worry-grid">
+                        <div class="modern-card js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span>不要な空き家、<span class="marker-yellow">管理費だけ</span>払っている</span></div>
+                        <div class="modern-card js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span>〇月までに<span class="marker-yellow">急いで現金化</span>したい</span></div>
+                        <div class="modern-card js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span>不動産屋の「高く売れる」が<span class="marker-yellow">疑わしい</span></span></div>
+                        <div class="modern-card js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span>遠方の実家を相続、<span class="marker-yellow">どうしていいか不明</span></span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-section">
+                <div class="sec-title-wrap js-fade">
+                    <span class="sec-title-en">DIFFERENCE</span>
+                    <h2 class="sec-title-ja">他社との圧倒的な違い</h2>
+                </div>
+
+                <div class="pc-comparison js-fade">
+                    <div class="timeline-wrap-vert">
+                        <div class="tl-header-vert">
+                            <div class="tl-other-head">一般的な仲介</div>
+                            <div class="tl-good-head">GOOD売買</div>
+                        </div>
+
+                        <div class="tl-row-vert">
+                            <div class="tl-time-vert">1〜3日目</div>
+                            <div class="tl-box-vert tl-other-box">査定・媒介契約<span class="tl-note">準備に時間がかかります。</span></div>
+                            <div class="tl-box-vert tl-good-box">スピード査定・提示<span class="tl-note">すぐに金額を提示し即契約へ！</span></div>
+                        </div>
+
+                        <div class="tl-row-vert">
+                            <div class="tl-time-vert time-accent">最短7日</div>
+                            <div class="tl-box-vert tl-other-box">広告・内覧対応<span class="tl-note">掃除や立ち会いの手間。</span></div>
+                            <div class="tl-box-vert tl-good-box" style="background-color: var(--accent); color: #fff;">現金化完了！<span class="tl-note" style="color:#fff; opacity:1;">内覧不要。【手数料０円】で解決。</span></div>
+                        </div>
+
+                        <div class="tl-row-vert">
+                            <div class="tl-time-vert">数ヶ月〜半年</div>
+                            <div class="tl-box-vert tl-other-box">買主探し・値下げ<span class="tl-note">いつ売れるか不透明。</span></div>
+                            <div class="tl-box-vert tl-done">（現金化済み）</div>
+                        </div>
+
+                        <div class="tl-row-vert" style="margin-bottom:0;">
+                            <div class="tl-time-vert" style="background-color:#e2e8f0; border-color:#e2e8f0;">ようやく完了</div>
+                            <div class="tl-box-vert tl-other-box">売却・現金化<span class="tl-note text-red">※【仲介手数料】が引かれます。</span></div>
+                            <div class="tl-box-vert tl-done">（現金化済み）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sp-comparison js-fade">
+                    <div class="swipe-hint">横にスクロールして比較 👉</div>
+                    <div class="horizontal-scroll-container">
+                        <div class="tl-grid">
+                            <div class="grid-label g-lbl-other">一般的な仲介</div>
+                            <div class="grid-label g-lbl-good">GOOD売買</div>
+                            <div class="g-axis-line-container"></div>
+
+                            <div class="grid-box tl-other-box" style="grid-column: 2; grid-row: 1; color: var(--text-muted);">査定・媒介契約<span class="tl-note">準備に時間がかかります</span></div>
+                            <div class="grid-time" style="grid-column: 2;">1〜3日目</div>
+                            <div class="grid-box good-grid-box" style="grid-column: 2; grid-row: 3;">スピード査定・提示<span class="tl-note">ご納得で即契約へ！</span></div>
+
+                            <div class="grid-box tl-other-box" style="grid-column: 3; grid-row: 1; color: var(--text-muted);">広告・内覧対応<span class="tl-note">掃除や立ち会いの手間</span></div>
+                            <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
+                            <div class="grid-box" style="grid-column: 3; grid-row: 3; background-color: var(--accent); color: #fff; border-color: var(--accent);">現金化完了！<span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span></div>
+
+                            <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1; color: var(--text-muted);">買主探し・値下げ<span class="tl-note">売れ残る不安が続きます</span></div>
+                            <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
+                            <div class="grid-box" style="grid-column: 4; grid-row: 3; border-color: transparent; color: #94a3b8;">（現金化済み）</div>
+
+                            <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1; color: var(--text-muted);">売却・現金化<span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span></div>
+                            <div class="grid-time" style="grid-column: 5; background-color:#e2e8f0; border-color:#e2e8f0;">完了</div>
+                            <div class="grid-box" style="grid-column: 5; grid-row: 3; border-color: transparent; color: #94a3b8;">（現金化済み）</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="right-section bg-light">
+                <div class="sec-title-wrap js-fade">
+                    <span class="sec-title-en">REASON</span>
+                    <h2 class="sec-title-ja">選ばれる理由</h2>
+                </div>
+                
+                <div class="modern-card js-fade" style="flex-direction: column; text-align: center; gap: 15px; max-width: 600px; margin: 0 auto;">
+                    <p class="text-large text-red" style="margin:0;">契約欲しさの「囲い込み」はしません！</p>
+                    <p style="color: var(--text-muted); margin:0; font-size: 0.95rem;">弊社は<strong>「買取専門店」</strong>。提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
+                </div>
+                
+                <div class="honest-box js-fade">
+                    <svg class="char-mini char-reason" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 10 L90 45 L80 45 L80 90 L20 90 L20 45 L10 45 Z" fill="#027130" />
+                        <rect x="40" y="60" width="20" height="30" fill="#ffffff" />
+                        <circle cx="35" cy="50" r="5" fill="#F08200" />
+                        <circle cx="65" cy="50" r="5" fill="#F08200" />
+                        <path d="M45 60 Q50 65 55 60" stroke="#F08200" stroke-width="4" fill="transparent" stroke-linecap="round" />
+                    </svg>
+                    <h3>【正直にお伝えします】<br>デメリットについて</h3>
+                    <p style="color: var(--text-muted); text-align: center; font-size: 0.95rem;">仲介で一般の方に売却するより、<span class="marker-yellow">幾分か買取金額がダウンしてしまう</span>のが事実でありデメリットです。<br><br>しかし、その分<strong>「いつ売れるか分からない不安ゼロ」「仲介手数料ゼロ」「すぐに現金化」</strong>という確実な安心感をお約束します！</p>
+                </div>
+            </section>
+
+            <section class="right-section">
+                <div class="sec-title-wrap js-fade">
+                    <span class="sec-title-en">MOVIE</span>
+                    <h2 class="sec-title-ja">1分でわかる弊社の取り組み</h2>
+                </div>
+                <div class="iframe-wrapper video-wrapper js-fade">
+                    <iframe src="https://www.youtube.com/embed/2fFRqJS0dsE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </section>
+
+            <section class="right-section bg-light">
+                <div class="sec-title-wrap js-fade">
+                    <span class="sec-title-en">AREA</span>
+                    <h2 class="sec-title-ja">買取強化エリア</h2>
+                </div>
+                <div class="area-tags js-fade">
+                    <span class="area-tag">明石市</span><span class="area-tag">神戸市</span><span class="area-tag">加古郡</span><span class="area-tag">加古川市</span><span class="area-tag">高砂市</span>
+                </div>
+            </section>
+
+            <footer>
+                <p style="font-weight: 900; font-size: 1.2rem; color: var(--primary);">株式会社LANSEED</p>
+                <p style="font-size: 0.9rem;">〒651-2133 兵庫県神戸市西区枝吉一丁目13番<br>営業時間：9:30〜19:30</p>
+                <a href="https://www.lanseed.co.jp/" target="_blank">コーポレートサイトはこちら</a>
+            </footer>
+
+        </main>
+    </div>
 
     <div class="floating-cta" id="floating-btn">
-        <a href="#contact" class="btn">まずは無料で相談する</a>
+        <a href="#contact-form" class="btn">無料で査定・相談する</a>
     </div>
 
     <script>
@@ -499,10 +462,19 @@
             }, { root: null, rootMargin: '0px', threshold: 0.1 });
             fadeElements.forEach(el => observer.observe(el));
 
+            // スマホ時のみ追従ボタンを表示する制御
             const floatBtn = document.getElementById('floating-btn');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 400) floatBtn.classList.add('show');
-                else floatBtn.classList.remove('show');
+                if (window.innerWidth <= 992) {
+                    if (window.scrollY > 400) floatBtn.classList.add('show');
+                    else floatBtn.classList.remove('show');
+                } else {
+                    floatBtn.classList.remove('show'); // PCでは常に非表示
+                }
+            });
+            // 画面リサイズ時にもチェック
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 992) floatBtn.classList.remove('show');
             });
         });
     </script>
