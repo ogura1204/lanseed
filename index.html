@@ -14,13 +14,14 @@
            Reset & Base Styles
            ========================================= */
         :root {
-            --primary: #027130;     
-            --secondary: #FAFAFA;   
-            --accent: #F08200;      
-            --text-main: #333333;
-            --text-muted: #777777;
-            --bg-gray: #F4F4F4;     
-            --border-color: #EBEAE5;
+            /* より洗練されたモダンなカラーパレットへ調整 */
+            --primary: #005b26;     /* より深みのある上品なグリーン */
+            --secondary: #F2F4F6;   /* ADAY風の少し青みがかった淡いグレー */
+            --accent: #E66A00;      /* 落ち着きと目立ちやすさを両立したオレンジ */
+            --text-main: #1a1a1c;   /* 真っ黒ではなく、高級感のあるダークグレー */
+            --text-muted: #6b7280;
+            --bg-white: #FFFFFF;
+            --border-color: #E2E8F0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,9 +31,11 @@
             color: var(--text-main);
             font-family: 'Noto Sans JP', "Helvetica Neue", Arial, sans-serif;
             line-height: 1.8;
-            font-size: 15px;
+            font-size: 16px;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
+            word-break: auto-phrase; /* テキストの不自然な改行を防ぐ */
+            overflow-wrap: break-word;
         }
 
         a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
@@ -41,11 +44,10 @@
         .text-red { color: var(--accent); }
         .marker-yellow { background: linear-gradient(transparent 60%, #fef08a 60%); font-weight: 700; display: inline; }
 
-        /* 画像の画質維持・アスペクト比固定のための設定 */
         img { max-width: 100%; height: auto; display: block; object-fit: contain; }
 
         /* =========================================
-           Layout (PC 2カラム - ADAY構造)
+           Layout (PC 2カラム)
            ========================================= */
         .wrapper {
             display: flex;
@@ -58,51 +60,29 @@
            左側：サイドバー（固定）
            ----------------------------------------- */
         .sidebar {
-            width: 300px;
+            width: 320px;
             height: 100vh;
             position: sticky;
             top: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 60px 30px;
+            padding: 60px 40px;
             background-color: var(--secondary);
             flex-shrink: 0;
         }
 
         .sidebar-top { text-align: center; }
-        .sidebar-logo {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            letter-spacing: 0.05em;
-            margin-bottom: 30px;
-        }
-        
-        .sidebar-ill {
-            width: 140px; height: auto;
-            margin: 0 auto 20px;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .sidebar-catch {
-            font-size: 1rem;
-            font-weight: 900;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: var(--text-main);
-        }
+        .sidebar-logo { font-size: 2.2rem; font-weight: 900; color: var(--primary); letter-spacing: 0.05em; margin-bottom: 30px; }
+        .sidebar-ill { width: 150px; height: auto; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+        .sidebar-catch { font-size: 1.05rem; font-weight: 900; line-height: 1.6; margin-bottom: 40px; color: var(--text-main); }
 
         .btn-dl-sidebar {
             display: flex; align-items: center; justify-content: center;
-            background-color: var(--accent);
-            color: #ffffff;
-            padding: 18px 0;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(240, 130, 0, 0.3);
-            transition: transform 0.2s;
+            background: linear-gradient(135deg, #FF8811, var(--accent));
+            color: #ffffff; padding: 20px 0; border-radius: 50px;
+            font-weight: 900; font-size: 1.05rem;
+            box-shadow: 0 10px 25px rgba(230, 106, 0, 0.3); transition: transform 0.2s;
         }
         .btn-dl-sidebar:hover { transform: translateY(-3px); }
 
@@ -111,194 +91,209 @@
         .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
 
         /* -----------------------------------------
-           右側：メインコンテンツ（スクロール領域）
+           右側：メインコンテンツ
            ----------------------------------------- */
         .main-content {
             flex: 1;
-            background-color: #FFFFFF;
+            background-color: var(--bg-white);
             border-radius: 50px 0 0 50px;
             padding: 100px 8%;
             min-width: 0;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.02);
+            box-shadow: -15px 0 40px rgba(0,0,0,0.03);
         }
 
-        /* セクション共通 */
-        section { margin-bottom: 120px; }
-        .sec-header { text-align: center; margin-bottom: 60px; }
-        .sec-en { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 900; color: #B0B0B0; letter-spacing: 0.15em; display: block; margin-bottom: 10px; }
-        .sec-ja { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 900; color: var(--primary); margin: 0; letter-spacing: 0.05em; }
+        section { margin-bottom: 140px; }
+        .sec-header { text-align: center; margin-bottom: 70px; }
+        .sec-en { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 900; color: #cbd5e1; letter-spacing: 0.2em; display: block; margin-bottom: 10px; }
+        /* ジャンプ率を高めた見出し */
+        .sec-ja { font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 900; color: var(--primary); margin: 0; letter-spacing: 0.05em; line-height: 1.3; }
 
         /* =========================================
-           Hero セクション
+           Hero セクション (ジャンプ率を最大化)
            ========================================= */
         .hero { text-align: center; padding-top: 20px; }
-        .hero-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.4; margin-bottom: 40px; color: var(--primary); }
+        .hero-title { font-size: clamp(2.4rem, 6vw, 3.8rem); font-weight: 900; line-height: 1.3; margin-bottom: 40px; color: var(--primary); letter-spacing: -0.02em; }
         
         .dl-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
-        .badge { background: var(--bg-gray); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; }
+        .badge { background: var(--secondary); color: var(--text-main); border: 2px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 900; font-size: 1rem; }
         
         .hero-img-large {
             width: 100%; max-width: 800px; margin: 0 auto 50px;
-            background-color: var(--secondary);
-            border-radius: 30px; padding: 50px 20px;
+            background-color: var(--secondary); border-radius: 40px; padding: 60px 20px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 1px solid var(--border-color);
         }
         
-        /* アニメーション用キャラ */
-        .hero-char { width: clamp(120px, 20vw, 160px); height: auto; animation: float-char 3s ease-in-out infinite; margin-bottom: 20px; }
+        .hero-char { width: clamp(140px, 20vw, 180px); height: auto; animation: float-char 3s ease-in-out infinite; margin-bottom: 30px; }
         @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .hero-text { font-size: 1.15rem; font-weight: 700; line-height: 2; margin-bottom: 40px; }
+        .hero-text { font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 700; line-height: 2; margin-bottom: 40px; }
 
         /* =========================================
            お悩み (Worry) セクション
            ========================================= */
         .worry-list { max-width: 700px; margin: 0 auto; position: relative; }
         .worry-item {
-            margin-bottom: 20px; background-color: var(--secondary); border: 1px solid var(--border-color);
-            padding: 25px 30px; border-radius: 20px; display: flex; align-items: center;
-            font-size: 1.1rem; font-weight: 700; transition: transform 0.2s;
+            margin-bottom: 24px; background-color: var(--bg-white); border: 2px solid var(--border-color);
+            padding: 30px 40px; border-radius: 24px; display: flex; align-items: flex-start;
+            font-size: 1.15rem; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .worry-item:hover { transform: translateY(-3px); }
-        .worry-icon { color: var(--accent); font-size: 1.5rem; margin-right: 20px; font-weight: 900; font-family: 'Montserrat', sans-serif; }
+        .worry-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
+        .worry-icon { color: var(--accent); font-size: 1.8rem; margin-right: 20px; font-weight: 900; font-family: 'Montserrat', sans-serif; line-height: 1; }
+        .worry-text { flex: 1; line-height: 1.6; }
         
-        .char-mini { width: clamp(45px, 8vw, 60px); height: auto; flex-shrink: 0; position: absolute; z-index: 2; }
-        .char-worry { top: -30px; right: -20px; animation: float-char 3.5s ease-in-out infinite; }
+        .char-mini { width: clamp(50px, 10vw, 70px); height: auto; flex-shrink: 0; position: absolute; z-index: 2; }
+        .char-worry { top: -40px; right: -30px; animation: float-char 3.5s ease-in-out infinite; }
 
         /* =========================================
            他社比較 (Difference) セクション
            ========================================= */
-        /* PC用 縦タイムライン */
-        .pc-timeline { max-width: 700px; margin: 0 auto; }
-        .tl-header { display: flex; justify-content: space-between; margin-bottom: 50px; font-weight: 900; text-align: center; }
-        .tl-head-other { width: 45%; color: var(--text-muted); padding: 10px; border-bottom: 2px solid var(--border-color); }
-        .tl-head-good { width: 45%; color: var(--primary); padding: 10px; border-bottom: 2px solid var(--primary); font-size: 1.1rem; }
+        .pc-timeline { max-width: 760px; margin: 0 auto; }
+        .tl-header { display: flex; justify-content: space-between; margin-bottom: 60px; font-weight: 900; text-align: center; }
+        .tl-head-other { width: 45%; color: var(--text-muted); padding: 15px; border-bottom: 3px solid var(--border-color); font-size: 1.1rem; }
+        .tl-head-good { width: 45%; color: var(--primary); padding: 15px; border-bottom: 3px solid var(--primary); font-size: 1.3rem; }
         
-        .tl-row { display: flex; justify-content: space-between; position: relative; margin-bottom: 50px; align-items: center; }
-        .tl-row::before { content: ''; position: absolute; left: 50%; top: 30px; bottom: -60px; width: 2px; background-color: var(--border-color); transform: translateX(-50%); z-index: 1; }
+        .tl-row { display: flex; justify-content: space-between; position: relative; margin-bottom: 60px; align-items: center; }
+        .tl-row::before { content: ''; position: absolute; left: 50%; top: 40px; bottom: -70px; width: 2px; background-color: var(--border-color); transform: translateX(-50%); z-index: 1; }
         .tl-row:last-child::before { display: none; }
         
         .tl-time {
             position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-            background-color: #fff; color: var(--text-muted); width: 100px; padding: 6px 0; border-radius: 30px;
-            font-size: 0.85rem; font-weight: 900; z-index: 2; border: 2px solid var(--border-color); text-align: center;
+            background-color: #fff; color: var(--text-muted); width: 110px; padding: 8px 0; border-radius: 30px;
+            font-size: 0.9rem; font-weight: 900; z-index: 2; border: 2px solid var(--border-color); text-align: center;
         }
-        .time-accent { background-color: var(--accent); color: #fff; border-color: var(--accent); }
+        .time-accent { background-color: var(--accent); color: #fff; border-color: var(--accent); font-size: 1rem; padding: 10px 0; }
         
-        .tl-box { width: 42%; padding: 25px 20px; border-radius: 20px; z-index: 2; position: relative; font-weight: 700; font-size: 0.95rem; line-height: 1.5; }
+        .tl-box { width: 42%; padding: 30px 25px; border-radius: 24px; z-index: 2; position: relative; font-weight: 700; font-size: 1rem; line-height: 1.6; }
         .tl-other-box { background-color: var(--secondary); border: 1px solid var(--border-color); color: var(--text-muted); }
-        .tl-good-box { background-color: rgba(2, 113, 48, 0.05); border: 2px solid var(--primary); color: var(--primary); }
-        .tl-box-accent { background-color: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 10px 20px rgba(240, 130, 0, 0.2); }
+        .tl-good-box { background-color: rgba(0, 91, 38, 0.04); border: 2px solid var(--primary); color: var(--primary); }
+        .tl-box-accent { background: linear-gradient(135deg, #FF8811, var(--accent)); border: none; color: #fff; box-shadow: 0 15px 30px rgba(230, 106, 0, 0.25); }
         
-        .tl-done { opacity: 0.5; background: transparent; text-align: center; color: var(--text-muted); padding: 10px; border-color: transparent; }
-        .tl-note { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 8px; opacity: 0.9; }
+        .tl-done { opacity: 0.4; background: transparent; text-align: center; color: var(--text-muted); padding: 10px; border-color: transparent; }
+        .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; opacity: 0.9; }
 
-        /* SP用 横スクロールタイムライン */
         .sp-timeline { display: none; }
-        .swipe-hint { text-align: center; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; animation: swipe-anim 2s infinite; }
+        .swipe-hint { text-align: center; color: var(--text-muted); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; animation: swipe-anim 2s infinite; }
         @keyframes swipe-anim { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
 
         /* =========================================
            理由・デメリット セクション
            ========================================= */
         .reason-box {
-            background-color: var(--secondary); border-radius: 30px; padding: 50px 40px;
+            background-color: var(--secondary); border-radius: 30px; padding: 60px 50px;
             text-align: center; margin-bottom: 40px; border: 1px solid var(--border-color);
         }
         .honest-box {
-            background-color: #fffaf0; border-radius: 30px; padding: 50px 40px;
+            background-color: #fffaf0; border-radius: 30px; padding: 60px 50px;
             border: 2px solid #fbd38d; text-align: center; position: relative;
         }
-        .honest-box h3 { color: var(--accent); font-size: 1.3rem; margin: 0 0 20px 0; font-weight: 900; }
-        .honest-box p { color: var(--text-main); font-weight: 700; margin: 0; }
-        .char-reason { top: -25px; left: -15px; animation: float-char 3.2s ease-in-out infinite; }
+        .honest-box h3 { color: var(--accent); font-size: 1.4rem; margin: 0 0 20px 0; font-weight: 900; }
+        .honest-box p { color: var(--text-main); font-weight: 700; margin: 0; line-height: 1.8; }
+        .char-reason { top: -35px; left: -20px; animation: float-char 3.2s ease-in-out infinite; }
 
         /* =========================================
            動画・エリア セクション
            ========================================= */
-        .iframe-wrapper { position: relative; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 20px; overflow: hidden; background: #000; }
+        .iframe-wrapper { position: relative; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 30px; overflow: hidden; background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .video-wrapper { padding-bottom: 56.25%; height: 0; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-        .area-tag { background-color: var(--secondary); color: var(--primary); padding: 12px 24px; border-radius: 50px; font-weight: 900; font-size: 1rem; border: 1px solid var(--border-color); }
+        .area-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .area-tag { background-color: var(--secondary); color: var(--primary); padding: 16px 32px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; border: 1px solid var(--border-color); }
 
         /* =========================================
-           フォーム (ADAY風クリーンデザイン)
+           フォーム
            ========================================= */
-        .form-wrapper { max-width: 700px; margin: 0 auto; background: var(--secondary); padding: 50px; border-radius: 30px; border: 1px solid var(--border-color); position: relative; }
-        .form-group { margin-bottom: 35px; }
-        .form-label { display: block; font-size: 1.05rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
-        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; vertical-align: middle; }
-        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; vertical-align: middle; }
+        .form-wrapper { max-width: 760px; margin: 0 auto; background: var(--secondary); padding: 60px; border-radius: 40px; border: 1px solid var(--border-color); position: relative; }
+        .form-group { margin-bottom: 40px; }
+        .form-label { display: block; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
+        .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
+        .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
         
-        .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .timing-group { grid-template-columns: repeat(5, 1fr); }
         .radio-card input[type="radio"] { display: none; }
         .radio-card-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 15px 10px; border: 2px solid var(--border-color); border-radius: 12px; font-weight: 700; color: var(--text-muted);
-            cursor: pointer; transition: all 0.2s; text-align: center; height: 100%; background-color: #fff; font-size: 0.95rem;
+            padding: 20px 10px; border: 2px solid var(--border-color); border-radius: 16px; font-weight: 700; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s; text-align: center; height: 100%; background-color: #fff; font-size: 1rem;
         }
-        .radio-card-content small { display: block; font-size: 0.75rem; font-weight: normal; margin-top: 5px; color: #999; }
-        .radio-card input[type="radio"]:checked + .radio-card-content { background-color: rgba(2, 113, 48, 0.05); border-color: var(--primary); color: var(--primary); }
+        .radio-card-content small { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 8px; color: #999; }
+        .radio-card input[type="radio"]:checked + .radio-card-content { background-color: rgba(0, 91, 38, 0.04); border-color: var(--primary); color: var(--primary); box-shadow: 0 4px 15px rgba(0, 91, 38, 0.08); }
         
         .form-textarea {
-            width: 100%; padding: 20px; border: 2px solid var(--border-color); border-radius: 12px;
-            font-size: 1rem; font-family: inherit; color: var(--text-main);
-            resize: vertical; min-height: 140px; transition: border-color 0.2s;
+            width: 100%; padding: 25px; border: 2px solid var(--border-color); border-radius: 16px;
+            font-size: 1.05rem; font-family: inherit; color: var(--text-main);
+            resize: vertical; min-height: 160px; transition: border-color 0.2s;
         }
         .form-textarea:focus { outline: none; border-color: var(--primary); }
         
         .btn-submit {
-            width: 100%; background-color: var(--primary); color: #fff; padding: 20px; border-radius: 50px;
-            font-size: 1.2rem; font-weight: 900; border: none; cursor: pointer; transition: 0.2s;
-            box-shadow: 0 8px 20px rgba(2, 113, 48, 0.2);
+            width: 100%; background: linear-gradient(135deg, #007A33, var(--primary)); color: #fff; padding: 25px; border-radius: 50px;
+            font-size: 1.3rem; font-weight: 900; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 30px rgba(0, 91, 38, 0.25); letter-spacing: 0.1em;
         }
-        .btn-submit:hover { transform: translateY(-3px); }
+        .btn-submit:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0, 91, 38, 0.3); }
         
-        .success-message { text-align: center; padding: 40px; background-color: rgba(2, 113, 48, 0.05); border: 2px solid var(--primary); border-radius: 20px; margin-top: 20px; }
-        .success-message h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.3rem; font-weight: 900; }
+        .success-message { text-align: center; padding: 50px; background-color: #e6f4ea; border: 2px solid var(--primary); border-radius: 24px; margin-top: 20px; }
+        .success-message h3 { color: var(--primary); margin: 0 0 15px 0; font-size: 1.5rem; font-weight: 900; }
 
         /* =========================================
-           SP用 フローティングボタン（PCでは非表示）
+           SP用 ヘッダー＆追従ボタン（PC非表示）
            ========================================= */
+        .sp-header { display: none; }
         .sp-floating-cta { display: none; }
+
+        /* アニメーション */
+        .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .js-fade.is-active { opacity: 1; transform: translateY(0); }
 
         /* =========================================
            Responsive (SP - 1カラム)
            ========================================= */
         @media (max-width: 900px) {
-            .wrapper { flex-direction: column; padding: 0; gap: 0; }
-            
+            .wrapper { flex-direction: column; padding: 0; }
             .sidebar { display: none; }
             
+            /* SP専用トップヘッダー（追加要件） */
+            .sp-header {
+                display: block; text-align: center; padding: 30px 20px 20px;
+                background-color: var(--secondary);
+            }
+            .sp-header .sp-logo { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 0; letter-spacing: 0.05em; }
+            .sp-header .sp-sub { font-size: 0.95rem; font-weight: 900; color: var(--text-muted); margin-top: 5px; }
+
             .main-content {
                 border-radius: 0;
-                padding: 60px 20px 140px;
+                padding: 20px 20px 140px;
                 box-shadow: none;
+                background-color: var(--secondary); /* SP時は背景を統一してシームレスに */
             }
 
-            section { margin-bottom: 80px; }
-            .sec-ja { font-size: 1.6rem; }
+            section { margin-bottom: 100px; }
+            .sec-ja { font-size: 1.8rem; }
+            .sec-header { margin-bottom: 50px; }
             
-            .hero-title { font-size: 2rem; margin-bottom: 30px; }
+            .hero-title { font-size: 2.4rem; margin-bottom: 30px; letter-spacing: -0.05em; line-height: 1.25; }
             .dl-badges { gap: 10px; margin-bottom: 30px; }
-            .badge { padding: 8px 16px; font-size: 0.8rem; }
-            .hero-img-large { padding: 30px 15px; }
+            .badge { padding: 10px 20px; font-size: 0.85rem; }
+            .hero-img-large { padding: 40px 20px; border-radius: 30px; background-color: var(--bg-white); }
             
-            .worry-item { padding: 20px; font-size: 1rem; }
+            /* 文字切れ防止＆レイアウト調整 */
+            .worry-item { padding: 25px 20px; font-size: 1.05rem; border-radius: 20px; align-items: center; }
+            .worry-icon { font-size: 1.4rem; margin-right: 15px; }
 
-            .reason-box, .honest-box { padding: 30px 20px; border-radius: 20px; }
-            .form-wrapper { padding: 30px 20px; border-radius: 20px; }
+            .reason-box, .honest-box { padding: 40px 20px; border-radius: 24px; }
+            .reason-box p.text-red { font-size: 1.25rem; line-height: 1.4; }
+            
+            .form-wrapper { padding: 40px 20px; border-radius: 24px; }
             
             .radio-group { grid-template-columns: 1fr; }
             .timing-group { grid-template-columns: 1fr 1fr; }
             .timing-group label:last-child { grid-column: span 2; }
 
             /* -------------------------------------
-               SP用：横スクロール比較レイアウト
+               SP用：横スクロール比較
                ------------------------------------- */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; }
@@ -311,19 +306,19 @@
 
             .tl-grid {
                 display: grid;
-                grid-template-columns: 100px repeat(4, 180px);
+                grid-template-columns: 100px repeat(4, 200px); /* 幅を少し広げて文字切れ防止 */
                 grid-template-rows: 1fr auto 1fr;
-                gap: 15px 10px;
-                min-width: 850px; 
-                background: #fff; border-radius: 20px; padding: 20px; border: 1px solid var(--border-color);
+                gap: 15px 12px;
+                min-width: 950px; 
+                background: #fff; border-radius: 24px; padding: 20px; border: 1px solid var(--border-color);
             }
 
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: 2px solid var(--border-color); }
             .g-lbl-good { grid-column: 1; grid-row: 3; color: var(--primary); border-bottom: 2px solid var(--primary); }
-            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.85rem; padding: 10px; }
+            .grid-label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 0.9rem; padding: 10px; }
 
-            .grid-box { padding: 15px 10px; border-radius: 12px; font-size: 0.9rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.4; }
-            .grid-box .tl-note { font-size: 0.75rem; margin-top: 5px; font-weight: normal; }
+            .grid-box { padding: 15px 12px; border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; border: 1px solid; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; }
+            .grid-box .tl-note { font-size: 0.8rem; margin-top: 6px; font-weight: normal; }
 
             .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; }
             .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
@@ -331,31 +326,38 @@
             .grid-time {
                 grid-row: 2; justify-self: center; align-self: center;
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
-                padding: 4px 16px; border-radius: 20px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; white-space: nowrap;
+                padding: 6px 18px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; z-index: 2; position: relative; white-space: nowrap;
             }
-            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; }
+            .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.95rem; padding: 8px 20px; }
 
-            /* SP用 追従ボタンの表示 */
+            /* -------------------------------------
+               SP用：追従CTAボタン (問い合わせで消える制御付き)
+               ------------------------------------- */
             .sp-floating-cta {
                 display: block; position: fixed; bottom: 0; left: 0; width: 100%;
-                background: linear-gradient(to top, rgba(255,255,255,1) 60%, rgba(255,255,255,0));
+                background: linear-gradient(to top, rgba(242,244,246,1) 50%, rgba(242,244,246,0));
                 padding: 20px 20px 30px; z-index: 100;
+                transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
             }
+            /* JSで付与されるクラス。フォームエリアに到達したら隠す */
+            .sp-floating-cta.hidden-by-contact { transform: translateY(100%); opacity: 0; pointer-events: none; }
+            
             .btn-dl-sp {
-                display: block; background-color: var(--accent); color: #ffffff; text-align: center;
-                padding: 18px 0; border-radius: 50px; font-weight: 900; font-size: 1.1rem;
-                box-shadow: 0 10px 20px rgba(240, 130, 0, 0.3);
+                display: block; background: linear-gradient(135deg, #FF8811, var(--accent)); color: #ffffff; text-align: center;
+                padding: 20px 0; border-radius: 50px; font-weight: 900; font-size: 1.2rem;
+                box-shadow: 0 10px 25px rgba(230, 106, 0, 0.35); letter-spacing: 0.05em;
             }
         }
-
-        .js-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .js-fade.is-active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
+    <div class="sp-header js-fade is-active">
+        <h1 class="sp-logo">GOOD売買</h1>
+        <p class="sp-sub">明石・神戸・加古川の不動産買取専門店</p>
+    </div>
+
     <div class="wrapper">
-        
         <aside class="sidebar">
             <div class="sidebar-top">
                 <div class="sidebar-logo">GOOD売買</div>
@@ -390,7 +392,7 @@
 
                 <div class="hero-img-large js-fade is-active">
                     <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2002.png" alt="ランシードくん" class="hero-char">
-                    <p style="font-weight: 900; font-size: 1.2rem; color: var(--primary); margin:0;">私たちにお任せください！</p>
+                    <p style="font-weight: 900; font-size: 1.3rem; color: var(--primary); margin:0;">私たちにお任せください！</p>
                 </div>
                 
                 <p class="hero-text">
@@ -408,10 +410,10 @@
                 <div class="worry-list">
                     <img src="https://ogura1204.github.io/lanseed/%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%BC%E3%83%88%E3%82%99%E3%81%8F%E3%82%93%2003.png" alt="ランシードくん" class="char-mini char-worry js-fade">
                     
-                    <div class="worry-item js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span>不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
-                    <div class="worry-item js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span>〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
-                    <div class="worry-item js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span>不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
-                    <div class="worry-item js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span>遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.1s;"><span class="worry-icon">Q.</span><span class="worry-text">不要な土地や空き家、<span class="marker-yellow">管理費だけ</span>払い続けている</span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.2s;"><span class="worry-icon">Q.</span><span class="worry-text">〇月までに資金が必要！<span class="marker-yellow">急いで現金化</span>したい</span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.3s;"><span class="worry-icon">Q.</span><span class="worry-text">不動産屋の「高く売れる」が<span class="marker-yellow">本当か疑わしい</span></span></div>
+                    <div class="worry-item js-fade" style="transition-delay: 0.4s;"><span class="worry-icon">Q.</span><span class="worry-text">遠方の実家を相続したが、<span class="marker-yellow">どうしていいか分からない</span></span></div>
                 </div>
             </section>
 
@@ -466,14 +468,14 @@
 
                             <div class="grid-box tl-other-box" style="grid-column: 3; grid-row: 1; border-color: var(--border-color);">広告・内覧対応<span class="tl-note">掃除や立ち会いの手間</span></div>
                             <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
-                            <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3; border-color: var(--accent);">ご契約・現金化！<span class="tl-note" style="color:#fff;">手数料０円で即解決。</span></div>
+                            <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3; border-color: var(--accent);">ご契約・現金化！<span class="tl-note" style="color:#fff; opacity:1;">手数料０円で即解決。</span></div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1; border-color: var(--border-color);">買主探し・値下げ<span class="tl-note">売れ残る不安が続きます</span></div>
                             <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3; border-color: transparent;">（現金化済み）</div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1; border-color: var(--border-color);">売却・現金化<span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span></div>
-                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</div>
+                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3; border-color: transparent;">（現金化済み）</div>
                         </div>
                     </div>
@@ -487,8 +489,8 @@
                 </div>
                 
                 <div class="reason-box js-fade">
-                    <p class="text-red" style="font-size:1.4rem; font-weight:900; margin-bottom:15px;">契約欲しさの「囲い込み」はしません！</p>
-                    <p style="font-weight:700; margin:0;">弊社は<strong>「買取専門店」</strong>。<br>提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
+                    <p class="text-red" style="font-size:clamp(1.2rem, 3vw, 1.5rem); font-weight:900; margin-bottom:15px;">契約欲しさの「囲い込み」はしません！</p>
+                    <p style="font-weight:700; margin:0; line-height: 1.8;">弊社は<strong>「買取専門店」</strong>。<br>提示した条件でご納得いただければ、<span class="marker-yellow">即買取・即現金化</span>させていただきます。余計な駆け引きは一切いたしません。</p>
                 </div>
                 
                 <div class="honest-box js-fade">
@@ -578,17 +580,35 @@
         </main>
     </div>
 
-    <div class="sp-floating-cta">
+    <div class="sp-floating-cta" id="floating-btn">
         <a href="#contact" class="btn-dl-sp">無料で査定・相談する</a>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // スクロールフェードイン
             const fadeElements = document.querySelectorAll('.js-fade');
-            const observer = new IntersectionObserver((entries) => {
+            const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-active'); });
             }, { root: null, rootMargin: '0px', threshold: 0.1 });
-            fadeElements.forEach(el => observer.observe(el));
+            fadeElements.forEach(el => fadeObserver.observe(el));
+
+            // SP時 フローティングボタンの表示・非表示制御
+            const floatBtn = document.getElementById('floating-btn');
+            const contactSection = document.getElementById('contact');
+            
+            const contactObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // フォームが見えたらボタンを隠す（クラスを付与）、見えなくなったら出す
+                    if (entry.isIntersecting) {
+                        floatBtn.classList.add('hidden-by-contact');
+                    } else {
+                        floatBtn.classList.remove('hidden-by-contact');
+                    }
+                });
+            }, { root: null, rootMargin: '0px 0px 100px 0px', threshold: 0 }); // 少し手前で反応させる
+            
+            contactObserver.observe(contactSection);
         });
     </script>
 </body>
