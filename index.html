@@ -14,10 +14,10 @@
            Reset & Base Styles
            ========================================= */
         :root {
-            --primary: #005b26;
+            --primary: #005b26; /* 緑色 */
             --secondary: #F2F4F6;
             --accent: #E66A00; /* オレンジ */
-            --text-main: #1a1a1c;
+            --text-main: #1a1a1c; /* 黒文字 */
             --text-muted: #6b7280;
             --bg-white: #FFFFFF;
             --border-color: #E2E8F0;
@@ -103,7 +103,6 @@
         .sidebar-bottom .company-info { font-size: 0.65rem; margin: 15px 0; line-height: 1.8; letter-spacing: 0; }
         .sidebar-bottom .copyright { font-size: 0.65rem; margin-top: 15px; font-weight: 400; }
 
-        /* 会社情報用スタイル（SP等汎用） */
         .company-info { font-size: 0.8rem; color: var(--text-muted); margin: 20px 0; line-height: 1.6; font-weight: 500; }
 
         /* -----------------------------------------
@@ -164,7 +163,7 @@
         @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* =========================================
-           他社比較 (Difference) セクション ★GOOD側エリア全体をオレンジ強調★
+           他社比較 (Difference) セクション
            ========================================= */
         .pc-timeline { 
             max-width: 900px; 
@@ -174,13 +173,12 @@
             padding: 20px 0 40px 0; 
         }
         
-        /* ★GOOD側の背景をエリア全体に敷くための疑似要素 */
         .pc-timeline::after {
             content: '';
             position: absolute;
             top: -10px; right: -30px; bottom: -10px; 
             width: 53%; 
-            background: var(--accent); /* オレンジ背景 */
+            background: var(--accent); /* エリア全体オレンジ背景 */
             border-radius: 40px;
             z-index: -1;
             box-shadow: 0 15px 40px rgba(230, 106, 0, 0.25);
@@ -209,7 +207,7 @@
             background-color: #fff; color: var(--text-muted); width: 110px; padding: 8px 0; border-radius: 30px;
             font-size: 0.9rem; font-weight: 900; z-index: 2; border: 2px solid var(--border-color); text-align: center;
         }
-        /* ★変更：時間軸アイコンを緑（primary）に変更 */
+        /* ★最短7日：背景緑色 */
         .time-accent { background-color: var(--primary); color: #fff; border: 3px solid #fff; font-size: 1rem; padding: 10px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
         .tl-box { padding: 30px 25px; border-radius: 24px; z-index: 2; position: relative; font-weight: 700; font-size: 1rem; line-height: 1.6; }
@@ -239,8 +237,8 @@
         .tl-other-box.tl-done { color: var(--text-muted); opacity: 0.4; width: 38%; font-size: 0.85rem;}
         
         .good-title { font-size: 1.25rem; font-weight: 900; display: block; margin-bottom: 8px; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        /* ★変更：文字色を黒にし、視認性のために白い影を適用 */
-        .good-title-highlight { font-size: 1.4rem; color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.8); display: block; margin-bottom: 8px; font-weight: 900; line-height: 1.4;}
+        /* ★ご契約・現金化完了！：黒文字、影なし */
+        .good-title-highlight { font-size: 1.4rem; color: var(--text-main); text-shadow: none; display: block; margin-bottom: 8px; font-weight: 900; line-height: 1.4;}
         
         .tl-good-box .tl-note { display: block; font-size: 0.95rem; font-weight: 700; margin-top: 10px; color: rgba(255,255,255,0.95); }
         .tl-other-box .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; opacity: 0.9; }
@@ -431,7 +429,7 @@
             .sp-good-bg {
                 grid-column: 1 / -1;
                 grid-row: 3;
-                background-color: var(--accent); /* オレンジ */
+                background-color: var(--accent); /* エリア全体オレンジ背景 */
                 border-radius: 16px;
                 z-index: 0;
                 margin: -8px -10px;
@@ -458,6 +456,7 @@
             .tl-other-box { border: 1px solid var(--border-color); color: var(--text-muted); background: var(--secondary); }
             .tl-other-box .tl-note { font-size: 0.75rem; margin-top: 4px; font-weight: normal; }
             
+            /* ★SP版：テキスト一致＆配色の一致 */
             .grid-box.tl-good-box { 
                 background: transparent; 
                 border: none; 
@@ -468,8 +467,8 @@
             
             .good-title-sp { font-size: 1rem; font-weight: 900; display: block; margin-bottom: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
             
-            /* ★変更：SP版でも文字色を黒にし、視認性のために白い影を適用 */
-            .good-title-highlight-sp { font-size: 1.15rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 4px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+            /* ★SP版でもご契約・現金化完了！は黒文字・影なしに変更 */
+            .good-title-highlight-sp { font-size: 1.15rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 4px; text-shadow: none; }
             
             .grid-box.tl-box-accent { 
                 background: rgba(255,255,255,0.15); 
@@ -487,7 +486,7 @@
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
                 padding: 4px 12px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; white-space: nowrap;
             }
-            /* ★変更：SP版でも時間軸アイコンを緑（primary）に変更 */
+            /* ★SP版：最短7日の緑色背景 */
             .grid-time.time-accent { background-color: var(--primary); color: #fff; border: 3px solid #fff; font-size: 0.85rem; padding: 6px 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
             /* -------------------------------------
@@ -677,8 +676,8 @@
                             </div>
                             <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
                             <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3;">
-                                <span class="good-title-highlight-sp">ご契約・現金化！</span>
-                                <span class="tl-note">手数料０円で即解決。</span>
+                                <span class="good-title-highlight-sp">ご契約・現金化完了！</span>
+                                <span class="tl-note">内覧対応一切不要。<br>【仲介手数料０円】で解決。</span>
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1;">
@@ -687,16 +686,16 @@
                             </div>
                             <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3;">
-                                （現金化済み）
+                                （すでに現金化済み）
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1;">
-                                <span style="font-weight:900; display:block;">売却・現金化</span>
+                                <span style="font-weight:900; display:block;">やっと売却・現金化</span>
                                 <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
                             </div>
                             <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3;">
-                                （現金化済み）
+                                （すでに現金化済み）
                             </div>
                         </div>
                     </div>
