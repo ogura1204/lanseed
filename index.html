@@ -14,10 +14,10 @@
            Reset & Base Styles
            ========================================= */
         :root {
-            --primary: #005b26; /* 緑色 */
+            --primary: #005b26;
             --secondary: #F2F4F6;
             --accent: #E66A00; /* オレンジ */
-            --text-main: #1a1a1c; /* 黒文字 */
+            --text-main: #1a1a1c;
             --text-muted: #6b7280;
             --bg-white: #FFFFFF;
             --border-color: #E2E8F0;
@@ -163,7 +163,7 @@
         @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* =========================================
-           他社比較 (Difference) セクション
+           他社比較 (Difference) セクション ★GOOD側エリア全体をオレンジ強調★
            ========================================= */
         .pc-timeline { 
             max-width: 900px; 
@@ -178,7 +178,7 @@
             position: absolute;
             top: -10px; right: -30px; bottom: -10px; 
             width: 53%; 
-            background: var(--accent); /* エリア全体オレンジ背景 */
+            background: var(--accent); 
             border-radius: 40px;
             z-index: -1;
             box-shadow: 0 15px 40px rgba(230, 106, 0, 0.25);
@@ -207,7 +207,6 @@
             background-color: #fff; color: var(--text-muted); width: 110px; padding: 8px 0; border-radius: 30px;
             font-size: 0.9rem; font-weight: 900; z-index: 2; border: 2px solid var(--border-color); text-align: center;
         }
-        /* ★最短7日：背景緑色 */
         .time-accent { background-color: var(--primary); color: #fff; border: 3px solid #fff; font-size: 1rem; padding: 10px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
         .tl-box { padding: 30px 25px; border-radius: 24px; z-index: 2; position: relative; font-weight: 700; font-size: 1rem; line-height: 1.6; }
@@ -237,8 +236,7 @@
         .tl-other-box.tl-done { color: var(--text-muted); opacity: 0.4; width: 38%; font-size: 0.85rem;}
         
         .good-title { font-size: 1.25rem; font-weight: 900; display: block; margin-bottom: 8px; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        /* ★ご契約・現金化完了！：黒文字、影なし */
-        .good-title-highlight { font-size: 1.4rem; color: var(--text-main); text-shadow: none; display: block; margin-bottom: 8px; font-weight: 900; line-height: 1.4;}
+        .good-title-highlight { font-size: 1.4rem; color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.8); display: block; margin-bottom: 8px; font-weight: 900; line-height: 1.4;}
         
         .tl-good-box .tl-note { display: block; font-size: 0.95rem; font-weight: 700; margin-top: 10px; color: rgba(255,255,255,0.95); }
         .tl-other-box .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; opacity: 0.9; }
@@ -403,12 +401,12 @@
             .form-input, .form-textarea { padding: 15px; font-size: 1rem; }
             .privacy-note { font-size: 0.75rem; margin-top: 15px; }
 
-            /* SP用：横スクロール比較 */
+            /* SP用：横スクロール比較（無駄な余白を消し、ボックス幅を広げる） */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; max-width: 100vw; overflow-x: hidden; } 
 
             .horizontal-scroll-container {
-                padding: 0 0 20px 0;
+                padding: 0 0 20px 0; 
                 width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -417,58 +415,71 @@
 
             .tl-grid {
                 display: grid;
-                grid-template-columns: 80px repeat(4, 250px); 
+                /* ★幅を広げて改行を防ぐ */
+                grid-template-columns: 100px repeat(4, 300px); 
                 grid-template-rows: 1fr auto 1fr;
-                gap: 15px 12px;
+                gap: 20px 10px;
                 width: max-content; 
-                background: #fff; border-radius: 20px; padding: 15px 25px;
+                background: #fff; border-radius: 20px; padding: 20px 25px; 
                 position: relative;
                 z-index: 1;
             }
 
+            /* ★SP版でのGOOD側エリア全体背景（行を覆う） */
             .sp-good-bg {
                 grid-column: 1 / -1;
                 grid-row: 3;
-                background-color: var(--accent); /* エリア全体オレンジ背景 */
+                background-color: var(--accent); /* オレンジ */
                 border-radius: 16px;
                 z-index: 0;
-                margin: -8px -10px;
+                margin: -10px; /* 余白・パディングを覆うように拡張 */
                 box-shadow: 0 10px 25px rgba(230, 106, 0, 0.25);
             }
 
-            .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-weight: 900; font-size: 0.8rem; text-align: center; }
+            /* ★一般的な仲介業者を高さ方向で真ん中に */
+            .g-lbl-other { 
+                grid-column: 1; grid-row: 1; 
+                color: var(--text-muted); 
+                display: flex; align-items: center; justify-content: center; 
+                font-weight: 900; font-size: 0.85rem; text-align: center; 
+                padding: 0; 
+            }
             
             .g-lbl-good { 
                 grid-column: 1; grid-row: 3; 
                 color: #fff; 
                 display: flex; align-items: center; justify-content: center; 
                 font-weight: 900; font-size: 0.85rem; text-align: center;
-                border-bottom: 1px dashed rgba(255,255,255,0.4);
-                padding-bottom: 5px;
+                border: none;
+                padding: 0;
                 position: relative; z-index: 1;
             }
 
             .g-axis-line-container { grid-column: 2 / -1; grid-row: 2; position: relative; display: flex; align-items: center; z-index: 1; }
             .g-axis-line-container::before { content: ''; position: absolute; left: -10px; right: 0; height: 2px; background-color: var(--border-color); z-index: 1; }
 
-            .grid-box { padding: 15px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-align: center; display: flex; flex-direction: column; justify-content: center; line-height: 1.4; position: relative; z-index: 1; }
+            /* ★要素を時系列ごとに縦のラインを揃える（ボックスの幅を制限して中央配置） */
+            .grid-box { 
+                width: 100%;
+                max-width: 280px; 
+                justify-self: center; 
+                align-self: stretch; 
+                padding: 20px 15px; 
+                border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; position: relative; z-index: 1; 
+            }
 
-            .tl-other-box { border: 1px solid var(--border-color); color: var(--text-muted); background: var(--secondary); }
-            .tl-other-box .tl-note { font-size: 0.75rem; margin-top: 4px; font-weight: normal; }
+            .tl-other-box { border: 2px solid var(--border-color); color: var(--text-muted); background: var(--secondary); }
+            .tl-other-box .tl-note { font-size: 0.8rem; margin-top: 8px; font-weight: normal; }
             
-            /* ★SP版：テキスト一致＆配色の一致 */
             .grid-box.tl-good-box { 
                 background: transparent; 
                 border: none; 
                 color: #fff; 
-                padding: 10px 5px;
             }
-            .grid-box .tl-note { color: rgba(255,255,255,0.95); font-size: 0.8rem; margin-top: 4px; font-weight: 700;}
+            .grid-box .tl-note { color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-top: 8px; font-weight: 700;}
             
-            .good-title-sp { font-size: 1rem; font-weight: 900; display: block; margin-bottom: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-            
-            /* ★SP版でもご契約・現金化完了！は黒文字・影なしに変更 */
-            .good-title-highlight-sp { font-size: 1.15rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 4px; text-shadow: none; }
+            .good-title-sp { font-size: 1.1rem; font-weight: 900; display: block; margin-bottom: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+            .good-title-highlight-sp { font-size: 1.25rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 6px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
             
             .grid-box.tl-box-accent { 
                 background: rgba(255,255,255,0.15); 
@@ -478,16 +489,16 @@
                 transform: scale(1.05); 
                 z-index: 5; 
             }
-            .grid-box.tl-done { color: rgba(255,255,255,0.7); border: none; background: transparent; font-size: 0.95rem; }
+            .grid-box.tl-done { color: rgba(255,255,255,0.7); border: none; background: transparent; font-size: 1rem; }
             .tl-other-box.tl-done { color: var(--text-muted); opacity: 0.4; }
 
             .grid-time {
                 grid-row: 2; justify-self: center; align-self: center;
                 background: #fff; border: 2px solid var(--border-color); color: var(--text-muted);
-                padding: 4px 12px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; z-index: 2; position: relative; white-space: nowrap;
+                padding: 6px 16px; border-radius: 30px; font-weight: 900; font-size: 0.85rem; z-index: 2; position: relative; white-space: nowrap;
             }
-            /* ★SP版：最短7日の緑色背景 */
-            .grid-time.time-accent { background-color: var(--primary); color: #fff; border: 3px solid #fff; font-size: 0.85rem; padding: 6px 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+            /* ★変更：SP版でも時間軸アイコンを緑（primary）に変更 */
+            .grid-time.time-accent { background-color: var(--primary); color: #fff; border: 3px solid #fff; font-size: 0.95rem; padding: 8px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
             /* -------------------------------------
                SP用 フッター
@@ -676,8 +687,8 @@
                             </div>
                             <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
                             <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3;">
-                                <span class="good-title-highlight-sp">ご契約・現金化完了！</span>
-                                <span class="tl-note">内覧対応一切不要。<br>【仲介手数料０円】で解決。</span>
+                                <span class="good-title-highlight-sp">ご契約・現金化！</span>
+                                <span class="tl-note">手数料０円で即解決。</span>
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1;">
@@ -686,16 +697,16 @@
                             </div>
                             <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3;">
-                                （すでに現金化済み）
+                                （現金化済み）
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1;">
-                                <span style="font-weight:900; display:block;">やっと売却・現金化</span>
+                                <span style="font-weight:900; display:block;">売却・現金化</span>
                                 <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
                             </div>
                             <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3;">
-                                （すでに現金化済み）
+                                （現金化済み）
                             </div>
                         </div>
                     </div>
