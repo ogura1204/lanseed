@@ -186,7 +186,6 @@
 
         .tl-header { display: flex; justify-content: space-between; margin-bottom: 60px; font-weight: 900; text-align: center; align-items: center; }
         
-        /* ★一般的な仲介業者の見出しを黒文字に変更 */
         .tl-head-other { width: 38%; color: var(--text-main); padding: 15px; border-bottom: 3px solid var(--border-color); font-size: 1.1rem; }
         
         .tl-head-good { 
@@ -212,8 +211,8 @@
 
         .tl-box { padding: 30px 25px; border-radius: 24px; z-index: 2; position: relative; font-weight: 700; font-size: 1rem; line-height: 1.6; }
         
-        /* ★一般的な仲介業者のボックス内をすべて黒文字に変更 */
         .tl-other-box { width: 38%; background-color: var(--secondary); border: 1px solid var(--border-color); color: var(--text-main); }
+        .tl-other-box .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; color: var(--text-main); }
         
         .tl-good-box { 
             width: 44%; 
@@ -235,16 +234,12 @@
         }
         
         .tl-done { text-align: center; color: rgba(255,255,255,0.7); padding: 10px; width: 44%; border: none; background: transparent; font-size: 1rem; opacity: 1;}
-        /* ★他社側の完了テキストも黒文字で透過を少し抑える */
         .tl-other-box.tl-done { color: var(--text-main); opacity: 0.5; width: 38%; font-size: 0.85rem;}
         
         .good-title { font-size: 1.25rem; font-weight: 900; display: block; margin-bottom: 8px; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        
-        /* ★ご契約・現金化！の白影を削除 */
         .good-title-highlight { font-size: 1.4rem; color: var(--text-main); text-shadow: none; display: block; margin-bottom: 8px; font-weight: 900; line-height: 1.4;}
         
-        .tl-good-box .tl-note { display: block; font-size: 0.95rem; font-weight: 700; margin-top: 10px; color: rgba(255,255,255,0.95); }
-        .tl-other-box .tl-note { display: block; font-size: 0.85rem; font-weight: normal; margin-top: 10px; opacity: 0.9; }
+        .tl-good-box .tl-note, .tl-box-accent .tl-note { display: block; font-size: 0.95rem; font-weight: 700; margin-top: 10px; color: rgba(255,255,255,0.95); }
 
         .sp-timeline { display: none; }
         .swipe-hint { text-align: center; color: var(--text-muted); font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; animation: swipe-anim 2s infinite; }
@@ -472,18 +467,19 @@
 
             /* ★SP版での一般的な仲介業者のボックス内をすべて黒文字に変更 */
             .tl-other-box { border: 2px solid var(--border-color); color: var(--text-main); background: var(--secondary); }
-            .tl-other-box .tl-note { font-size: 0.8rem; margin-top: 8px; font-weight: normal; }
+            /* テキストを明示的に黒色へ */
+            .tl-other-box .tl-note { font-size: 0.8rem; margin-top: 8px; font-weight: normal; color: var(--text-main); }
             
             .grid-box.tl-good-box { 
                 background: transparent; 
                 border: none; 
                 color: #fff; 
             }
-            .grid-box .tl-note { color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-top: 8px; font-weight: 700;}
+            .tl-good-box .tl-note, .tl-box-accent .tl-note { color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-top: 8px; font-weight: 700;}
             
             .good-title-sp { font-size: 1.1rem; font-weight: 900; display: block; margin-bottom: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
             
-            /* ★SP版：ご契約・現金化！の白影を削除 */
+            /* ★SP版：ご契約・現金化！の白影を削除し黒文字でくっきり表示 */
             .good-title-highlight-sp { font-size: 1.25rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 6px; text-shadow: none; }
             
             .grid-box.tl-box-accent { 
@@ -495,8 +491,7 @@
                 z-index: 5; 
             }
             .grid-box.tl-done { color: rgba(255,255,255,0.7); border: none; background: transparent; font-size: 1rem; }
-            
-            /* ★SP版：他社側の完了テキストも黒文字で透過を少し抑える */
+            /* ★他社側の完了テキストも黒文字で透過を少し抑える */
             .tl-other-box.tl-done { color: var(--text-main); opacity: 0.5; }
 
             .grid-time {
@@ -659,7 +654,7 @@
                         <div class="tl-time" style="background-color:var(--border-color); border-color:var(--border-color);">ようやく完了</div>
                         <div class="tl-box tl-other-box">
                             <span style="font-weight:900; display:block; margin-bottom:5px;">やっと売却・現金化</span>
-                            <span class="tl-note text-red">※さらに数十万円の【仲介手数料】が引かれます。</span>
+                            <span class="tl-note text-red" style="font-weight:bold;">※さらに数十万円の【仲介手数料】が引かれます。</span>
                         </div>
                         <div class="tl-box tl-done">（すでに現金化済み）</div>
                     </div>
@@ -679,7 +674,7 @@
 
                             <div class="grid-box tl-other-box" style="grid-column: 2; grid-row: 1;">
                                 <span style="font-weight:900; display:block;">査定・媒介契約</span>
-                                <span class="tl-note">準備に時間がかかります</span>
+                                <span class="tl-note" style="color: var(--text-main);">広告や販売活動の準備に時間がかかります。</span>
                             </div>
                             <div class="grid-time" style="grid-column: 2;">1〜3日目</div>
                             <div class="grid-box tl-good-box" style="grid-column: 2; grid-row: 3;">
@@ -689,30 +684,30 @@
 
                             <div class="grid-box tl-other-box" style="grid-column: 3; grid-row: 1;">
                                 <span style="font-weight:900; display:block;">広告・内覧対応</span>
-                                <span class="tl-note">掃除や立ち会いの手間</span>
+                                <span class="tl-note" style="color: var(--text-main);">見知らぬ人が家に来るため、掃除や立ち会いの手間。</span>
                             </div>
                             <div class="grid-time time-accent" style="grid-column: 3;">最短7日</div>
                             <div class="grid-box tl-box-accent" style="grid-column: 3; grid-row: 3;">
-                                <span class="good-title-highlight-sp">ご契約・現金化！</span>
-                                <span class="tl-note">手数料０円で即解決。</span>
+                                <span class="good-title-highlight-sp">ご契約・現金化完了！</span>
+                                <span class="tl-note">内覧対応一切不要。【仲介手数料０円】で解決。</span>
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 4; grid-row: 1;">
                                 <span style="font-weight:900; display:block;">買主探し・値下げ</span>
-                                <span class="tl-note">売れ残る不安が続きます</span>
+                                <span class="tl-note" style="color: var(--text-main);">いつ売れるか不透明。売れ残る不安が続きます。</span>
                             </div>
                             <div class="grid-time" style="grid-column: 4;">数ヶ月〜半年</div>
                             <div class="grid-box tl-done" style="grid-column: 4; grid-row: 3;">
-                                （現金化済み）
+                                （すでに現金化済み）
                             </div>
 
                             <div class="grid-box tl-other-box" style="grid-column: 5; grid-row: 1;">
                                 <span style="font-weight:900; display:block;">売却・現金化</span>
-                                <span class="tl-note text-red" style="font-weight:bold;">※手数料が引かれます</span>
+                                <span class="tl-note text-red" style="font-weight:bold; color: var(--accent);">※さらに数十万円の【仲介手数料】が引かれます。</span>
                             </div>
-                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">完了</div>
+                            <div class="grid-time" style="grid-column: 5; background-color:var(--border-color); border-color:var(--border-color); color:var(--text-muted);">ようやく完了</div>
                             <div class="grid-box tl-done" style="grid-column: 5; grid-row: 3;">
-                                （現金化済み）
+                                （すでに現金化済み）
                             </div>
                         </div>
                     </div>
