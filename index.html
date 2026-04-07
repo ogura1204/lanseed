@@ -99,7 +99,11 @@
 
         .sidebar-bottom { text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); }
         .footer-nav li { margin-bottom: 12px; }
-        .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
+        
+        /* 会社情報用スタイル（PC・SP共通） */
+        .company-info { font-size: 0.8rem; color: var(--text-muted); margin: 20px 0; line-height: 1.6; font-weight: 500; }
+        
+        .copyright { font-size: 0.75rem; color: #999; margin-top: 10px; font-weight: 400; }
 
         /* -----------------------------------------
            右側：メインコンテンツ
@@ -262,7 +266,6 @@
         }
         .btn-submit:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0, 91, 38, 0.3); }
         
-        /* ★追加：個人情報に関する注意書き用スタイル */
         .privacy-note { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 20px; font-weight: 700; line-height: 1.5; }
 
         .success-message { text-align: center; padding: 50px; background-color: #e6f4ea; border: 2px solid var(--primary); border-radius: 24px; margin-top: 20px; }
@@ -393,8 +396,6 @@
             .sp-footer { display: block; text-align: center; padding: 50px 15px; margin-top: 20px; border-top: 1px solid var(--border-color); }
             .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
             .sp-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; }
-            
-            .company-info { font-size: 0.85rem; color: var(--text-muted); margin: 20px 0; line-height: 1.6; font-weight: 500; }
 
             /* -------------------------------------
                SP用 追従CTAボタン
@@ -444,6 +445,12 @@
                 <ul class="footer-nav">
                     <li><a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (LANSEED)</a></li>
                 </ul>
+                <div class="company-info">
+                    兵庫県明石市二見町西二見１５７－１２７<br>
+                    営業時間 : 9:00 - 19:00（日祝日は定休）<br>
+                    TEL : 0120-64-4411<br>
+                    不動産免許:兵庫県知事 (2) 第401607号
+                </div>
                 <p class="copyright">&copy; 2026 LANSEED Co., Ltd.</p>
             </div>
         </aside>
