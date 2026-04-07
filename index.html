@@ -165,17 +165,16 @@
         @keyframes float-char { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         /* =========================================
-           他社比較 (Difference) セクション ★GOOD側をオレンジ強調★
+           他社比較 (Difference) セクション
            ========================================= */
         .pc-timeline { max-width: 760px; margin: 0 auto; }
         .tl-header { display: flex; justify-content: space-between; margin-bottom: 60px; font-weight: 900; text-align: center; align-items: flex-end; }
         
         .tl-head-other { width: 40%; color: var(--text-muted); padding: 15px; border-bottom: 3px solid var(--border-color); font-size: 1.1rem; }
         
-        /* ★GOOD側の見出しをオレンジ強調 */
         .tl-head-good { 
             width: 48%; 
-            background-color: var(--accent); /* オレンジ */
+            background-color: var(--accent); 
             color: #fff; 
             padding: 15px 20px; 
             border-radius: 50px; 
@@ -194,30 +193,27 @@
             font-size: 0.9rem; font-weight: 900; z-index: 2; border: 2px solid var(--border-color); text-align: center;
         }
         
-        /* ★GOOD側の時間アイコンをオレンジ強調 */
         .time-accent { background-color: var(--accent); color: #fff; border-color: var(--accent); font-size: 1rem; padding: 10px 0; box-shadow: 0 6px 15px rgba(230, 106, 0, 0.3); }
         
         .tl-box { padding: 30px 25px; border-radius: 24px; z-index: 2; position: relative; font-weight: 700; font-size: 1rem; line-height: 1.6; }
         
         .tl-other-box { width: 40%; background-color: var(--secondary); border: 1px solid var(--border-color); color: var(--text-muted); }
         
-        /* ★GOOD側をオレンジ背景＋影＋枠線で最強に目立たせる */
         .tl-good-box { 
             width: 46%; 
-            background-color: rgba(230, 106, 0, 0.04); /* 薄いオレンジ背景 */
-            border: 3px solid var(--accent); /* オレンジ枠線 */
-            color: var(--accent); /* オレンジ文字 */
+            background-color: rgba(230, 106, 0, 0.04); 
+            border: 3px solid var(--accent); 
+            color: var(--accent); 
             box-shadow: 0 10px 25px rgba(230, 106, 0, 0.15);
         }
         
-        /* ★GOOD側の最終ステップをポップアップ＋グラデーションで強調 */
         .tl-box-accent { 
             width: 46%;
             background: linear-gradient(135deg, #FF8811, var(--accent)); 
             border: 3px solid #ffe4c4; 
             color: #fff; 
             box-shadow: 0 15px 35px rgba(230, 106, 0, 0.4); 
-            transform: scale(1.05); /* 少し大きくする */
+            transform: scale(1.05); 
             z-index: 5;
         }
         
@@ -271,13 +267,12 @@
         .form-wrapper { max-width: 760px; margin: 0 auto; background: var(--secondary); padding: 60px; border-radius: 40px; border: 1px solid var(--border-color); position: relative; }
         .form-group { margin-bottom: 40px; }
         
-        .form-label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
+        .form-label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 1.1rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
         .required { background-color: var(--accent); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
         .optional { background-color: #cbd5e1; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
         
         .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .timing-group { grid-template-columns: repeat(5, 1fr); }
-        .contact-group { grid-template-columns: repeat(2, 1fr); }
         .radio-card input[type="radio"] { display: none; }
         .radio-card-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -287,12 +282,14 @@
         .radio-card-content small { display: block; font-size: 0.8rem; font-weight: normal; margin-top: 8px; color: #999; }
         .radio-card input[type="radio"]:checked + .radio-card-content { background-color: rgba(230, 106, 0, 0.04); border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 15px rgba(230, 106, 0, 0.08); }
         
-        .form-textarea {
-            width: 100%; padding: 25px; border: 2px solid var(--border-color); border-radius: 16px;
-            font-size: 1.05rem; font-family: inherit; color: var(--text-main);
-            resize: vertical; min-height: 160px; transition: border-color 0.2s;
+        /* ★テキスト入力用のスタイルを追加 */
+        .form-input, .form-textarea {
+            width: 100%; padding: 20px 25px; border: 2px solid var(--border-color); border-radius: 16px;
+            font-size: 1.05rem; font-family: inherit; color: var(--text-main); background-color: #fff;
+            transition: border-color 0.2s;
         }
-        .form-textarea:focus { outline: none; border-color: var(--primary); }
+        .form-textarea { resize: vertical; min-height: 160px; padding: 25px; }
+        .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--primary); }
         
         .btn-submit {
             width: 100%; background: linear-gradient(135deg, #007A33, var(--primary)); color: #fff; padding: 25px; border-radius: 50px;
@@ -377,8 +374,10 @@
             .radio-group { grid-template-columns: 1fr; gap: 8px; }
             .timing-group { grid-template-columns: 1fr 1fr; gap: 8px; }
             .timing-group label:last-child { grid-column: span 2; }
-            .contact-group { grid-template-columns: 1fr 1fr; gap: 8px; }
             .radio-card-content { padding: 12px 5px; font-size: 0.85rem; border-radius: 12px; }
+            
+            /* ★SP版での入力欄の余白調整 */
+            .form-input, .form-textarea { padding: 15px; font-size: 1rem; }
             
             .privacy-note { font-size: 0.75rem; margin-top: 15px; }
 
@@ -403,11 +402,10 @@
                 background: #fff; border-radius: 20px; padding: 15px; border: 1px solid var(--border-color);
             }
 
-            /* ★SP版での他社比較GOOD側オレンジ強調 */
             .g-lbl-other { grid-column: 1; grid-row: 1; color: var(--text-muted); border-bottom: none; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-weight: 900; font-size: 0.8rem; text-align: center; }
             .g-lbl-good { 
                 grid-column: 1; grid-row: 3; 
-                background-color: var(--accent); /* オレンジ */
+                background-color: var(--accent); 
                 color: #fff !important; 
                 border-radius: 8px; 
                 display: flex; align-items: center; justify-content: center; 
@@ -424,10 +422,10 @@
 
             .tl-other-box { border-color: var(--border-color); color: var(--text-muted); }
             
-            /* ★SP版でのGOOD側オレンジ強調 */
             .grid-box.tl-good-box { 
                 background-color: rgba(230, 106, 0, 0.04); 
                 border: 3px solid var(--accent); 
+                color: var(--accent);
                 box-shadow: 0 6px 15px rgba(230, 106, 0, 0.15); 
             }
             .grid-box.tl-box-accent { 
@@ -755,11 +753,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">弊社からのご連絡方法 <span class="required">必須</span></label>
-                            <div class="radio-group contact-group">
-                                <label class="radio-card"><input type="radio" name="entry.291937266" value="電話" required><span class="radio-card-content">電話</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.291937266" value="メール"><span class="radio-card-content">メール</span></label>
-                            </div>
+                            <label class="form-label">お名前 <span class="required">必須</span></label>
+                            <input type="text" name="entry.1598686272" class="form-input" placeholder="例：山田 太郎" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">弊社からのご連絡方法（メール or 電話）と、ご連絡先をご記載ください <span class="required">必須</span></label>
+                            <input type="text" name="entry.2031094038" class="form-input" placeholder="例：090-1234-5678 または sample@example.com" required>
                         </div>
 
                         <div class="form-group">
