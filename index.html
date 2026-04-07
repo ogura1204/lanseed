@@ -238,6 +238,7 @@
         
         .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .timing-group { grid-template-columns: repeat(5, 1fr); }
+        .contact-group { grid-template-columns: repeat(2, 1fr); }
         .radio-card input[type="radio"] { display: none; }
         .radio-card-content {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -336,6 +337,7 @@
             .radio-group { grid-template-columns: 1fr; gap: 8px; }
             .timing-group { grid-template-columns: 1fr 1fr; gap: 8px; }
             .timing-group label:last-child { grid-column: span 2; }
+            .contact-group { grid-template-columns: 1fr 1fr; gap: 8px; }
             .radio-card-content { padding: 12px 5px; font-size: 0.85rem; border-radius: 12px; }
 
             /* SP用：横スクロール比較 */
@@ -637,6 +639,7 @@
                     </div>
                 </div>
             </section>
+
             <section id="contact" style="margin-bottom: 0;">
                 <div class="sec-header js-fade">
                     <span class="sec-en">CONTACT</span>
@@ -677,6 +680,14 @@
                                 <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
                                 <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
                                 <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">弊社からのご連絡方法 <span class="required">必須</span></label>
+                            <div class="radio-group contact-group">
+                                <label class="radio-card"><input type="radio" name="entry.291937266" value="電話" required><span class="radio-card-content">電話</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.291937266" value="メール"><span class="radio-card-content">メール</span></label>
                             </div>
                         </div>
 
