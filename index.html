@@ -97,13 +97,14 @@
         }
         .btn-dl-sidebar:hover { transform: translateY(-3px); }
 
-        .sidebar-bottom { text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); }
-        .footer-nav li { margin-bottom: 12px; }
-        
-        /* 会社情報用スタイル（PC・SP共通） */
+        /* ★変更：PCサイドバー下部の文字サイズ・改行防止の調整 */
+        .sidebar-bottom { text-align: center; font-weight: 700; color: var(--text-muted); }
+        .sidebar-bottom .footer-nav li { margin-bottom: 8px; font-size: 0.8rem; }
+        .sidebar-bottom .company-info { font-size: 0.7rem; margin: 15px 0; line-height: 1.6; white-space: nowrap; letter-spacing: -0.02em; }
+        .sidebar-bottom .copyright { font-size: 0.65rem; margin-top: 15px; font-weight: 400; }
+
+        /* 会社情報用スタイル（SP等汎用） */
         .company-info { font-size: 0.8rem; color: var(--text-muted); margin: 20px 0; line-height: 1.6; font-weight: 500; }
-        
-        .copyright { font-size: 0.75rem; color: #999; margin-top: 10px; font-weight: 400; }
 
         /* -----------------------------------------
            右側：メインコンテンツ
@@ -396,6 +397,9 @@
             .sp-footer { display: block; text-align: center; padding: 50px 15px; margin-top: 20px; border-top: 1px solid var(--border-color); }
             .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
             .sp-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; }
+            
+            /* ★SPではテキストの折り返しを許可する */
+            .company-info { font-size: 0.85rem; margin: 20px 0; white-space: normal; }
 
             /* -------------------------------------
                SP用 追従CTAボタン
