@@ -23,7 +23,6 @@
             --border-color: #E2E8F0;
         }
 
-        /* ★修正：PC表示で左固定(sticky)を効かせるため、ここにあった overflow-x: hidden を撤廃 */
         html, body { 
             width: 100%; 
             margin: 0; 
@@ -57,7 +56,7 @@
            ========================================= */
         .wrapper {
             display: flex;
-            align-items: flex-start; /* ★左メニューを固定（sticky）するために必須 */
+            align-items: flex-start;
             min-height: 100vh;
             max-width: 1440px;
             margin: 0 auto;
@@ -65,13 +64,13 @@
         }
 
         /* -----------------------------------------
-           左側：サイドバー（★スクロールしても画面内に完全に固定される）
+           左側：サイドバー
            ----------------------------------------- */
         .sidebar {
             width: 320px;
             height: 100vh;
-            position: -webkit-sticky; /* Safari対応 */
-            position: sticky; /* ★スクロール追従固定 */
+            position: -webkit-sticky;
+            position: sticky;
             top: 0;
             display: flex;
             flex-direction: column;
@@ -103,13 +102,13 @@
         .copyright { font-size: 0.75rem; color: #999; margin-top: 30px; font-weight: 400; }
 
         /* -----------------------------------------
-           右側：メインコンテンツ（ここだけがスクロールする）
+           右側：メインコンテンツ
            ----------------------------------------- */
         .main-content {
             flex: 1;
             background-color: var(--bg-white);
             border-radius: 50px 0 0 50px;
-            padding: 100px 8%;
+            padding: 100px 8% 20px; /* 下部の余白を少し調整 */
             min-width: 0;
             box-shadow: -15px 0 40px rgba(0,0,0,0.03);
             position: relative;
@@ -251,9 +250,27 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
+           フッター全般設定（PC・SP共通）
            ========================================= */
-        .sp-header, .sp-footer, .sp-floating-cta { display: none; }
+        .main-footer { 
+            text-align: center; 
+            padding: 60px 15px 40px; 
+            margin-top: 60px; 
+            border-top: 1px solid var(--border-color); 
+        }
+        .main-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
+        .main-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; }
+        
+        .company-info { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            margin: 20px 0; 
+            line-height: 1.6; 
+            font-weight: 500; 
+        }
+
+        /* SP用 ヘッダー＆追従ボタン（PC非表示） */
+        .sp-header, .sp-floating-cta { display: none; }
 
         .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .js-fade.is-active { opacity: 1; transform: translateY(0); }
@@ -262,7 +279,6 @@
            Responsive (SP - 1カラム)
            ========================================= */
         @media (max-width: 900px) {
-            /* ★SP時のみ横揺れを防止する設定を適用 */
             html, body { overflow-x: hidden; max-width: 100vw; }
             
             .wrapper { flex-direction: column; padding: 0; max-width: 100%; overflow-x: hidden; }
@@ -317,9 +333,7 @@
             .timing-group label:last-child { grid-column: span 2; }
             .radio-card-content { padding: 12px 5px; font-size: 0.85rem; border-radius: 12px; }
 
-            /* -------------------------------------
-               SP用：横スクロール比較
-               ------------------------------------- */
+            /* SP用：横スクロール比較 */
             .pc-timeline { display: none; }
             .sp-timeline { display: block; margin-left: -15px; margin-right: -15px; max-width: 100vw; overflow-x: hidden; } 
 
@@ -361,16 +375,13 @@
             }
             .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.85rem; padding: 6px 14px; }
 
-            /* -------------------------------------
-               SP用 フッター
-               ------------------------------------- */
-            .sp-footer { display: block; text-align: center; padding: 50px 15px; margin-top: 20px; border-top: 1px solid var(--border-color); }
-            .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
-            .sp-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; }
+            /* SP用 フッター上書き */
+            .main-footer {
+                padding: 50px 15px;
+                margin-top: 30px;
+            }
 
-            /* -------------------------------------
-               SP用 追従CTAボタン
-               ------------------------------------- */
+            /* SP用 追従CTAボタン */
             .sp-floating-cta {
                 display: block; position: fixed; bottom: 0; left: 0; width: 100%;
                 background: linear-gradient(to top, rgba(242,244,246,1) 50%, rgba(242,244,246,0));
@@ -633,8 +644,14 @@
                 </div>
             </section>
 
-            <footer class="sp-footer js-fade">
+            <footer class="main-footer js-fade">
                 <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (株式会社LANSEED)</a>
+                <div class="company-info">
+                    兵庫県明石市二見町西二見１５７－１２７<br>
+                    営業時間 : 9:00 - 19:00（日祝日は定休）<br>
+                    TEL : 0120-64-4411<br>
+                    不動産免許:兵庫県知事 (2) 第401607号
+                </div>
                 <p>&copy; 2026 LANSEED Co., Ltd. All Rights Reserved.</p>
             </footer>
 
