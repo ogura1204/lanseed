@@ -108,7 +108,7 @@
             flex: 1;
             background-color: var(--bg-white);
             border-radius: 50px 0 0 50px;
-            padding: 100px 8% 20px; /* 下部の余白を少し調整 */
+            padding: 100px 8%;
             min-width: 0;
             box-shadow: -15px 0 40px rgba(0,0,0,0.03);
             position: relative;
@@ -211,6 +211,22 @@
         .area-tag { background-color: var(--secondary); color: var(--primary); padding: 16px 32px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; border: 1px solid var(--border-color); }
 
         /* =========================================
+           Q&A セクション
+           ========================================= */
+        .faq-list { max-width: 760px; margin: 0 auto; }
+        .faq-item {
+            background-color: var(--bg-white); border: 2px solid var(--border-color);
+            border-radius: 24px; padding: 30px 40px; margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .faq-item:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
+        .faq-q { display: flex; align-items: flex-start; font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; line-height: 1.6; }
+        .faq-icon-q { color: var(--accent); font-size: 1.6rem; margin-right: 15px; font-weight: 900; font-family: 'Montserrat', sans-serif; line-height: 1; flex-shrink: 0; }
+        .faq-a { display: flex; align-items: flex-start; font-size: 1rem; font-weight: 700; color: var(--text-main); background-color: rgba(0, 91, 38, 0.04); padding: 20px 25px; border-radius: 16px; border: 1px solid rgba(0, 91, 38, 0.1); line-height: 1.8; }
+        .faq-icon-a { color: var(--primary); font-size: 1.4rem; margin-right: 15px; font-weight: 900; font-family: 'Montserrat', sans-serif; line-height: 1.2; flex-shrink: 0; }
+
+        /* =========================================
            フォーム
            ========================================= */
         .form-wrapper { max-width: 760px; margin: 0 auto; background: var(--secondary); padding: 60px; border-radius: 40px; border: 1px solid var(--border-color); position: relative; }
@@ -250,27 +266,9 @@
         .char-form { top: -40px; right: -20px; animation: float-char 3.8s ease-in-out infinite; }
 
         /* =========================================
-           フッター全般設定（PC・SP共通）
+           SP用 ヘッダー＆フッター＆追従ボタン（PC非表示）
            ========================================= */
-        .main-footer { 
-            text-align: center; 
-            padding: 60px 15px 40px; 
-            margin-top: 60px; 
-            border-top: 1px solid var(--border-color); 
-        }
-        .main-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
-        .main-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; }
-        
-        .company-info { 
-            font-size: 0.85rem; 
-            color: var(--text-muted); 
-            margin: 20px 0; 
-            line-height: 1.6; 
-            font-weight: 500; 
-        }
-
-        /* SP用 ヘッダー＆追従ボタン（PC非表示） */
-        .sp-header, .sp-floating-cta { display: none; }
+        .sp-header, .sp-footer, .sp-floating-cta { display: none; }
 
         .js-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .js-fade.is-active { opacity: 1; transform: translateY(0); }
@@ -325,6 +323,13 @@
             .reason-box p.text-red { font-size: 1.15rem; line-height: 1.4; }
             .reason-box p, .honest-box p { font-size: 0.95rem; }
             .honest-box h3 { font-size: 1.15rem; }
+
+            /* SP用：Q&A */
+            .faq-item { padding: 20px 15px; border-radius: 16px; }
+            .faq-q { font-size: 1rem; margin-bottom: 15px; }
+            .faq-icon-q { font-size: 1.4rem; margin-right: 10px; }
+            .faq-a { padding: 15px; font-size: 0.95rem; border-radius: 12px; }
+            .faq-icon-a { font-size: 1.2rem; margin-right: 10px; }
             
             .form-wrapper { padding: 30px 15px; border-radius: 20px; width: 100%; box-sizing: border-box; }
             .form-label { font-size: 0.95rem; flex-wrap: wrap; }
@@ -375,13 +380,18 @@
             }
             .grid-time.time-accent { border-color: var(--accent); background-color: var(--accent); color: #fff; font-size: 0.85rem; padding: 6px 14px; }
 
-            /* SP用 フッター上書き */
-            .main-footer {
-                padding: 50px 15px;
-                margin-top: 30px;
-            }
+            /* -------------------------------------
+               SP用 フッター
+               ------------------------------------- */
+            .sp-footer { display: block; text-align: center; padding: 50px 15px; margin-top: 20px; border-top: 1px solid var(--border-color); }
+            .sp-footer a { color: var(--primary); font-weight: 900; font-size: 1rem; text-decoration: none; }
+            .sp-footer p { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; }
+            
+            .company-info { font-size: 0.85rem; color: var(--text-muted); margin: 20px 0; line-height: 1.6; font-weight: 500; }
 
-            /* SP用 追従CTAボタン */
+            /* -------------------------------------
+               SP用 追従CTAボタン
+               ------------------------------------- */
             .sp-floating-cta {
                 display: block; position: fixed; bottom: 0; left: 0; width: 100%;
                 background: linear-gradient(to top, rgba(242,244,246,1) 50%, rgba(242,244,246,0));
@@ -586,6 +596,47 @@
                 </div>
             </section>
 
+            <section class="faq">
+                <div class="sec-header js-fade">
+                    <span class="sec-en">Q&amp;A</span>
+                    <h2 class="sec-ja">よくあるご質問</h2>
+                </div>
+                
+                <div class="faq-list">
+                    <div class="faq-item js-fade">
+                        <div class="faq-q">
+                            <span class="faq-icon-q">Q.</span>
+                            <span>査定をお願いして、断っても大丈夫ですか？</span>
+                        </div>
+                        <div class="faq-a">
+                            <span class="faq-icon-a">A.</span>
+                            <span>はい、もちろんです。まずは金額を知りたいだけの方も大歓迎です。強引な勧誘は一切いたしませんので、じっくりとご検討ください。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item js-fade">
+                        <div class="faq-q">
+                            <span class="faq-icon-q">Q.</span>
+                            <span>家の中に古い荷物がたくさんありますが、そのままでいいですか？</span>
+                        </div>
+                        <div class="faq-a">
+                            <span class="faq-icon-a">A.</span>
+                            <span>はい、問題ございません。処分が難しい家具や生活用品なども、そのままの状態で引き取らせていただきます。お体への負担も考慮し、すべて私たちにお任せください。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item js-fade">
+                        <div class="faq-q">
+                            <span class="faq-icon-q">Q.</span>
+                            <span>周囲の人に売却を知られたくないのですが…。</span>
+                        </div>
+                        <div class="faq-a">
+                            <span class="faq-icon-a">A.</span>
+                            <span>買取は不特定多数の方へ広告を出す必要がないため、外部に知られる心配はございません。担当者が伺う際も、近隣に配慮した形で対応させていただきます。</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section id="contact" style="margin-bottom: 0;">
                 <div class="sec-header js-fade">
                     <span class="sec-en">CONTACT</span>
@@ -644,7 +695,7 @@
                 </div>
             </section>
 
-            <footer class="main-footer js-fade">
+            <footer class="sp-footer js-fade">
                 <a href="https://www.lanseed.co.jp/" target="_blank">運営会社 (株式会社LANSEED)</a>
                 <div class="company-info">
                     兵庫県明石市二見町西二見１５７－１２７<br>
