@@ -434,7 +434,6 @@
                 box-shadow: 0 10px 25px rgba(230, 106, 0, 0.25);
             }
 
-            /* ★SP版での一般的な仲介業者の見出しを黒文字に変更 */
             .g-lbl-other { 
                 grid-column: 1; grid-row: 1; 
                 color: var(--text-main); 
@@ -465,9 +464,7 @@
                 border-radius: 16px; font-size: 0.95rem; font-weight: 700; text-align: center; display: flex; flex-direction: column; justify-content: center; line-height: 1.5; position: relative; z-index: 1; 
             }
 
-            /* ★SP版での一般的な仲介業者のボックス内をすべて黒文字に変更 */
             .tl-other-box { border: 2px solid var(--border-color); color: var(--text-main); background: var(--secondary); }
-            /* テキストを明示的に黒色へ */
             .tl-other-box .tl-note { font-size: 0.8rem; margin-top: 8px; font-weight: normal; color: var(--text-main); }
             
             .grid-box.tl-good-box { 
@@ -479,7 +476,6 @@
             
             .good-title-sp { font-size: 1.1rem; font-weight: 900; display: block; margin-bottom: 6px; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
             
-            /* ★SP版：ご契約・現金化！の白影を削除し黒文字でくっきり表示 */
             .good-title-highlight-sp { font-size: 1.25rem; color: var(--text-main); font-weight: 900; display: block; margin-bottom: 6px; text-shadow: none; }
             
             .grid-box.tl-box-accent { 
@@ -491,7 +487,6 @@
                 z-index: 5; 
             }
             .grid-box.tl-done { color: rgba(255,255,255,0.7); border: none; background: transparent; font-size: 1rem; }
-            /* ★他社側の完了テキストも黒文字で透過を少し抑える */
             .tl-other-box.tl-done { color: var(--text-main); opacity: 0.5; }
 
             .grid-time {
@@ -806,41 +801,49 @@
                     </script>
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="showSuccessMessage();"></iframe>
                     
-                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQ7eleeEcYCT1YLAkTFa6RGUD5ISm7IVe_HCJvsGL5zPuF2A/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
+                    <form action="https://docs.google.com/forms/d/e/1FAIpQLScP9mJtMxmCMd853kFg26edFMJK-XTgSEVCjCiOsEyuZiyW9w/formResponse" method="POST" target="hidden_iframe" id="customForm" onsubmit="submitted=true;">
                         
                         <div class="form-group">
                             <label class="form-label">売却を検討されているのはどちらですか？ <span class="required">必須</span></label>
                             <div class="radio-group">
-                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="マンション" required><span class="radio-card-content">マンション</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="戸建て"><span class="radio-card-content">戸建て</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.1230365107" value="土地"><span class="radio-card-content">土地</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1055902625" value="マンション" required><span class="radio-card-content">マンション</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1055902625" value="戸建て"><span class="radio-card-content">戸建て</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1055902625" value="土地"><span class="radio-card-content">土地</span></label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">売却予定時期はいつ頃でしょうか？ <span class="required">必須</span></label>
                             <div class="radio-group timing-group">
-                                <label class="radio-card"><input type="radio" name="entry.557509174" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
-                                <label class="radio-card"><input type="radio" name="entry.557509174" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.557509174" value="半年以内"><span class="radio-card-content">半年以内</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.557509174" value="１年以内"><span class="radio-card-content">１年以内</span></label>
-                                <label class="radio-card"><input type="radio" name="entry.557509174" value="未定"><span class="radio-card-content">未定</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1972513103" value="すぐに（最短7日）" required><span class="radio-card-content">すぐに<br><small>（最短7日）</small></span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1972513103" value="3ヶ月以内"><span class="radio-card-content">3ヶ月以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1972513103" value="半年以内"><span class="radio-card-content">半年以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1972513103" value="１年以内"><span class="radio-card-content">１年以内</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1972513103" value="未定"><span class="radio-card-content">未定</span></label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">お名前 <span class="required">必須</span></label>
-                            <input type="text" name="entry.1598686272" class="form-input" placeholder="例：山田 太郎" required>
+                            <input type="text" name="entry.1089351969" class="form-input" placeholder="例：山田 太郎" required>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">弊社からのご連絡方法（メール or 電話）と、ご連絡先をご記載ください <span class="required">必須</span></label>
-                            <input type="text" name="entry.2031094038" class="form-input" placeholder="例：090-1234-5678 または sample@example.com" required>
+                            <label class="form-label">ご希望のご連絡方法 <span class="required">必須</span></label>
+                            <div class="radio-group contact-group">
+                                <label class="radio-card"><input type="radio" name="entry.1081255899" value="お電話" required><span class="radio-card-content">お電話</span></label>
+                                <label class="radio-card"><input type="radio" name="entry.1081255899" value="メール"><span class="radio-card-content">メール</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">ご連絡先（電話番号またはメールアドレス） <span class="required">必須</span></label>
+                            <input type="text" name="entry.166999226" class="form-input" placeholder="例：090-1234-5678 または sample@example.com" required>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" style="flex-wrap: nowrap;">備考 <span class="optional">任意</span></label>
-                            <textarea name="entry.946392948" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
+                            <textarea name="entry.1247821458" class="form-textarea" placeholder="物件の所在地や面積、その他気になることがあればご自由にご記入ください。"></textarea>
                         </div>
                         
                         <button type="submit" class="btn-submit">送信する</button>
